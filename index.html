@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>프로모션 기획 연습장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --navy:#1F2A44; --navy-2:#2E3B5C; --navy-soft:#E8ECF4;
+  --coral:#FF6B5A; --coral-ink:#D9442F; --coral-soft:#FFECE9;
+  --bg:#F2F4F8; --card:#FFFFFF; --ink:#1F2A44; --muted:#5A6482; --line:#DCE1EB;
+  --good:#1B8F5F; --good-soft:#E3F5EC; --bad:#D23A3A; --bad-soft:#FCE8E8; --warn:#B7791F; --warn-soft:#FFF4DE;
+  --r:14px; --r-sm:10px;
+  --ff:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --fd:"Do Hyeon","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:var(--ff);font-size:17px;line-height:1.6;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--fd);font-weight:400;line-height:1.25;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5vw,44px)} h2{font-size:clamp(23px,3.4vw,30px)} h3{font-size:20px}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+@media (min-width:720px){.wrap{padding-inline:24px}}
+
+/* 헤더 */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:#fff;box-shadow:0 2px 10px rgba(31,42,68,.25)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.brand b{font-family:var(--fd);font-weight:400;font-size:22px;letter-spacing:.5px}
+.brand b i{font-style:normal;color:var(--coral)}
+.tag{font-size:13px;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;background:none;border:0;color:#C9D1E4;padding:10px 14px;font-size:16px;font-weight:500;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:#fff;border-bottom-color:var(--coral)}
+.tabs button span{font-family:var(--fd);margin-right:4px;color:var(--coral)}
+.prog{background:var(--navy-2);padding-block:8px}
+.prog .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pseg{font-size:13px;color:#C9D1E4}
+.pseg .bar{height:7px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:3px}
+.pseg .bar i{display:block;height:100%;width:0;background:var(--coral);transition:width .4s}
+.pseg em{font-style:normal;color:#fff;float:right}
+
+main{padding-block:22px 60px}
+section.tab{display:none;flex-direction:column;gap:18px}
+section.tab.on{display:flex}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.card.flat{box-shadow:none}
+.lead{color:var(--muted);max-width:68ch}
+.eyebrow{font-size:13px;letter-spacing:.08em;color:var(--coral-ink);font-weight:700}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:0;border-radius:999px;padding:10px 18px;font-weight:700;background:var(--navy);color:#fff;font-size:16px}
+.btn.coral{background:var(--coral);color:#fff}
+.btn.ghost{background:var(--navy-soft);color:var(--navy)}
+.btn.sm{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;background:var(--navy-soft);color:var(--navy)}
+.pill.c{background:var(--coral-soft);color:var(--coral-ink)}
+.pill.g{background:var(--good-soft);color:var(--good)}
+.pill.r{background:var(--bad-soft);color:var(--bad)}
+.note{font-size:14px;color:var(--muted)}
+.fake{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:700;color:var(--coral-ink);background:var(--coral-soft);border-radius:8px;padding:3px 10px}
+.fb{border-radius:var(--r-sm);padding:12px 14px;font-size:16px}
+.fb.ok{background:var(--good-soft);color:#115c3d}
+.fb.no{background:var(--bad-soft);color:#8f2020}
+.fb.info{background:var(--navy-soft)}
+.src{display:block;font-size:14px;margin-top:4px;opacity:.9}
+.src::before{content:"강의 근거 ▸ ";font-weight:700}
+.tblwrap{overflow-x:auto;border-radius:var(--r-sm);border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:16px;background:var(--card)}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--navy);color:#fff;font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+
+/* 홈 */
+.hero{background:var(--navy);color:#fff;border-radius:var(--r);padding:26px 22px;display:grid;gap:16px}
+.hero p{color:#D5DBEA;max-width:62ch}
+.hero h1 i{font-style:normal;color:var(--coral)}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px}
+.kpi .v{font-family:var(--fd);font-size:30px;line-height:1.1}
+.kpi .v small{font-family:var(--ff);font-size:15px;color:var(--muted);margin-left:4px}
+.kpi .k{font-size:14px;color:var(--muted)}
+.kpi.hot .v{color:var(--coral-ink)}
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:640px){.journey{grid-template-columns:1fr 1fr}}
+.stage{border-radius:var(--r-sm);padding:12px;background:var(--navy-soft);position:relative}
+.stage b{font-family:var(--fd);font-weight:400;font-size:22px;display:block}
+.stage .t{font-size:14px;color:var(--muted)}
+.stage .m{font-size:14px;margin-top:6px}
+.stage:nth-child(4){background:var(--coral-soft)}
+.formula{font-size:16px;display:grid;gap:8px}
+.formula div{background:var(--bg);border-radius:var(--r-sm);padding:10px 12px}
+.formula b{color:var(--coral-ink)}
+.steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.steps3 button{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:var(--r-sm);padding:14px}
+.steps3 button b{display:block;font-family:var(--fd);font-weight:400;font-size:20px}
+
+/* 용어사전 */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search{flex:1 1 260px;border:2px solid var(--line);border-radius:999px;padding:10px 16px;background:var(--card)}
+.search:focus{border-color:var(--navy);outline:none}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.term{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px}
+.term.known{border-color:var(--good)}
+.term h3{font-size:21px;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.term ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:16px}
+.term li{padding-left:22px;position:relative}
+.term li::before{position:absolute;left:0;font-weight:700;font-size:13px;top:3px}
+.term li.d::before{content:"뜻";color:var(--navy)}
+.term li.e::before{content:"예";color:var(--coral-ink)}
+.term li.c::before{content:"헷";color:var(--warn)}
+.term .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.knowbtn{border:1px solid var(--line);background:none;border-radius:999px;padding:4px 12px;font-size:14px}
+.term.known .knowbtn{background:var(--good);color:#fff;border-color:var(--good)}
+.pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.pair{border:2px dashed var(--coral);border-radius:var(--r);padding:14px;background:var(--card)}
+.pair h3{font-size:19px;margin-bottom:8px}
+.pair .vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:15px}
+.pair .vs div{background:var(--bg);border-radius:8px;padding:8px}
+.pair .vs b{display:block;font-size:14px;color:var(--coral-ink)}
+.pair p{font-size:15px;margin-top:8px}
+.intro{display:grid;gap:6px}
+.chain{font-family:var(--fd);font-size:20px;margin-top:4px}
+.chain i{font-style:normal;color:var(--coral)}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+
+/* 게임 공통 */
+.gsel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.gsel button{text-align:left;border:2px solid var(--line);background:var(--card);border-radius:var(--r);padding:14px}
+.gsel button[aria-pressed="true"]{border-color:var(--coral);background:var(--coral-soft)}
+.gsel b{font-family:var(--fd);font-weight:400;font-size:20px;display:block}
+.gsel .s{font-size:14px;color:var(--muted)}
+.gsel .done{color:var(--good);font-weight:700;font-size:14px}
+.game{display:none;flex-direction:column;gap:14px}
+.game.on{display:flex}
+.score{font-family:var(--fd);font-size:26px;color:var(--coral-ink)}
+
+/* 게임1 */
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:54px;padding:10px;border-radius:var(--r-sm);background:var(--bg)}
+.gc{border:2px solid var(--navy);background:var(--card);border-radius:10px;padding:6px 12px;font-size:16px;font-weight:500;user-select:none;touch-action:manipulation}
+.gc.kpi{border-color:var(--coral);border-style:dashed}
+.gc.sel{background:var(--navy);color:#fff}
+.gc.kpi.sel{background:var(--coral);color:#fff}
+.gc.ok{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.gc.no{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.zones{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:760px){.zones{grid-template-columns:1fr 1fr}}
+.zone{border:2px dashed var(--line);border-radius:var(--r-sm);padding:10px;min-height:140px;background:var(--card);display:flex;flex-direction:column;gap:6px}
+.zone.hot{border-color:var(--coral);background:var(--coral-soft)}
+.zone h3{font-size:19px}
+.zone .zc{display:flex;flex-wrap:wrap;gap:6px}
+.zone .zc .gc{font-size:14px;padding:4px 9px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.trap{display:grid;gap:10px}
+.trap .q{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;display:grid;gap:8px}
+.choice{display:flex;gap:8px;flex-wrap:wrap}
+.choice button{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:500}
+.choice button.pick{border-color:var(--navy);background:var(--navy);color:#fff}
+.choice button.right{border-color:var(--good);background:var(--good);color:#fff}
+.choice button.wrong{border-color:var(--bad);background:var(--bad);color:#fff}
+
+/* 게임2 */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (min-width:900px){.mem{grid-template-columns:repeat(8,1fr)}}
+.mc{aspect-ratio:3/4;max-width:100%;perspective:600px;border:0;background:none;padding:0}
+.mc .in{position:relative;width:100%;height:100%;transition:transform .35s;transform-style:preserve-3d}
+.mc.open .in,.mc.got .in{transform:rotateY(180deg)}
+.mc .f,.mc .b{position:absolute;inset:0;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;backface-visibility:hidden;font-size:15px;font-weight:700;line-height:1.3}
+.mc .f{background:var(--navy);color:var(--coral);font-family:var(--fd);font-size:26px;font-weight:400}
+.mc .b{transform:rotateY(180deg);background:var(--card);border:2px solid var(--navy)}
+.mc .b.st{border-color:var(--coral);color:var(--coral-ink)}
+.mc.got .b{background:var(--good-soft);border-color:var(--good);color:#115c3d}
+@media (prefers-reduced-motion:reduce){.mc .in{transition:none}}
+
+/* 게임3 */
+.smart-q{font-size:21px;font-weight:700;background:var(--bg);border-radius:var(--r-sm);padding:16px;border-left:6px solid var(--coral)}
+.letters{display:flex;gap:8px;flex-wrap:wrap}
+.letters button{width:64px;border:2px solid var(--line);background:var(--card);border-radius:12px;padding:6px 0;line-height:1.2}
+.letters button b{display:block;font-family:var(--fd);font-weight:400;font-size:24px}
+.letters button small{font-size:12px;color:var(--muted)}
+.letters button[aria-pressed="true"]{border-color:var(--coral);background:var(--coral-soft)}
+.letters button.miss{border-color:var(--bad)}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.ok{background:var(--good)} .dots i.no{background:var(--bad)} .dots i.cur{background:var(--navy)}
+
+/* 게임4 */
+.sim{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+@media (max-width:860px){.sim{grid-template-columns:1fr}}
+.sl{display:grid;gap:4px;margin-bottom:10px}
+.sl label{display:flex;justify-content:space-between;font-size:15px;font-weight:500}
+.sl label output{font-weight:700;color:var(--navy)}
+input[type=range]{width:100%;accent-color:var(--coral);height:26px}
+.res{border-radius:var(--r);padding:16px;display:grid;gap:10px;background:var(--bg)}
+.res.pos{background:var(--good-soft)} .res.neg{background:var(--bad-soft)}
+.bigroi{font-family:var(--fd);font-size:52px;line-height:1}
+.res.pos .bigroi{color:var(--good)} .res.neg .bigroi{color:var(--bad)}
+.rrow{display:flex;justify-content:space-between;gap:10px;font-size:16px;border-bottom:1px solid rgba(31,42,68,.1);padding-bottom:4px}
+.rrow b{font-variant-numeric:tabular-nums}
+.bebar{display:grid;gap:6px;font-size:14px}
+.bebar .track{height:14px;border-radius:9px;background:rgba(31,42,68,.1);position:relative;overflow:hidden}
+.bebar .track i{position:absolute;inset:0 auto 0 0;border-radius:9px}
+.missions{display:grid;gap:10px}
+.mission{border:1px solid var(--line);border-radius:var(--r-sm);padding:14px;display:grid;gap:8px;background:var(--card)}
+.mission h3{font-size:19px;display:flex;justify-content:space-between;gap:8px}
+
+/* 아코디언 */
+details.acc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;gap:12px;align-items:center;font-weight:700;font-size:18px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary .n{font-family:var(--fd);font-weight:400;font-size:24px;color:var(--coral);min-width:30px}
+details.acc summary::after{content:"+";margin-left:auto;font-size:24px;color:var(--muted)}
+details.acc[open] summary::after{content:"−"}
+details.acc .body{padding:0 18px 16px;display:grid;gap:10px}
+.pts{margin:0;padding-left:0;list-style:none;display:grid;gap:6px}
+.pts li{padding:8px 12px;background:var(--bg);border-radius:8px}
+.pts li b{color:var(--navy);margin-right:6px}
+.wrongbox{background:var(--bad-soft);border-radius:8px;padding:8px 12px;color:#8f2020}
+.wrongbox b{margin-right:6px}
+
+/* 활동지 */
+.design{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.design div{background:var(--bg);border-radius:var(--r-sm);padding:10px 12px;font-size:15px}
+.design b{display:block;font-family:var(--fd);font-weight:400;font-size:18px;color:var(--coral-ink)}
+.stepnav{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.stepnav button{flex:0 0 auto;border:2px solid var(--line);background:var(--card);border-radius:12px;padding:6px 10px;font-size:14px;text-align:left;line-height:1.25}
+.stepnav button b{font-family:var(--fd);font-weight:400;font-size:18px;display:block}
+.stepnav button.filled{border-color:var(--good)}
+.stepnav button[aria-current="step"]{border-color:var(--coral);background:var(--coral-soft)}
+.fields{display:grid;gap:12px}
+.f label{display:block;font-weight:700;font-size:15px;margin-bottom:4px}
+.f textarea,.f input,.f select,.cell{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff;font-size:16px}
+.f textarea{min-height:74px;resize:vertical}
+.f textarea:focus,.f input:focus,.cell:focus{border-color:var(--navy);outline:none}
+.f .help{font-size:13px;color:var(--muted);margin-top:2px}
+.cell{padding:7px 8px}
+td .cell{min-width:80px}
+.toggles{display:flex;gap:8px;flex-wrap:wrap}
+.reveal{display:none;border-radius:var(--r-sm);padding:14px;font-size:16px}
+.reveal.on{display:block}
+.reveal.hint{background:var(--warn-soft)}
+.reveal.ex{background:var(--coral-soft)}
+.reveal.model{background:var(--navy-soft)}
+.reveal h4{margin:0 0 6px;font-size:15px;letter-spacing:.04em}
+.reveal ul{margin:0;padding-left:20px}
+.check{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-weight:700}
+.stepfoot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ok-t{color:var(--good)} .no-t{color:var(--bad)} .warn-t{color:var(--warn)}
+.onepage{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:2px solid var(--navy);border-radius:var(--r-sm);overflow:hidden}
+@media (max-width:640px){.onepage{grid-template-columns:1fr}}
+.onepage div{padding:12px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);font-size:15px;white-space:pre-wrap;min-height:70px}
+.onepage div b{display:block;font-size:13px;color:var(--coral-ink);letter-spacing:.04em;white-space:normal}
+.onepage .ttl{grid-column:1/-1;background:var(--navy);color:#fff;font-family:var(--fd);font-size:24px;white-space:normal}
+.onepage .empty-v{color:#9aa2b8}
+
+/* 비교 */
+.cmp th:first-child{width:18%}
+.cmp td b.g{color:var(--good)} .cmp td b.r{color:var(--bad)}
+.conclude{background:var(--navy);color:#fff;border-radius:var(--r);padding:22px;font-family:var(--fd);font-size:clamp(22px,3.4vw,32px);line-height:1.35}
+.conclude i{font-style:normal;color:var(--coral)}
+.bars{display:grid;gap:14px}
+.bars .lbl{font-weight:700;margin-bottom:4px}
+.bars .ln{display:grid;grid-template-columns:90px 1fr 70px;gap:8px;align-items:center;font-size:14px}
+.bars .ln .t{height:16px;background:var(--bg);border-radius:6px;overflow:hidden}
+.bars .ln .t i{display:block;height:100%}
+
+footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:center}
+
+@media print{
+  header.top,footer,.noprint,section.tab:not(#tab-sheet){display:none!important}
+  body,html{background:#fff}
+  #tab-sheet{display:flex!important}
+  #tab-sheet > *:not(#printArea){display:none!important}
+  #printArea{display:block!important;border:0}
+  .onepage div{font-size:12px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap brand">
+    <b>프로모션 기획 <i>연습장</i></b>
+    <span class="tag">교육용 가상 데이터</span>
+  </div>
+  <nav class="wrap tabs" role="tablist" aria-label="학습 메뉴">
+    <button role="tab" data-tab="home" aria-selected="true"><span>①</span>홈</button>
+    <button role="tab" data-tab="glossary" aria-selected="false"><span>②</span>용어사전</button>
+    <button role="tab" data-tab="games" aria-selected="false"><span>③</span>워밍업 게임</button>
+    <button role="tab" data-tab="guide" aria-selected="false"><span>④</span>실습 가이드</button>
+    <button role="tab" data-tab="sheet" aria-selected="false"><span>⑤</span>이익창출 활동지</button>
+    <button role="tab" data-tab="compare" aria-selected="false"><span>⑥</span>비교</button>
+  </nav>
+  <div class="prog" aria-label="학습 진도">
+    <div class="wrap">
+      <div class="pseg">용어 <em id="pg1">0%</em><div class="bar"><i id="pb1"></i></div></div>
+      <div class="pseg">게임 <em id="pg2">0/4</em><div class="bar"><i id="pb2"></i></div></div>
+      <div class="pseg">활동지 <em id="pg3">0/10</em><div class="bar"><i id="pb3"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ① 홈 -->
+<section class="tab on" id="tab-home" role="tabpanel">
+  <div class="hero">
+    <span class="eyebrow" style="color:var(--coral)">유통·리테일 마케팅 실습 3-1</span>
+    <h1>팔리는 행사보다 <i>남는 행사</i>를 기획합니다</h1>
+    <p>백화점 부산본점 케이스로 용어를 익히고, 게임으로 감을 잡고, 활동지로 직접 기획안을 씁니다. 모든 숫자는 교육용 가상 데이터입니다.</p>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:12px">
+      <h2>케이스: 부산본점의 현재</h2>
+      <span class="fake">교육용 가상 데이터</span>
+    </div>
+    <div class="grid g4">
+      <div class="kpi"><div class="k">연 방문객</div><div class="v num">620만<small>−3.2%</small></div></div>
+      <div class="kpi hot"><div class="k">20~30대 비중</div><div class="v num">22%<small>3년 전 31%</small></div></div>
+      <div class="kpi"><div class="k">20~30대 객단가</div><div class="v num">8.7만<small>전체 12.4만의 70%</small></div></div>
+      <div class="kpi"><div class="k">20~30대 주말 비중</div><div class="v num">68%</div></div>
+      <div class="kpi hot"><div class="k">팝업 (자사 vs 센텀시티)</div><div class="v num">4회<small>vs 22회</small></div></div>
+      <div class="kpi hot"><div class="k">SNS 언급 (자사 vs 센텀시티)</div><div class="v num">1,200<small>vs 4,800건</small></div></div>
+      <div class="kpi"><div class="k">센텀시티 20~30대 비중</div><div class="v num">38%</div></div>
+      <div class="kpi"><div class="k">예산 · 장소</div><div class="v num">3억<small>1층 아트리움 200평</small></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-bottom:12px">마케팅 여정 4단계와 KPI</h2>
+    <div class="journey">
+      <div class="stage"><b>유입</b><div class="t">광고 · SNS · 팝업</div><div class="m">방문객수 · 신규회원 · 앱설치</div></div>
+      <div class="stage"><b>체류</b><div class="t">전시 · 체험 · 포토존 · 공연</div><div class="m">평균 체류시간 · 층별 이동 · 참여인원</div></div>
+      <div class="stage"><b>전환</b><div class="t">할인 · 사은품 · 쿠폰 · 포인트</div><div class="m">구매전환율 · 객단가 · 구매건수</div></div>
+      <div class="stage"><b>재방문</b><div class="t">VIP · 멤버십 · 시즌행사</div><div class="m">재방문율 · 등급상승률 · 재구매주기</div></div>
+    </div>
+    <p class="note" style="margin-top:10px">정성 KPI: SNS 언급량 · 만족도 · 추천의향 &nbsp;|&nbsp; 흔한 실수: 유입 목적 행사를 매출로 평가. 목적은 <b>주 1개 + 부 1개</b>만.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2 style="margin-bottom:12px">수익 공식 3줄</h2>
+      <div class="formula num">
+        <div><b>증분 매출</b> = 행사기간 매출 − 기준 매출</div>
+        <div><b>ROI</b> = (증분 매출 × GP율 − 비용) ÷ 비용 × 100</div>
+        <div><b>손익분기 증분 매출</b> = 비용 ÷ GP율</div>
+      </div>
+      <p class="note" style="margin-top:8px">사례 A: 증분 8억 · GP 25% · 비용 3억 → ROI −33% / 사례 B: 증분 15억 → +25%</p>
+    </div>
+    <div class="card">
+      <h2 style="margin-bottom:12px">이렇게 공부하세요</h2>
+      <div class="steps3">
+        <button data-go="glossary"><b>1. 용어</b>카드 80여 장. 아는 카드에 체크</button>
+        <button data-go="games"><b>2. 게임</b>4종, 각 5분. 틀리면 강의 근거가 나옵니다</button>
+        <button data-go="sheet"><b>3. 활동지</b>10단계로 '남는 행사'를 직접 설계</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ② 용어사전 -->
+<section class="tab" id="tab-glossary" role="tabpanel">
+  <div>
+    <h2>용어사전</h2>
+    <p class="lead">강의 용어정리 전체를 담았습니다. 카드마다 <b>뜻</b> · <b>이 강의 예시</b> · <b>헷갈리는 포인트</b> 세 줄. 외운 카드는 체크하세요.</p>
+  </div>
+  <div class="card intro">
+    <span class="eyebrow">도입 질문 · 자켓 예시</span>
+    <p style="margin-top:6px"><b>"마케팅은 뭘까?"</b> → 팔리는 모든 과정. 누구에게(타깃) · 무엇을(컨셉) · 어떻게(프로모션) 팔지 정하는 일.</p>
+    <p><b>"너라면 자켓을 어떻게 팔래?"</b> → 타깃부터: 오피스 직장인 → 출근룩·셋업 제안(컨셉) → 점심시간 팝업·퇴근길 쿠폰(프로모션)</p>
+    <div class="chain">타깃 <i>→</i> 페르소나 <i>→</i> 니즈 <i>→</i> 컨셉 <i>→</i> 프로모션 <i>→</i> KPI</div>
+  </div>
+  <div class="tools">
+    <input id="q" class="search" type="search" placeholder="용어 검색 (예: ROI, 페르소나)" aria-label="용어 검색">
+  </div>
+  <div class="tools" id="cats" role="group" aria-label="분류 필터"></div>
+  <div class="terms" id="terms"></div>
+  <div>
+    <h2 style="margin-bottom:10px">헷갈리는 쌍</h2>
+    <div class="pairs">
+      <div class="pair"><h3>매출 vs 이익</h3><div class="vs"><div><b>매출</b>판 금액 전체</div><div><b>이익</b>매출 × GP율 − 비용</div></div><p>증분 매출 11억이어도 GP 30%면 이익은 3.3억. 비용 3억을 빼면 0.3억 남습니다. <b>매출이 올랐다고 성공이 아닙니다. 올린 만큼 남았는지 봐야 합니다.</b></p></div>
+      <div class="pair"><h3>매출 vs 증분 매출</h3><div class="vs"><div><b>매출</b>행사 기간에 팔린 전부</div><div><b>증분 매출</b>행사 덕에 <u>늘어난</u> 만큼</div></div><p>행사가 없어도 났을 기준 매출을 빼야 합니다. ROI는 증분으로 계산합니다.</p></div>
+      <div class="pair"><h3>표현 니즈 vs 잠재 니즈</h3><div class="vs"><div><b>표현</b>"퇴근하고 들를 데가 없다"</div><div><b>잠재</b>"하루 끝에 나를 챙기는 사람이고 싶다"</div></div><p>표현 니즈만 풀면 경쟁사와 같은 행사. 컨셉은 잠재 니즈에서 나옵니다.</p></div>
+      <div class="pair"><h3>유입 KPI vs 전환 KPI</h3><div class="vs"><div><b>유입</b>방문객수 · 신규회원 · 앱설치</div><div><b>전환</b>구매전환율 · 객단가 · 구매건수</div></div><p>유입 목적 팝업을 매출(전환)로 평가하면 '실패'로 오판합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 게임 -->
+<section class="tab" id="tab-games" role="tabpanel">
+  <div>
+    <h2>워밍업 게임 4종</h2>
+    <p class="lead">각 5분 내외. 점수는 이 화면에서만 유지됩니다(새로고침하면 초기화).</p>
+  </div>
+  <div class="gsel" id="gsel">
+    <button data-g="1" aria-pressed="true"><b>1. 여정 KPI 매칭</b><span class="s">수단·KPI를 4단계에</span> <span class="done" id="gd1"></span></button>
+    <button data-g="2" aria-pressed="false"><b>2. 8대 전략 뒤집기</b><span class="s">사례 ↔ 전략 짝 맞추기</span> <span class="done" id="gd2"></span></button>
+    <button data-g="3" aria-pressed="false"><b>3. SMART 판정관</b><span class="s">목표 10문장 판정</span> <span class="done" id="gd3"></span></button>
+    <button data-g="4" aria-pressed="false"><b>4. 손익 시뮬레이터</b><span class="s">남았나, 손해봤나?</span> <span class="done" id="gd4"></span></button>
+  </div>
+
+  <!-- 게임1 -->
+  <div class="game on card" id="game1">
+    <div class="row" style="justify-content:space-between">
+      <h2>여정 KPI 매칭</h2><span class="score num" id="g1score"></span>
+    </div>
+    <p>카드를 눌러 고른 뒤 단계 칸을 누르세요(PC는 끌어다 놓기도 됩니다). 칸 안의 카드를 누르면 되돌아갑니다.</p>
+    <div class="legend"><span><span class="gc" style="padding:0 8px">실선</span> 수단 카드 12장</span><span><span class="gc kpi" style="padding:0 8px">점선</span> KPI 카드 8장</span></div>
+    <div class="pool" id="pool" aria-label="카드 더미"></div>
+    <div class="zones" id="zones"></div>
+    <div class="row"><button class="btn coral" id="g1check">채점하기</button><button class="btn ghost" id="g1reset">다시 하기</button></div>
+    <div id="g1fb"></div>
+    <div class="trap" id="trap" hidden>
+      <h3>마지막 문제: 함정을 찾아라</h3>
+      <div id="trapQs"></div>
+      <div id="trapFb"></div>
+    </div>
+  </div>
+
+  <!-- 게임2 -->
+  <div class="game card" id="game2">
+    <div class="row" style="justify-content:space-between">
+      <h2>8대 전략 카드 뒤집기</h2><span class="score num" id="g2score"></span>
+    </div>
+    <p>사례 카드와 전략 카드를 짝지으세요. <span class="note">(리:스토어, 황지영, 2020)</span></p>
+    <div class="row note"><span>뒤집은 횟수 <b class="num" id="g2moves">0</b></span><span>찾은 짝 <b class="num" id="g2pairs">0</b>/8</span><button class="btn ghost sm" id="g2reset">섞기</button></div>
+    <div class="mem" id="mem"></div>
+    <div id="g2last" class="fb info" hidden></div>
+    <div id="g2quiz" hidden class="trap">
+      <h3>부산본점에 비어 있는 축은? (2개 고르기)</h3>
+      <div class="choice" id="g2opts"></div>
+      <div class="row"><button class="btn coral" id="g2qcheck">정답 확인</button></div>
+      <div id="g2qfb"></div>
+    </div>
+  </div>
+
+  <!-- 게임3 -->
+  <div class="game card" id="game3">
+    <div class="row" style="justify-content:space-between">
+      <h2>SMART 판정관</h2><span class="score num" id="g3score"></span>
+    </div>
+    <div class="dots" id="g3dots"></div>
+    <div id="g3body"></div>
+  </div>
+
+  <!-- 게임4 -->
+  <div class="game card" id="game4">
+    <div class="row" style="justify-content:space-between">
+      <h2>남았나, 손해봤나? 손익 시뮬레이터</h2><span class="score num" id="g4score"></span>
+    </div>
+    <p class="note">증분 매출 = 증분 방문객 × 구매전환율 × 객단가 + 기존 고객 증분. 순부담 = 총비용 − 브랜드 분담액.</p>
+    <div class="row"><span class="note">불러오기:</span>
+      <button class="btn ghost sm" data-preset="A">사례 A</button>
+      <button class="btn ghost sm" data-preset="B">사례 B</button>
+      <button class="btn ghost sm" data-preset="M">모범답안(인디 서머)</button>
+      <button class="btn ghost sm" data-preset="S">AFTER 6</button>
+    </div>
+    <div class="sim">
+      <div id="sliders"></div>
+      <div>
+        <div class="res" id="res">
+          <div class="row" style="justify-content:space-between;align-items:flex-end">
+            <div><div class="note">ROI (순부담 기준)</div><div class="bigroi num" id="rRoi">0%</div></div>
+            <span class="pill" id="rBadge">—</span>
+          </div>
+          <div class="rrow"><span>증분 매출</span><b id="rRev"></b></div>
+          <div class="rrow"><span>증분 이익 (× GP율)</span><b id="rGp"></b></div>
+          <div class="rrow"><span>순부담 비용</span><b id="rNet"></b></div>
+          <div class="rrow"><span>손익분기 증분 매출</span><b id="rBe"></b></div>
+          <div class="rrow"><span>ROI (총비용 기준)</span><b id="rRoiT"></b></div>
+          <div class="bebar">
+            <div>예상 증분 vs 손익분기</div>
+            <div class="track"><i id="barRev"></i></div>
+            <div class="track"><i id="barBe" style="background:var(--navy)"></i></div>
+            <div class="note"><span style="color:var(--coral-ink)">■</span> 예상 증분 &nbsp; <span style="color:var(--navy)">■</span> 손익분기</div>
+          </div>
+          <div id="shareWarn" class="note"></div>
+        </div>
+      </div>
+    </div>
+    <h3>미션 3단계</h3>
+    <div class="missions">
+      <div class="mission" id="m1">
+        <h3>① 사례 A는 왜 −33%일까? <span class="pill" id="m1s">도전</span></h3>
+        <div class="row"><button class="btn ghost sm" data-preset="A">사례 A 불러오기</button></div>
+        <div class="choice" id="m1opts"></div>
+        <div id="m1fb"></div>
+      </div>
+      <div class="mission" id="m2">
+        <h3>② 모범답안(ROI +10%)에서 방문이 20% 빗나가면? <span class="pill" id="m2s">도전</span></h3>
+        <div class="row"><button class="btn ghost sm" data-preset="M">모범답안 불러오기</button><button class="btn ghost sm" id="m2cut">증분 방문 20% 줄이기</button></div>
+        <div class="choice" id="m2opts"></div>
+        <div id="m2fb"></div>
+      </div>
+      <div class="mission" id="m3">
+        <h3>③ 비용은 그대로(총 3억), ROI 50% 넘기기 <span class="pill" id="m3s">도전</span></h3>
+        <p class="note">모범답안을 불러온 뒤 전환율 · 객단가 · GP율 · 분담액 중 <b>하나만</b> 움직여 보세요. 어떤 레버가 가장 조금 움직여도 50%를 넘길까요?</p>
+        <div class="row"><button class="btn ghost sm" data-preset="M">모범답안 불러오기</button></div>
+        <div id="m3live" class="note"></div>
+        <div id="m3fb"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 실습 가이드 -->
+<section class="tab" id="tab-guide" role="tabpanel">
+  <div>
+    <h2>실습 가이드 — 짚어줄 점</h2>
+    <p class="lead">실습 ①~⑪마다 꼭 확인할 점 3개와 흔한 오답 1개입니다. 제출 전 스스로 점검하세요.</p>
+  </div>
+  <div class="row noprint"><button class="btn ghost sm" id="accAll">모두 펼치기</button></div>
+  <div id="acc" class="grid"></div>
+</section>
+
+<!-- ⑤ 활동지 -->
+<section class="tab" id="tab-sheet" role="tabpanel">
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <div><span class="eyebrow">이익창출 활동지</span><h2>서면 AFTER 6 — 퇴근 후 90분, 나를 위한 뷰티·다이닝 살롱</h2></div>
+      <span class="fake">가상 가정치</span>
+    </div>
+    <p class="lead" style="margin-top:8px">모범답안(인디 서머)은 유입 중심이라 ROI +10%로 여유가 얇습니다. 같은 케이스·같은 3억으로 <b>남는 행사</b>를 만들어 봅니다. 빈칸은 직접 쓰고, 막히면 힌트 → 예시답 → 모범답안 비교 순서로 여세요.</p>
+    <div class="design" style="margin-top:12px">
+      <div><b>① 전환율</b>진단·클래스 참여자를 구매로</div>
+      <div><b>② 객단가</b>7만/12만/20만 사다리</div>
+      <div><b>③ GP율</b>뷰티·F&amp;B 고GP 카테고리</div>
+      <div><b>④ 공동판촉</b>입점 브랜드 분담</div>
+      <div><b>⑤ 평일 저녁</b>화~금 18~22시 빈 시간</div>
+    </div>
+    <p class="note" style="margin-top:8px">입력한 내용은 이 브라우저에만 저장됩니다.</p>
+  </div>
+  <nav class="stepnav" id="stepnav" aria-label="활동지 단계"></nav>
+  <div class="card" id="stepCard"></div>
+  <div id="printArea" hidden></div>
+</section>
+
+<!-- ⑥ 비교 -->
+<section class="tab" id="tab-compare" role="tabpanel">
+  <div>
+    <h2>모범답안 vs 내 기획(AFTER 6)</h2>
+    <p class="lead">같은 케이스, 같은 3억. 무엇을 목적으로 두느냐에 따라 레버와 숫자가 달라집니다. <span class="fake">가상 가정치</span></p>
+  </div>
+  <div class="tblwrap">
+    <table class="cmp">
+      <thead><tr><th>항목</th><th>모범답안 · 서면 인디 서머</th><th>이익창출 · 서면 AFTER 6</th></tr></thead>
+      <tbody id="cmpBody"></tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:12px">손익분기 vs 예상 증분 매출 (억원)</h3>
+    <div class="bars" id="cmpBars"></div>
+  </div>
+  <div class="card" id="mineCmp"></div>
+  <div class="conclude">매출을 키우는 기획과 <i>이익을 남기는 기획</i>은 레버가 다르다.</div>
+</section>
+
+</main>
+<footer>교육용 가상 데이터 · 특정 기업과 무관한 학습용 자료입니다 · 근거: 3-1 백화점 프로모션 기획 강의</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function r1(x){return Math.round(x*10)/10}
+function r2(x){return Math.round(x*100)/100}
+function eok(x){var v=r2(x);return (v%1===0?v.toFixed(0):(Math.round(v*100)%10===0?v.toFixed(1):v.toFixed(2)))+"억"}
+function won(x){return Math.round(x*1e8).toLocaleString("ko-KR")+"원"}
+function pct(x){return (x>0?"+":"")+Math.round(x)+"%"}
+
+/* ───────── 탭 ───────── */
+var TABS=["home","glossary","games","guide","sheet","compare"];
+function showTab(t){
+  if(TABS.indexOf(t)<0)t="home";
+  $$(".tabs button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.tab===t?"true":"false")});
+  $$("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="tab-"+t)});
+  if(t==="compare")renderMine();
+  window.scrollTo(0,0);
+  try{history.replaceState(null,"","#"+t)}catch(e){}
+}
+$$(".tabs button").forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.tab)})});
+$$("[data-go]").forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.go)})});
+
+/* ───────── 진도 ───────── */
+var known=store.get("pl_known",[]);
+var gamesDone={1:false,2:false,3:false,4:false};
+function updateProgress(){
+  var g=TERMS.length?known.length/TERMS.length:0;
+  $("#pb1").style.width=Math.round(g*100)+"%";$("#pg1").textContent=Math.round(g*100)+"%";
+  var n=0;for(var k in gamesDone)if(gamesDone[k])n++;
+  $("#pb2").style.width=(n/4*100)+"%";$("#pg2").textContent=n+"/4";
+  var f=STEPS.filter(function(s,i){return stepFilled(i)}).length;
+  $("#pb3").style.width=(f/10*100)+"%";$("#pg3").textContent=f+"/10";
+  for(var i=1;i<=4;i++)$("#gd"+i).textContent=gamesDone[i]?"✓ 완료":"";
+}
+
+/* ───────── ② 용어사전 ───────── */
+var CATS=[["all","전체"],["basic","기본개념"],["kpi","여정·KPI"],["str","8대 전략"],["tool","분석도구"],["ops","운영·홍보"],["money","예산·수익"]];
+var TERMS=[
+["마케팅 vs 영업","basic","마케팅은 고객이 \"사고 싶게\" 판을 까는 일, 영업은 그 판에서 직접 파는 일입니다.","20~30대 비중 31%→22%는 '파는 법'보다 '올 이유'가 사라진 문제라 마케팅 과제입니다.","할인도 마케팅 도구입니다. 판매 행위와 '오게 만드는 구조'를 구분하세요."],
+["시즌 프로모션","basic","명절·세일 시즌처럼 달력에 맞춰 여는 정기 행사입니다.","인디 서머는 여름 45일, 시즌에 기대 기간을 잡았습니다.","시즌은 '언제', 테마는 '무엇'. 둘은 겹칠 수 있습니다."],
+["테마 프로모션","basic","하나의 주제·라이프스타일로 묶은 행사입니다.","AFTER 6는 '퇴근 후 나를 챙기기' 테마로 뷰티·다이닝을 묶었습니다.","테마는 할인 폭이 아니라 이야기로 고객을 부릅니다."],
+["VIP 프로모션","basic","상위 등급 고객을 위한 전용 혜택·행사입니다.","AFTER 6 리턴 살롱 패스: 3회 방문 시 다음 시즌 VIP 사전예약권.","VIP 행사는 방문객수가 아니라 재방문율·등급상승률로 봅니다."],
+["팝업스토어 (팝업 프로모션)","basic","짧게 여는 임시 매장. 힘은 희소성·SNS 인증·경험소비입니다.","센텀시티 연 22회 vs 자사 4회 → SNS 4,800건 vs 1,200건 격차.","팝업은 매출보다 '반응'을 삽니다. 매출로만 평가하면 함정."],
+["팝업 기획 3원칙","basic","무엇을 알아낼까 / 어디서 찍을까 / 4주 뒤 무엇을 남길까.","20~30대가 반응하는 브랜드는? 찍을 지점은? 끝나고 회원 몇 명이 남나?","3원칙은 '얼마 팔까'로 시작하지 않습니다."],
+["BOPIS","basic","온라인에서 사고 매장에서 찾는 방식(Buy Online, Pick-up In Store).","리피지털의 대표 사례. 방문 전 불편(주차·대기)을 줄입니다.","배송 서비스가 아니라 고객을 매장으로 부르는 장치입니다."],
+["CRM","basic","고객관계관리. 고객 데이터를 모아 맞춤 혜택·메시지를 주는 활동입니다.","모범답안: 앱 스탬프 로그로 3회 이상 방문 고객 4,000명 관리.","문자 발송 도구가 아니라 재방문 단계의 설계입니다."],
+["고객여정 4단계","kpi","유입 → 체류 → 전환 → 재방문.","광고·SNS·팝업 → 전시·포토존 → 쿠폰·사은품 → VIP·멤버십.","한 행사가 4단계를 다 잡지 못합니다. 주 1개 + 부 1개."],
+["정량 KPI","kpi","숫자로 셀 수 있는 성과 지표입니다.","방문객 620만, 20~30대 객단가 8.7만원, 구매전환율.","숫자라고 다 KPI가 아닙니다. 목적 단계와 맞아야 합니다."],
+["정성 KPI","kpi","평판·느낌을 보는 지표. SNS 언급량·만족도·추천의향.","자사 SNS 1,200건 vs 센텀시티 4,800건.","SNS 언급량은 셀 수 있어도 '평판'을 보는 정성 KPI로 묶습니다."],
+["객단가","kpi","한 번 구매할 때 평균 금액. 매출 ÷ 구매건수.","20~30대 8.7만원 = 전체 12.4만원의 70%.","객단가가 올라도 고객 수는 그대로일 수 있습니다. 전환 KPI."],
+["구매전환율","kpi","방문·참여한 사람 중 실제로 산 사람의 비율입니다.","AFTER 6 가정: 증분 방문 3만 × 35% = 구매자 1.05만 명.","유입 목적 행사의 성적표로 쓰면 안 됩니다."],
+["재방문율","kpi","한 번 온 고객 중 다시 온 고객의 비율입니다.","리턴 패스(모범답안) · 리턴 살롱 패스(AFTER 6)가 노리는 지표.","행사 끝난 뒤에야 측정되는 경우가 많습니다."],
+["SNS 언급량","kpi","SNS에서 점포·행사가 언급된 건수입니다.","자사 1,200건 = 센텀시티 4,800건의 1/4.","유입(정성) KPI입니다. 매출과 바로 잇지 마세요."],
+["주 목적 · 부 목적","kpi","행사가 가장 노리는 단계 1개와 보조 단계 1개입니다.","인디 서머 주=유입 / AFTER 6 주=전환(이익).","목적이 3개 이상이면 평가 기준이 흐려집니다."],
+["리테일 랩","str","매장을 고객 반응 데이터를 얻는 실험실로 씁니다.","b8ta · 베스트바이. 자사 팝업 연 4회 → 비어 있는 축.","팝업은 실패해도 4주면 끝나는 저비용 실험입니다."],
+["리인벤팅 스페이스","str","공간의 목적 자체를 다시 정의합니다.","애플 타운스퀘어. 아트리움을 평일 야간 라운지로 전환.","인테리어 교체가 아니라 '용도' 교체입니다."],
+["리아날로그","str","디지털이 못 주는 감각 경험(시향·시식·손작업)을 키웁니다.","이솝 · 츠타야. AFTER 6 향 블렌딩 클래스.","복고 감성이 아니라 '오감 접점'입니다."],
+["리테일 테라피","str","쇼핑을 심리적 회복의 시간으로 만듭니다.","구찌 가든 · 룰루레몬 클래스. AFTER 6 '쉬러 오는 백화점'.","체류 시간 KPI와 직결. 할인과는 다른 축입니다."],
+["리그린","str","가치소비를 방문 이유로 만듭니다.","파타고니아 원웨어(수선) · 리필 스테이션.","친환경 상품 판매만이 아니라 '참여 명분'을 줍니다."],
+["리테일테인먼트","str","콘셉트를 비틀어 재미와 영감을 줍니다.","젠틀몬스터 · 다이슨 데모. 자사 SNS 1/4 → 비어 있는 축.","찍고 싶은 지점이 곧 홍보비 절감입니다."],
+["리피지털","str","오프라인에 온라인 편의를 붙입니다(피지컬+디지털).","BOPIS · 나이키 라이브. AFTER 6 앱 사전예약·스탬프.","평일 유입과 재방문을 만드는 구조입니다."],
+["리클린","str","청결과 안심을 눈에 보이게 합니다.","식품관 오픈 키친 · 비접촉 시착.","신뢰가 곧 객단가로 이어지는 영역입니다."],
+["3C","tool","고객·경쟁사·자사로 상황을 나눠 보는 틀입니다.","고객 22%(3년 전 31%) / 경쟁 센텀 38%·팝업 22회 / 자사 620만(−3.2%).","사실칸엔 숫자, 해석칸엔 판단. 섞으면 탈락."],
+["4P","tool","제품·가격·장소·촉진. 3C의 방향을 실행 질문으로 바꿉니다.","가격: 번들 7만/12만/20만 / 장소: 1층 아트리움 200평.","분석 틀이 아니라 '그래서 무엇을 할까' 질문입니다."],
+["페르소나","tool","타깃을 한 사람처럼 구체적으로 그린 가상 인물입니다.","이서진 27세 UI디자이너, 서면 원룸, 인스타그램(모범답안).","'20대 여성'은 페르소나가 아닙니다. 이름·동선·SNS까지."],
+["표현 니즈","tool","고객이 스스로 알고 말하는 욕구입니다.","\"퇴근하고 들를 데가 없다.\"(AFTER 6)","표현 니즈만 풀면 경쟁사와 같은 행사가 됩니다."],
+["잠재 니즈","tool","고객 본인도 잘 모르는, 행동 밑의 욕구입니다.","\"하루 끝에 나를 챙기는 사람이고 싶다.\"(AFTER 6)","잠재 니즈가 컨셉으로 이어져야 차별성이 생깁니다."],
+["고객여정지도","tool","접점·행동·감정·불편·기회 × 인지·방문전·체험·구매·사후 표입니다.","모범답안 감정 최저점: 구매 단계 '결제 줄이 길다'.","마케팅 여정 4단계와 다릅니다. 고객 입장의 5단계입니다."],
+["접점","tool","고객이 브랜드와 만나는 지점입니다.","인스타 피드 · 아트리움 사이니지 · 계산대 · 앱 알림.","접점은 '장소·채널', 행동은 '고객이 하는 일'."],
+["페인포인트","tool","고객이 불편을 느껴 이탈하는 지점입니다.","주차·혼잡 걱정, 계산 대기, 쉴 곳 없음.","페인포인트 1개당 아이디어 1개로 풉니다."],
+["SMART","tool","목표 점검 5요소: 구체적·측정 가능·달성 가능·관련성·기한.","\"행사 6주간 20~30대 방문 16.4만→20.5만 명(+25%)\"","현재값·목표값·측정방법이 없으면 M 불통과."],
+["컨셉 5조건","tool","차별성 · 재미 · 체험 · SNS확산 · 브랜드일치.","인디 서머: '센텀에는 없는 것, 서면에만 있는 것'.","5개 중 빠진 것을 알고 보완하면 됩니다."],
+["예비비","money","예상 못 한 지출에 대비해 남기는 돈. 보통 5~10%.","3억 × 10% = 3,000만원(AFTER 6).","'남는 돈'이 아닙니다. 예산을 깎을 때도 남깁니다."],
+["기준 매출","money","행사가 없었다면 났을 매출입니다.","전년 같은 기간 매출 등으로 잡습니다.","기준 매출을 모르면 증분을 계산할 수 없습니다."],
+["증분 매출","money","행사 덕에 늘어난 매출. 행사기간 매출 − 기준 매출.","모범답안 11억 · AFTER 6 13억.","행사 기간 매출 전체가 아닙니다."],
+["GP율","money","매출총이익률. 매출에서 원가를 빼고 남는 비율입니다.","GP 30%면 증분 11억 중 3.3억이 이익.","매출이 커도 GP율이 낮으면 남는 게 적습니다."],
+["프로모션 ROI","money","(증분 매출 × GP율 − 비용) ÷ 비용 × 100.","사례 A: (8억 × 25% − 3억) ÷ 3억 = −33%.","유입이 주 목적이면 음수여도 실패가 아닐 수 있습니다."],
+["손익분기 증분 매출","money","본전이 되는 증분 매출. 비용 ÷ GP율.","3억 ÷ 25% = 12억(사례 A) · 3억 ÷ 30% = 10억(모범답안).","ROI보다 먼저 구합니다. '최소 이만큼은 늘려야'."],
+["공동판촉 (판촉비 분담)","money","입점 브랜드와 판촉 비용을 나눠 내는 방식입니다.","AFTER 6: 3억 중 1.2억(40%) 분담 → 순부담 1.8억.","납품업자 부담 50% 초과 불가(대규모유통업법). 분담받아도 비용입니다."],
+["번들","money","여러 상품을 묶어 파는 것입니다.","뷰티 + 향 + 디저트 셀프케어 번들(AFTER 6).","할인 묶음이 아니라 객단가를 올리는 설계입니다."],
+["객단가 사다리","money","금액 구간마다 혜택을 올려 한 단계 더 사게 하는 장치입니다.","7만 / 12만 / 20만 단계별 혜택(AFTER 6).","첫 구간은 현재 객단가(8.7만) 근처에서 시작해야 합니다."],
+["마케팅","basic","팔리는 모든 과정. 누구에게(타깃)·무엇을(컨셉)·어떻게(프로모션) 팔지 정하는 일입니다.","자켓이라면: 오피스 직장인 → 출근룩·셋업 제안 → 점심 팝업·퇴근길 쿠폰.","광고만 마케팅이 아닙니다. 타깃을 정하는 것부터 시작입니다."],
+["프로모션","basic","특정 기간·목적을 갖고 고객을 움직이는 판촉 행사입니다(할인·이벤트·팝업 등).","예산 3억 · 아트리움 200평으로 여는 행사가 이번 실습의 프로모션.","목적(유입·체류·전환·재방문)이 없으면 그냥 비용입니다."],
+["복합 라이프스타일 플랫폼","basic","쇼핑·문화·외식·체험을 한곳에 모은 생활 공간입니다.","백화점이 '사러 가는 곳'에서 '시간을 보내는 곳'으로 바뀌는 흐름.","매장 수를 늘리는 게 아니라 머물 이유를 늘리는 것입니다."],
+["경험 소비","basic","물건보다 그곳에서의 경험·추억에 돈과 시간을 쓰는 소비입니다.","팝업의 힘 3가지 중 하나(희소성·SNS 인증·경험소비).","경험이 구매로 이어지게 설계하지 않으면 매출은 안 남습니다."],
+["희소성","basic","기간·수량 한정으로 '지금 아니면 못 산다'는 긴급성을 만드는 것입니다.","굿즈 커스텀 1일 80건 한정(모범답안).","한정이 너무 많으면 희소하지 않습니다."],
+["캐릭터 IP","basic","지식재산권이 있는 캐릭터입니다. 팝업·굿즈의 단골 소재.","리테일테인먼트 사례: 캐릭터 IP 팝업으로 인지 단계 확산.","IP 비용은 콘텐츠 예산에 들어갑니다."],
+["굿즈","basic","캐릭터·브랜드 기념 상품입니다.","모범답안: 3만원 이상 구매 시 티셔츠·에코백 즉석 커스텀.","사은품이 아니라 '체험 결과물'로 만들면 단가가 내려갑니다."],
+["바이럴","basic","고객이 자발적으로 퍼뜨리는 입소문입니다.","자사 SNS 1,200건 → 크리에이터 12팀 계정 동시 가동으로 확산.","광고비로 산 노출은 바이럴이 아닙니다."],
+["고객 충성도","basic","한 브랜드·매장을 계속 찾는 정도입니다.","리턴 패스·VIP 사전예약권이 노리는 것.","한 번 많이 산 고객 ≠ 충성 고객. 재방문으로 봅니다."],
+["브랜드 협업","basic","다른 브랜드·IP와 손잡고 공동 행사·상품을 기획하는 것입니다.","AFTER 6: 입점 뷰티·F&B 브랜드와 공동판촉.","협업 비용 분담도 비용 계산에 넣어야 합니다."],
+["인사이트","basic","데이터에서 찾아낸 '그래서 무엇을 해야 하는가'의 단서입니다.","주말 68% → '평일 저녁이 비어 있다'.","숫자를 옮겨 적은 것은 인사이트가 아니라 사실입니다."],
+["KPI","kpi","핵심성과지표. 목표 달성 여부를 판단하는 숫자입니다.","유입=방문객수 / 체류=체류시간 / 전환=객단가 / 재방문=재방문율.","KPI는 목적 단계에 맞춰 고릅니다."],
+["고객 유입","kpi","새 고객을 오게 하는 단계입니다(광고·SNS·팝업).","인디 서머의 주 목적: 20~30대 방문 +25%.","유입 행사를 매출로 평가하면 성공해도 실패로 기록됩니다."],
+["체류 증가","kpi","오래 머물게 하는 단계입니다(전시·체험·포토존).","나이트 아케이드 · 향 블렌딩 클래스.","체류가 길어도 전환 장치가 없으면 구매로 안 이어집니다."],
+["구매 전환","kpi","둘러보던 고객이 실제로 사게 하는 단계입니다(할인·쿠폰·포인트).","AFTER 6의 주 목적: 전환율 35%.","할인만이 전환 수단은 아닙니다. 번들·사다리도 있습니다."],
+["재방문 유도","kpi","다시 오게 하는 단계입니다(VIP·멤버십·시즌 행사).","리턴 살롱 패스: 3회 방문 → 다음 시즌 VIP 사전예약권.","행사가 끝난 뒤의 설계가 필요합니다."],
+["체류시간","kpi","고객이 매장에 머무는 시간입니다. 길수록 구매 가능성이 오릅니다.","모범답안 평균 체류 38분 → 50분 목표.","체류 KPI지 전환 KPI가 아닙니다."],
+["생애가치 (LTV)","kpi","한 고객이 평생 가져다주는 총 매출입니다.","재방문·등급상승이 LTV를 키웁니다.","한 번의 행사 매출보다 긴 시간으로 봅니다."],
+["통합 멤버십 포인트","kpi","계열사 전체에서 쌓고 쓰는 멤버십 포인트입니다.","전환(포인트 적립)과 재방문(데이터 수집)에 모두 쓰입니다.","포인트 지급도 비용입니다."],
+["FAW","tool","Forces At Work. 사업에 영향을 주는 외부 환경 요인입니다.","20~30대 비중 하락, 경쟁점 팝업 확대 같은 변화.","3C의 고객·경쟁 칸을 채우기 전 큰 흐름을 봅니다."],
+["3C + Channel","tool","3C에 유통·접점 채널을 더해 보는 확장형입니다.","앱 · SNS · 지하철 연결통로 등 어디서 만나나.","채널은 4P의 Place·Promotion과 연결됩니다."],
+["세분시장","tool","전체 시장을 연령·성향 등으로 나눈 한 조각입니다.","20~30대 · 서면 인근 직장인.","세분시장을 한 사람으로 그리면 페르소나가 됩니다."],
+["잠재적 경쟁자","tool","지금은 아니지만 앞으로 들어올 경쟁자입니다.","주말 나들이 대신 퇴근 후 시간을 노리는 다른 공간들.","경쟁은 백화점끼리만이 아닙니다."],
+["시너지 효과","tool","기존 자산과 결합해 1+1이 2보다 커지는 효과입니다.","아트리움 행사 + 식품관 연계(AFTER 6).","붙이기만 하고 동선이 끊기면 시너지가 없습니다."],
+["시사점","tool","분석 결과에서 뽑은 실행 방향입니다.","'평일 저녁을 쓴다(근거: 주말 68%)'.","시사점 3개 각각에 근거 데이터를 붙입니다."],
+["타깃 고객","tool","이번 프로모션이 노리는 핵심 고객층입니다.","서면 인근 27~34세 직장인(AFTER 6).","'모두'는 타깃이 아닙니다."],
+["고객 여정","tool","고객이 기업과 만나는 모든 과정입니다(인지→방문 전→체험→구매→사후).","퇴근길 푸시를 보고 → 예약하고 → 진단받고 → 사고 → 사진 올린다.","마케팅 여정 4단계(유입~재방문)와 다른 틀입니다."],
+["감정 곡선","tool","단계별 감정(+/0/−)을 이은 선입니다. 가장 낮은 곳이 개입 지점.","모범답안 최저점: 구매 단계 '결제 줄이 길다'.","높은 곳을 더 올리기보다 낮은 곳을 메웁니다."],
+["이탈","tool","고객이 중간에 포기하고 떠나는 것입니다.","주차·혼잡 걱정으로 방문 포기.","이탈 지점 = 페인포인트 = 개선 기회."],
+["현재값 / 목표값","tool","지금 수치와 달성하려는 수치입니다.","객단가 8.7만원 → 9.6만원.","현재값이 없으면 M 불통과. 모르면 측정 계획을 씁니다."],
+["전년 동기 대비","tool","작년 같은 기간과 비교하는 것입니다.","20~30대 방문 전년 동기 대비 +25%.","계절 영향을 빼려고 같은 기간끼리 비교합니다."],
+["컨셉","tool","행사를 한 문장으로 설명하는 핵심 아이디어입니다.","'센텀에는 없는 것, 서면에만 있는 것'.","행사명이 아니라 한 문장입니다."],
+["키 비주얼 / 키 컬러","tool","행사를 대표하는 이미지와 색입니다.","딥블루 + 네온 코랄, 밤에 잘 보이는 아케이드 사인(모범답안).","찍고 싶은 비주얼이어야 확산됩니다."],
+["해시태그","tool","SNS에서 게시물을 묶는 # 키워드입니다.","#오늘의발견 · #퇴근후90분.","고객이 자기 사진에 붙일 수 있어야 합니다. 점포명만은 약합니다."],
+["운영계획","ops","행사명·일정·장소·예산·브랜드·인력·안전 계획입니다.","45일 · 아트리움 200평 · 상주 2명(모범답안).","안전 계획은 협상 불가 항목입니다."],
+["D-28","ops","행사 시작 28일 전. D-day 기준으로 거꾸로 셉니다.","D-4주 컨셉 티저 → D-2주 → D-1주 → 행사 중 → 사후.","D-4주 = D-28. 사후 칸까지 채웁니다."],
+["사이니지","ops","매장 안팎의 안내·광고용 간판·디스플레이입니다.","아트리움 입구 · 엘리베이터 · 지하철 연결통로.","접점 중 하나입니다. 여정지도에 넣으세요."],
+["인플루언서","ops","SNS에서 영향력이 큰 사람입니다.","부산 로컬 인플루언서 개장 전날 프리뷰 초청(모범답안).","팔로워 수보다 타깃과 맞는지가 먼저입니다."],
+["보도자료","ops","언론사에 배포하는 공식 홍보 문서입니다.","D-2주 지역지 배포 · 사후 성과 보도자료.","행사 후 성과 보도도 홍보입니다."],
+["앱 푸시","ops","앱 알림 메시지입니다.","화~금 17시 '오늘 저녁 빈 자리' 푸시(AFTER 6).","많이 보내면 알림을 끕니다. 요일·시간을 정해 보냅니다."],
+["리포스트","ops","고객 게시물을 공식 계정에 다시 올리는 것입니다.","#오늘의발견 고객 사진을 공식 계정에 소개.","고객 동의를 받고 올립니다."],
+["아트리움","ops","백화점 중앙의 높은 개방형 공간입니다. 주요 행사장.","부산본점 1층 아트리움 200평.","면적 합계 200평을 꼭 검산합니다."]
+];
+var curCat="all";
+$("#cats").innerHTML=CATS.map(function(c){return '<button class="chip" aria-pressed="'+(c[0]==="all")+'" data-c="'+c[0]+'">'+c[1]+'</button>'}).join("");
+$$("#cats .chip").forEach(function(b){b.addEventListener("click",function(){curCat=b.dataset.c;$$("#cats .chip").forEach(function(x){x.setAttribute("aria-pressed",x===b)});renderTerms()})});
+$("#q").addEventListener("input",renderTerms);
+function renderTerms(){
+  var q=$("#q").value.trim().toLowerCase().replace(/\s/g,"");
+  var list=TERMS.filter(function(t){
+    if(curCat!=="all"&&t[1]!==curCat)return false;
+    if(!q)return true;
+    return (t[0]+t[2]+t[3]+t[4]).toLowerCase().replace(/\s/g,"").indexOf(q)>=0;
+  });
+  var cn={};CATS.forEach(function(c){cn[c[0]]=c[1]});
+  $("#terms").innerHTML=list.length?list.map(function(t){
+    var k=known.indexOf(t[0])>=0;
+    return '<article class="term'+(k?" known":"")+'"><h3>'+esc(t[0])+'</h3><ul><li class="d">'+esc(t[2])+'</li><li class="e">'+esc(t[3])+'</li><li class="c">'+esc(t[4])+'</li></ul><div class="foot"><span class="pill">'+cn[t[1]]+'</span><button class="knowbtn" data-t="'+esc(t[0])+'">'+(k?"✓ 외웠어요":"외웠어요")+'</button></div></article>';
+  }).join(""):'<div class="empty">검색 결과가 없습니다. 다른 말로 찾아보세요.</div>';
+  $$("#terms .knowbtn").forEach(function(b){b.addEventListener("click",function(){
+    var t=b.dataset.t,i=known.indexOf(t);
+    if(i>=0)known.splice(i,1);else known.push(t);
+    store.set("pl_known",known);renderTerms();updateProgress();
+  })});
+}
+
+/* ───────── ③ 게임 선택 ───────── */
+$$("#gsel button").forEach(function(b){b.addEventListener("click",function(){
+  $$("#gsel button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+  $$(".game").forEach(function(g){g.classList.toggle("on",g.id==="game"+b.dataset.g)});
+})});
+
+/* 게임1 */
+var STG=["유입","체류","전환","재방문"];
+var STG_SRC=["유입 = 광고·SNS·팝업 / KPI 방문객수·신규회원·앱설치","체류 = 전시·체험·포토존·공연 / KPI 평균 체류시간·층별 이동·참여인원","전환 = 할인·사은품·쿠폰·포인트 / KPI 구매전환율·객단가·구매건수","재방문 = VIP·멤버십·시즌행사 / KPI 재방문율·등급상승률·재구매주기"];
+var G1=[["광고",0,0],["SNS 캠페인",0,0],["팝업스토어",0,0],["전시",1,0],["포토존",1,0],["공연",1,0],["할인",2,0],["쿠폰",2,0],["사은품",2,0],["VIP 라운지",3,0],["멤버십",3,0],["시즌행사",3,0],
+["방문객수",0,1],["앱설치",0,1],["평균 체류시간",1,1],["참여인원",1,1],["구매전환율",2,1],["객단가",2,1],["재방문율",3,1],["재구매주기",3,1]];
+var g1place={},g1sel=null,g1graded=false;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+var g1order=shuffle(G1.map(function(_,i){return i}));
+function g1render(){
+  var card=function(i){var c=G1[i],cls="gc"+(c[2]?" kpi":"")+(g1sel===i?" sel":"");
+    if(g1graded&&g1place[i]!=null)cls+=(g1place[i]===c[1]?" ok":" no");
+    return '<button class="'+cls+'" draggable="true" data-i="'+i+'">'+c[0]+'</button>'};
+  $("#pool").innerHTML=g1order.filter(function(i){return g1place[i]==null}).map(card).join("")||'<span class="note">카드를 모두 놓았습니다. 채점해 보세요.</span>';
+  $("#zones").innerHTML=STG.map(function(s,z){
+    return '<div class="zone" data-z="'+z+'"><h3>'+s+'</h3><div class="zc">'+g1order.filter(function(i){return g1place[i]===z}).map(card).join("")+'</div></div>';
+  }).join("");
+  $$("#pool .gc,#zones .gc").forEach(function(b){
+    b.addEventListener("click",function(e){e.stopPropagation();var i=+b.dataset.i;
+      if(g1place[i]!=null){delete g1place[i];g1graded=false;g1sel=null}else g1sel=(g1sel===i?null:i);
+      g1render()});
+    b.addEventListener("dragstart",function(e){try{e.dataTransfer.setData("text/plain",b.dataset.i)}catch(x){}g1sel=+b.dataset.i});
+  });
+  $$("#zones .zone").forEach(function(zn){
+    zn.addEventListener("click",function(){if(g1sel!=null){g1place[g1sel]=+zn.dataset.z;g1sel=null;g1graded=false;g1render()}});
+    zn.addEventListener("dragover",function(e){e.preventDefault();zn.classList.add("hot")});
+    zn.addEventListener("dragleave",function(){zn.classList.remove("hot")});
+    zn.addEventListener("drop",function(e){e.preventDefault();var i=g1sel;try{var d=e.dataTransfer.getData("text/plain");if(d!=="")i=+d}catch(x){}
+      if(i!=null){g1place[i]=+zn.dataset.z;g1sel=null;g1graded=false;g1render()}});
+  });
+}
+var TRAPS=[
+ ["20~30대 유입이 주 목적인 팝업을 '매출이 적다'며 실패로 평가했다.","trap","흔한 실수: 유입 목적 행사를 매출로 평가. 유입은 방문객수·신규회원·앱설치로 봅니다."],
+ ["VIP 시즌행사를 재방문율과 등급상승률로 평가했다.","ok","재방문 KPI = 재방문율·등급상승률·재구매주기. 목적과 KPI가 맞습니다."],
+ ["한 행사에 주 목적 3개, 부 목적 2개를 정하고 KPI 10개로 평가했다.","trap","목적은 주 1개 + 부 1개만. 많으면 아무것도 평가하지 못합니다."]
+];
+var trapAns={};
+function trapRender(){
+  $("#trapQs").innerHTML=TRAPS.map(function(t,i){
+    var a=trapAns[i],btn=function(v,l){var cls="";if(a!=null){if(v===t[1])cls="right";else if(a===v)cls="wrong"}return '<button data-i="'+i+'" data-v="'+v+'" class="'+cls+'"'+(a!=null?" disabled":"")+'>'+l+'</button>'};
+    var fb=a==null?"":(a===t[1]?'<div class="fb ok">정답! <span class="src">'+t[2]+'</span></div>':'<div class="fb no">아쉬워요. <span class="src">'+t[2]+'</span></div>');
+    return '<div class="q"><b>'+(i+1)+'. '+t[0]+'</b><div class="choice">'+btn("ok","맞게 평가했다")+btn("trap","함정이다")+'</div>'+fb+'</div>';
+  }).join("");
+  $$("#trapQs button").forEach(function(b){b.addEventListener("click",function(){trapAns[b.dataset.i]=b.dataset.v;trapRender();g1score()})});
+}
+function g1score(){
+  var ok=0;G1.forEach(function(c,i){if(g1place[i]===c[1])ok++});
+  var t=0,n=0;for(var k in trapAns){n++;if(trapAns[k]===TRAPS[k][1])t++}
+  var s=Math.round(ok*4+t*20/3);
+  $("#g1score").textContent=s+"점";
+  if(n===3){gamesDone[1]=true;$("#trapFb").innerHTML='<div class="fb info">최종 <b>'+s+'점</b> (카드 '+ok+'/20 · 함정 '+t+'/3)</div>';updateProgress()}
+}
+$("#g1check").addEventListener("click",function(){
+  var placed=Object.keys(g1place).length;
+  g1graded=true;g1render();
+  var wrong=G1.map(function(c,i){return i}).filter(function(i){return g1place[i]!=null&&g1place[i]!==G1[i][1]});
+  var ok=G1.filter(function(c,i){return g1place[i]===c[1]}).length;
+  var html='<div class="fb '+(wrong.length||placed<20?"no":"ok")+'"><b>카드 '+ok+'/20 정답</b>'+(placed<20?" · 아직 "+(20-placed)+"장 남음":"");
+  var seen={};wrong.forEach(function(i){var s=G1[i][1];if(!seen[s]){seen[s]=1;html+='<span class="src">'+STG_SRC[s]+'</span>'}});
+  html+='</div>';$("#g1fb").innerHTML=html;
+  $("#trap").hidden=false;trapRender();g1score();
+});
+$("#g1reset").addEventListener("click",function(){g1place={};g1sel=null;g1graded=false;trapAns={};g1order=shuffle(g1order);$("#g1fb").innerHTML="";$("#trap").hidden=true;$("#trapFb").innerHTML="";$("#g1score").textContent="";g1render()});
+
+/* 게임2 */
+var G2=[["리테일 랩","b8ta","매장 공간을 빌려주고 '고객이 얼마나 머물렀나'를 데이터로 판매"],
+["리인벤팅 스페이스","애플 타운스퀘어","판매장을 광장·모임 공간으로 용도 전환"],
+["리아날로그","이솝 시향 매장","시향·핸드케어 같은 감각 접점"],
+["리테일 테라피","구찌 가든","머물며 쉬는 정원·라운지"],
+["리그린","파타고니아 원웨어","옷 수선으로 가치소비를 방문 이유로"],
+["리테일테인먼트","젠틀몬스터","매장마다 다른 설치미술 — 사러 가는 곳 → 보러 가는 곳"],
+["리피지털","BOPIS","온라인 주문 + 매장 픽업"],
+["리클린","식품관 오픈 키친","위생을 눈에 보이게"]];
+var g2cards,g2open,g2got,g2moves,g2lock,g2quizAns;
+function g2init(){
+  g2cards=shuffle(G2.reduce(function(a,p,i){a.push({p:i,s:1,t:p[0]});a.push({p:i,s:0,t:p[1]});return a},[]));
+  g2open=[];g2got={};g2moves=0;g2lock=false;g2quizAns=[];
+  $("#g2last").hidden=true;$("#g2quiz").hidden=true;$("#g2qfb").innerHTML="";$("#g2score").textContent="";
+  g2render();
+}
+function g2render(){
+  $("#mem").innerHTML=g2cards.map(function(c,i){
+    var st=g2got[c.p]?" got":(g2open.indexOf(i)>=0?" open":"");
+    return '<button class="mc'+st+'" data-i="'+i+'" aria-label="'+(st?esc(c.t):"뒤집힌 카드")+'"><div class="in"><div class="f">?</div><div class="b'+(c.s?" st":"")+'">'+esc(c.t)+'</div></div></button>';
+  }).join("");
+  $("#g2moves").textContent=g2moves;$("#g2pairs").textContent=Object.keys(g2got).length;
+  $$("#mem .mc").forEach(function(b){b.addEventListener("click",function(){g2flip(+b.dataset.i)})});
+}
+function g2flip(i){
+  if(g2lock||g2got[g2cards[i].p]||g2open.indexOf(i)>=0)return;
+  g2open.push(i);g2render();
+  if(g2open.length===2){
+    g2moves++;var a=g2cards[g2open[0]],b=g2cards[g2open[1]];
+    if(a.p===b.p&&a.s!==b.s){
+      g2got[a.p]=true;g2open=[];
+      var p=G2[a.p];$("#g2last").hidden=false;$("#g2last").innerHTML='<b>'+p[1]+' = '+p[0]+'</b> · '+p[2];
+      g2render();
+      if(Object.keys(g2got).length===8){
+        var s=Math.max(40,100-(g2moves-8)*4);$("#g2score").textContent="짝 맞추기 "+s+"점";
+        g2quizRender();$("#g2quiz").hidden=false;
+      }
+    }else{g2lock=true;setTimeout(function(){g2open=[];g2lock=false;g2render()},850)}
+  }
+}
+function g2quizRender(){
+  $("#g2opts").innerHTML=G2.map(function(p,i){return '<button data-i="'+i+'" class="'+(g2quizAns.indexOf(i)>=0?"pick":"")+'">'+p[0]+'</button>'}).join("");
+  $$("#g2opts button").forEach(function(b){b.addEventListener("click",function(){var i=+b.dataset.i,k=g2quizAns.indexOf(i);if(k>=0)g2quizAns.splice(k,1);else{if(g2quizAns.length>=2)g2quizAns.shift();g2quizAns.push(i)}g2quizRender()})});
+}
+$("#g2qcheck").addEventListener("click",function(){
+  var right=g2quizAns.length===2&&g2quizAns.indexOf(0)>=0&&g2quizAns.indexOf(5)>=0;
+  $$("#g2opts button").forEach(function(b){var i=+b.dataset.i;b.disabled=true;if(i===0||i===5)b.className="right";else if(g2quizAns.indexOf(i)>=0)b.className="wrong"});
+  $("#g2qfb").innerHTML=right?'<div class="fb ok">정답! 리테일 랩과 리테일테인먼트가 비어 있습니다.<span class="src">팝업 연 4회(센텀시티 22회) · SNS 언급량 센텀시티의 1/4</span></div>':'<div class="fb no">정답은 <b>리테일 랩 · 리테일테인먼트</b>입니다.<span class="src">팝업 연 4회 → 반응을 실측할 실험(리테일 랩)이 없고, SNS 1/4 → 보러 올 재미(리테일테인먼트)가 없습니다.</span></div>';
+  gamesDone[2]=true;updateProgress();
+});
+$("#g2reset").addEventListener("click",g2init);
+
+/* 게임3 */
+var G3=[
+["젊은 고객을 늘린다.","SMT","누가(몇 세)·얼마나·언제까지가 모두 없습니다."],
+["행사 기간(7/3~8/16, 6주) 20~30대 방문객을 16.4만→20.5만 명(+25%)으로 늘린다. 게이트 연령 추정 데이터로 측정.","","모범답안 목표 ①. 대상·현재값·목표값·측정방법·기한이 모두 있습니다."],
+["SNS 언급량을 많이 늘린다.","SMT","'많이'는 측정할 수 없습니다. 어떤 채널·몇 건·언제까지인지 빠졌습니다."],
+["이번 행사 6주간 20~30대 객단가를 8.7만원에서 30만원으로 올린다.","A","전체 평균이 12.4만원인데 30만원은 근거 없는 목표입니다. A 근거를 말할 수 없습니다."],
+["행사 6주간 월평균 SNS 언급량을 1,200건에서 3,000건으로 늘린다. 해시태그 모니터링으로 측정.","","모범답안 목표 ③. 현재값·목표값·측정방법·기한 모두 있음."],
+["20~30대 방문객을 25% 늘린다.","T","언제까지인지 없습니다. 기한이 없으면 평가 시점을 정할 수 없습니다."],
+["20~30대 유입 행사에서, 행사 기간 50~60대 골프웨어 매출을 20% 늘린다.","R","행사 목적(20~30대 유입)과 맞지 않습니다. 전체 전략과의 관련성(R) 불통과."],
+["고객 만족도를 높인다.","SMT","대상·수치·기한이 모두 없습니다. 만족도를 어떻게 잴지도 없습니다."],
+["8월 말까지 신규 앱 설치를 늘린다.","M","현재값·목표값이 없습니다. 숫자가 없으면 M 불통과."],
+["행사 6주간 리턴 패스 3회 이상 방문 고객 4,000명을 만든다. 앱 스탬프 로그로 측정.","","모범답안 재방문 KPI. 구체적 대상·수치·측정·기한 있음."]
+];
+var g3i=0,g3res=[],g3mode=null,g3pick={};
+function g3render(){
+  $("#g3dots").innerHTML=G3.map(function(_,i){return '<i class="'+(g3res[i]===true?"ok":g3res[i]===false?"no":i===g3i?"cur":"")+'"></i>'}).join("");
+  var ok=g3res.filter(function(x){return x}).length;
+  $("#g3score").textContent=ok*10+"점";
+  if(g3i>=G3.length){
+    $("#g3body").innerHTML='<div class="fb ok"><b>'+ok+'/10 정답 · '+ok*10+'점</b><span class="src">목표 3개까지, 현재값·목표값·측정방법 없으면 M 불통과, A 근거를 말할 수 있는가</span></div><div class="row" style="margin-top:10px"><button class="btn ghost" id="g3re">다시 하기</button></div>';
+    $("#g3re").addEventListener("click",function(){g3i=0;g3res=[];g3mode=null;g3pick={};g3render()});
+    gamesDone[3]=true;updateProgress();return;
+  }
+  var q=G3[g3i],answered=g3res[g3i]!=null;
+  var html='<p class="note">'+(g3i+1)+' / 10</p><div class="smart-q">"'+esc(q[0])+'"</div>';
+  html+='<div class="choice" style="margin-top:10px"><button id="g3o" class="'+(g3mode==="O"?"pick":"")+'"'+(answered?" disabled":"")+'>O · SMART 통과</button><button id="g3x" class="'+(g3mode==="X"?"pick":"")+'"'+(answered?" disabled":"")+'>X · 빠진 요소 있음</button></div>';
+  if(g3mode==="X"){
+    var L=[["S","구체적"],["M","측정"],["A","달성"],["R","관련"],["T","기한"]];
+    html+='<p style="margin-top:10px">빠진 요소를 모두 고르세요.</p><div class="letters">'+L.map(function(l){var miss=answered&&q[1].indexOf(l[0])>=0;return '<button data-l="'+l[0]+'" aria-pressed="'+!!g3pick[l[0]]+'" class="'+(miss?"miss":"")+'"'+(answered?" disabled":"")+'><b>'+l[0]+'</b><small>'+l[1]+'</small></button>'}).join("")+'</div>';
+  }
+  if(!answered&&g3mode)html+='<div class="row" style="margin-top:12px"><button class="btn coral" id="g3ok">판정</button></div>';
+  if(answered){
+    var miss=q[1]?q[1].split("").join("·")+" 없음":"SMART 통과";
+    html+='<div class="fb '+(g3res[g3i]?"ok":"no")+'" style="margin-top:12px"><b>'+(g3res[g3i]?"정답!":"아쉬워요.")+' 정답: '+(q[1]?"X · ":"O · ")+miss+'</b><span class="src">'+esc(q[2])+'</span></div><div class="row" style="margin-top:10px"><button class="btn" id="g3next">다음 문장</button></div>';
+  }
+  $("#g3body").innerHTML=html;
+  var o=$("#g3o"),x=$("#g3x");
+  if(!answered){o.addEventListener("click",function(){g3mode="O";g3pick={};g3render()});x.addEventListener("click",function(){g3mode="X";g3render()})}
+  $$("#g3body .letters button").forEach(function(b){b.addEventListener("click",function(){g3pick[b.dataset.l]=!g3pick[b.dataset.l];g3render()})});
+  var ok2=$("#g3ok");if(ok2)ok2.addEventListener("click",function(){
+    var pick=Object.keys(g3pick).filter(function(k){return g3pick[k]}).sort().join("");
+    var ans=q[1].split("").sort().join("");
+    g3res[g3i]=(g3mode==="O"&&!q[1])||(g3mode==="X"&&q[1]&&pick===ans);
+    g3render();
+  });
+  var nx=$("#g3next");if(nx)nx.addEventListener("click",function(){g3i++;g3mode=null;g3pick={};g3render()});
+}
+
+/* 게임4 */
+var SL=[["v","증분 방문객",0,80000,500,"명"],["c","구매전환율",5,60,1,"%"],["a","객단가",3,25,0.1,"만원"],["x","기존 고객 증분 매출",0,3,0.05,"억"],["g","GP율",10,50,1,"%"],["t","총비용",0.5,5,0.1,"억"],["s","브랜드 분담액",0,2.5,0.05,"억"]];
+var PRE={A:{v:32000,c:25,a:10,x:0,g:25,t:3,s:0},B:{v:60000,c:25,a:10,x:0,g:25,t:3,s:0},M:{v:41000,c:25,a:9.6,x:1.2,g:30,t:3,s:0},S:{v:30000,c:35,a:11,x:1.45,g:32,t:3,s:1.2}};
+var sim=Object.assign({},PRE.M),simBase="M";
+$("#sliders").innerHTML=SL.map(function(s){return '<div class="sl"><label for="s_'+s[0]+'">'+s[1]+' <output id="o_'+s[0]+'" class="num"></output></label><input type="range" id="s_'+s[0]+'" min="'+s[2]+'" max="'+s[3]+'" step="'+s[4]+'"></div>'}).join("");
+function fmtS(k,v){var s=SL.filter(function(x){return x[0]===k})[0];if(k==="v")return Number(v).toLocaleString("ko-KR")+"명";if(k==="a")return r1(v)+"만원";if(s[5]==="억")return eok(v);return v+"%"}
+function calc(p){var rev=p.v*p.c/100*p.a/1e4+p.x,gp=rev*p.g/100,net=Math.max(0.01,p.t-p.s);return{rev:rev,gp:gp,net:net,be:net/(p.g/100),beT:p.t/(p.g/100),roi:(gp-net)/net*100,roiT:(gp-p.t)/p.t*100}}
+function simSync(){SL.forEach(function(s){$("#s_"+s[0]).value=sim[s[0]];$("#o_"+s[0]).textContent=fmtS(s[0],sim[s[0]])});simCalc()}
+var m3done=false;
+function simCalc(){
+  var r=calc(sim);
+  $("#rRoi").textContent=pct(r.roi);
+  $("#res").className="res "+(r.roi>=0?"pos":"neg");
+  $("#rBadge").className="pill "+(r.roi>=0?"g":"r");$("#rBadge").textContent=r.roi>=0?"흑자 · 남았다":"적자 · 손해봤다";
+  $("#rRev").textContent=eok(r.rev);$("#rGp").textContent=eok(r.gp);$("#rNet").textContent=eok(r.net)+(sim.s>0?" (총 "+eok(sim.t)+")":"");
+  $("#rBe").textContent=eok(r.be);$("#rRoiT").textContent=pct(r.roiT);
+  var mx=Math.max(r.rev,r.be,1);
+  $("#barRev").style.width=Math.min(100,r.rev/mx*100)+"%";$("#barRev").style.background=r.roi>=0?"var(--good)":"var(--coral)";
+  $("#barBe").style.width=Math.min(100,r.be/mx*100)+"%";
+  $("#shareWarn").innerHTML=sim.s>sim.t*0.5?'<span class="no-t"><b>주의:</b> 분담액이 총비용의 50%를 넘습니다. 납품업자 부담 50% 초과 불가(대규모유통업법).</span>':(sim.s>0?'분담받은 돈도 비용입니다. 총비용 기준 ROI '+pct(r.roiT)+'도 함께 보세요.':'');
+  // 미션3 실시간
+  var costOk=Math.abs(sim.t-3)<0.001;
+  $("#m3live").innerHTML='현재: 총비용 '+eok(sim.t)+' '+(costOk?'<span class="ok-t">✓ 유지</span>':'<span class="no-t">✗ 3억으로 되돌리세요</span>')+' · ROI(순부담) <b>'+pct(r.roi)+'</b>';
+  if(costOk&&r.roi>=50&&sim.s<=sim.t*0.5&&!m3done&&simBase==="M"){m3done=true;m3win()}
+}
+SL.forEach(function(s){$("#s_"+s[0]).addEventListener("input",function(e){sim[s[0]]=+e.target.value;if(s[0]==="s"&&sim.s>sim.t){sim.s=sim.t}$("#o_"+s[0]).textContent=fmtS(s[0],sim[s[0]]);simCalc()})});
+$$("[data-preset]").forEach(function(b){b.addEventListener("click",function(){sim=Object.assign({},PRE[b.dataset.preset]);simBase=b.dataset.preset;simSync()})});
+var mState={1:null,2:null,3:null};
+function m4score(){var n=0;for(var k in mState)if(mState[k])n++;$("#g4score").textContent="미션 "+n+"/3";if(n>=3||(mState[1]!=null&&mState[2]!=null&&mState[3])){gamesDone[4]=true;updateProgress()}}
+function mcq(id,opts,ans,okMsg,noMsg,key){
+  var box=$("#"+id+"opts"),picked=null;
+  function draw(){box.innerHTML=opts.map(function(o,i){var cls="";if(picked!=null){if(i===ans)cls="right";else if(i===picked)cls="wrong"}return '<button data-i="'+i+'" class="'+cls+'"'+(picked!=null?" disabled":"")+'>'+o+'</button>'}).join("");
+    $$("button",box).forEach(function(b){b.addEventListener("click",function(){picked=+b.dataset.i;draw();var ok=picked===ans;mState[key]=ok;
+      $("#"+id+"s").className="pill "+(ok?"g":"r");$("#"+id+"s").textContent=ok?"성공":"다시 보기";
+      $("#"+id+"fb").innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?okMsg:noMsg)+'</div>';m4score()})})}
+  draw();
+}
+mcq("m1",["증분 이익 2억(8억×25%)이 비용 3억보다 1억 적어서","행사 기간 매출이 기준 매출보다 줄어서","GP율이 비용보다 낮아서","방문객이 목표에 못 미쳐서"],0,
+ "정답! 8억 × 25% = 2억. 2억 − 3억 = −1억 → −1억 ÷ 3억 = −33%.<span class='src'>ROI = (증분 매출 × GP율 − 비용) ÷ 비용 × 100</span>",
+ "정답은 첫 번째. 증분이 늘었어도 이익(8억×25%=2억)이 비용 3억에 못 미칩니다.<span class='src'>사례 A: 증분 8억·GP25% → ROI −33%. 손익분기는 3억÷25%=12억</span>",1);
+$("#m2cut").addEventListener("click",function(){sim.v=Math.round(sim.v*0.8/10)*10;simSync()});
+mcq("m2",["여전히 흑자다 (약 +2%)","적자로 돌아선다 (약 −9%)","손익분기와 딱 같다 (0%)"],1,
+ "정답! 증분 방문 4.1만→3.28만 명이면 증분 약 9.1억으로 손익분기 10억 아래. ROI 약 −9%.<span class='src'>모범답안: 손익분기 10억 vs 예상 11억 → 여유 1억, 방문 목표 20%만 빗나가도 적자</span>",
+ "정답은 '적자로 돌아선다'. 여유가 1억뿐이라 방문 20% 감소를 못 버팁니다.<span class='src'>모범답안: 여유 1억, 방문목표 20%만 빗나가도 적자</span>",2);
+function m3win(){
+  var M=PRE.M,base=M.v*M.a/1e4,need=4.5;
+  var c=(need-M.x)/(M.v*M.a/1e4)*100,a=(need-M.x)/(M.v*M.c/100)*1e4,g=need/((M.v*M.c/100*M.a/1e4)+M.x)*100;
+  var sh=3-(calc(M).gp)/1.5;
+  mState[3]=true;$("#m3s").className="pill g";$("#m3s").textContent="성공";
+  $("#m3fb").innerHTML='<div class="fb ok"><b>ROI 50% 돌파!</b> 이제 레버별로 필요한 변화를 비교해 보세요.<div class="tblwrap" style="margin-top:8px"><table class="num"><thead><tr><th>레버 (하나만 움직일 때)</th><th class="r">모범답안</th><th class="r">ROI 50%에 필요</th><th class="r">변화폭</th></tr></thead><tbody>'+
+   '<tr><td>구매전환율</td><td class="r">25%</td><td class="r">'+r1(c)+'%</td><td class="r">+'+Math.round((c/25-1)*100)+'%</td></tr>'+
+   '<tr><td>객단가</td><td class="r">9.6만</td><td class="r">'+r1(a)+'만</td><td class="r">+'+Math.round((a/9.6-1)*100)+'%</td></tr>'+
+   '<tr><td>GP율</td><td class="r">30%</td><td class="r">'+r1(g)+'%</td><td class="r">+'+Math.round((g/30-1)*100)+'%</td></tr>'+
+   '<tr><td>브랜드 분담</td><td class="r">0</td><td class="r">'+eok(sh)+'</td><td class="r">비용의 '+Math.round(sh/3*100)+'%</td></tr></tbody></table></div>'+
+   '<p style="margin-top:8px"><b>발견:</b> 전환율과 객단가는 새 고객 매출에만 곱해져 효과가 같습니다. <b>GP율</b>은 기존 고객 증분까지 모든 매출에 곱해져 더 적게 움직여도 되고, <b>분담</b>은 비용 자체를 줄여 순부담 ROI를 가장 크게 올립니다. 단, 분담으로 올린 ROI는 총비용 기준 ROI를 바꾸지 않습니다. 협찬도 비용입니다.</p></div>';
+  m4score();
+}
+
+/* ───────── ④ 실습 가이드 ───────── */
+var GUIDE=[
+["3C 분석",["사실칸엔 숫자만 씁니다. '줄었다'가 아니라 '31%→22%(9%p↓)'.","해석칸엔 판단만 씁니다. 사실을 다시 옮겨 적지 않습니다.","시사점 3개는 각각 근거 데이터를 붙입니다."],"\"20~30대가 줄고 있다\"처럼 숫자 없이 사실칸을 채움"],
+["페르소나",["'20대 여성' 수준이면 탈락. 한 사람으로 그립니다.","이름·나이·직업, 퇴근·주말 동선, 주로 쓰는 SNS까지.","잠재 니즈가 ⑤ 컨셉으로 이어지는지 확인합니다."],"표현 니즈 '할인 좋아함'만 적고 잠재 니즈 칸이 비어 있음"],
+["고객여정지도",["행동칸은 동사로 씁니다. '검색한다', '저장한다'.","감정이 가장 낮은 지점이 프로모션 개입 지점입니다.","불편 1개당 아이디어 1개를 붙입니다."],"행동칸에 '만족', '관심'처럼 감정 단어를 씀"],
+["SMART 목표",["목표는 3개까지. 많으면 아무것도 달성 못 합니다.","현재값·목표값·측정방법이 없으면 M 불통과.","'왜 25%인가' A의 근거를 말할 수 있어야 합니다."],"\"젊은 고객을 늘린다\" (S·M·T 없음)"],
+["프로모션 컨셉",["센텀시티와 무엇이 다른지 한 문장으로 말합니다.","해시태그는 고객이 자기 사진에 붙일 수 있게 만듭니다.","차별성·재미·체험·SNS확산·브랜드일치 5조건을 점검합니다."],"해시태그를 점포명만으로 만듦 (#부산본점)"],
+["운영 프로그램",["프로그램마다 여정 단계 1개를 붙입니다.","유입만 몰리면 매출이 따라오지 않습니다. 전환·재방문도 1개씩.","면적 합계 200평을 검산합니다."],"프로그램 5개가 모두 '유입'이고 면적 합계가 240평"],
+["홍보 전략",["D-4주부터 사후까지 빈칸 없이 채웁니다.","평일 유입 장치를 반드시 넣습니다(주말 비중 68%).","자사 계정 하나로는 SNS 4배 열세를 못 뒤집습니다. 채널을 늘립니다."],"개장 주에만 홍보를 몰고 사후 칸이 비어 있음"],
+["예산 배분",["합계 3억을 검산합니다.","일반 비중을 벗어나면 이유를 적습니다.","20% 삭감 시 순서를 정합니다. 홍보·안전은 마지막."],"예산이 모자라 홍보비부터 깎고 예비비를 0으로 둠"],
+["KPI · ROI",["손익분기 증분 매출(비용 ÷ GP율)을 먼저 계산합니다.","ROI가 음수면 목적(유입)을 명시하고 다른 근거를 댑니다.","KPI는 주·부 목적 단계에 맞춥니다."],"유입이 주 목적인데 ROI가 음수라서 '실패한 기획'이라고 씀"],
+["1페이지 기획안",["8칸이 서로 이어지는지 봅니다.","타깃 ↔ 프로그램 ↔ KPI가 한 줄로 연결되는지.","숫자는 앞 실습과 같아야 합니다."],"④ 목표는 +25%인데 ⑨ KPI 표에는 +30%로 적음"],
+["발표",["문제를 숫자로 말합니다. '9%p 하락', '4배 열세'.","7분 안에 논리가 끊기지 않게: 문제 1 · 타깃·컨셉 2 · 운영·홍보 2 · 예산·KPI 2분.","질의응답에서 ROI 근거를 말할 수 있어야 합니다."],"컨셉 비주얼 설명에 3분을 쓰고 예산·KPI는 30초"]
+];
+var NUMS="①②③④⑤⑥⑦⑧⑨⑩⑪";
+$("#acc").innerHTML=GUIDE.map(function(g,i){return '<details class="acc"><summary><span class="n">'+NUMS[i]+'</span>'+g[0]+'</summary><div class="body"><ol class="pts">'+g[1].map(function(p,j){return '<li><b>'+(j+1)+'</b>'+esc(p)+'</li>'}).join("")+'</ol><div class="wrongbox"><b>흔한 오답</b>'+esc(g[2])+'</div></div></details>'}).join("");
+$("#accAll").addEventListener("click",function(){var all=$$("#acc details"),open=all.some(function(d){return !d.open});all.forEach(function(d){d.open=open});this.textContent=open?"모두 접기":"모두 펼치기"});
+
+/* ───────── ⑤ 활동지 ───────── */
+var W=store.get("pl_ws",{});
+function wv(id){return W[id]==null?"":W[id]}
+function ta(id,label,ph,help){return '<div class="f"><label for="'+id+'">'+label+'</label><textarea id="'+id+'" class="ws" placeholder="'+esc(ph||"")+'">'+esc(wv(id))+'</textarea>'+(help?'<div class="help">'+help+'</div>':'')+'</div>'}
+function inp(id,label,ph){return '<div class="f"><label for="'+id+'">'+label+'</label><input id="'+id+'" class="ws" value="'+esc(wv(id))+'" placeholder="'+esc(ph||"")+'"></div>'}
+function list(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'}
+
+var BUD=[["홍보","promo",15,25,25],["공간","space",30,40,25],["콘텐츠","content",20,30,22],["사은품","gift",10,15,8],["인력","staff",5,10,10],["예비비","reserve",5,10,10]];
+var PROG_EX=[["뷰티 진단 살롱 (퍼스널컬러·피부진단, 앱 사전예약)","전환",70],["향 블렌딩·네일 원데이 클래스 (유료 2.5만원, 샘플키트)","체류",40],["애프터6 다이닝 바 (식품관 F&B 팝업, 1인 세트)","체류",50],["셀프케어 번들 존 (7만/12만/20만 객단가 사다리)","전환",30],["리턴 살롱 패스 (3회 방문 → 다음 시즌 VIP 사전예약권)","재방문",10]];
+
+var STEPS=[
+{t:"3C 분석",fields:function(){return '<div class="grid g2">'+ta("w1_cf","Customer · 사실 (숫자만)","예: 20~30대 비중 31%→22%")+ta("w1_ci","Customer · 해석 (판단만)","")+ta("w1_pf","Competitor · 사실","")+ta("w1_pi","Competitor · 해석","")+ta("w1_mf","Company · 사실","")+ta("w1_mi","Company · 해석","")+'</div>'+ta("w1_imp","시사점 3개 (각각 근거 데이터)","1) … (근거: …)\n2) …\n3) …")},
+ hint:["사실칸: 620만(−3.2%) · 22%(31%) · 8.7만(12.4만의 70%) · 주말 68% · 센텀 38% · 팝업 22회 vs 4회 · SNS 4,800 vs 1,200","이익 관점 질문: 20~30대가 <b>언제</b> 비어 있나? <b>객단가</b>는 왜 70%인가?","4P 질문으로 넘겨 보세요: 어떤 제품·가격대로, 어디서, 어떻게 알릴까?"],
+ ex:["<b>Customer</b> 사실: 20~30대 객단가 8.7만원 = 전체 12.4만원의 70%, 주말 비중 68% / 해석: 평일 저녁이 비어 있고, 한 번 와도 적게 산다 → 전환·객단가 레버의 여지가 크다.","<b>Competitor</b> 사실: 센텀시티 팝업 연 22회, SNS 4,800건 / 해석: 팝업 물량 경쟁은 3억으로 못 이긴다 → 주말 팝업이 아닌 평일 저녁 전장.","<b>Company</b> 사실: 1층 아트리움 200평 · 예산 3억 · 식품관 보유 / 해석: 뷰티·F&B 고GP 카테고리를 연계할 수 있다.","<b>시사점</b> ① 평일 18~22시를 쓴다(근거: 주말 68%) ② 객단가 사다리로 8.7만을 끌어올린다(근거: 12.4만의 70%) ③ 입점 브랜드와 비용을 나눈다(근거: 예산 3억 한정)"],
+ model:["Customer: 20~30대 22%(3년 전 31%), 약 55.8만 명 감소. 올 이유가 사라진 것.","Competitor: 센텀시티와 팝업 물량으로 경쟁 불가 → 센텀이 비워 둔 축 = 로컬 콘텐츠 + 평일 야간.","<b>차이:</b> 모범답안은 '방문이 줄었다'를 먼저 풀 문제로 봤고, AFTER 6는 '와도 적게 산다(객단가 70%)'를 먼저 풉니다."]},
+{t:"타깃 페르소나",fields:function(){return '<div class="grid g2">'+inp("w2_name","이름 · 나이 · 직업","예: ○○○ · 30세 · 서면 인근 사무직")+inp("w2_sns","주로 쓰는 SNS","")+'</div>'+ta("w2_route","퇴근 후 동선 · 라이프스타일","예: 18시 퇴근 → 서면역 → …")+'<div class="grid g2">'+ta("w2_exp","표현 니즈 (스스로 말하는 것)","\"…\"")+ta("w2_lat","잠재 니즈 (본인도 잘 모르는 것)","\"…\"")+'</div>'},
+ hint:["'27~34세 직장인'은 출발점일 뿐. 한 사람의 이름을 붙이세요.","퇴근 시간, 서면에서의 이동 경로, 집에 가기 전 30분에 무엇을 하는지 적어 보세요.","잠재 니즈는 '왜 그 행동을 하는가'를 두 번 물으면 나옵니다."],
+ ex:["<b>한지우 · 31세 · 서면 인근 회계법인 대리</b> / 인스타그램(주) · 유튜브","동선: 19시 퇴근 → 서면역 → 편의점 저녁 → 집. 주말엔 센텀·해운대.","표현 니즈: \"퇴근하고 들를 데가 없다.\"","잠재 니즈: \"하루 끝에 나를 챙기는 사람이고 싶다.\" → 컨셉 '나를 위한 90분'으로 연결"],
+ model:["이서진 · 27세 · IT기업 UI디자이너 / 서면 원룸 · 인스타그램 / 분기 1~2회, 주로 주말 오후","잠재 니즈: '센텀 말고 우리 동네에도 자랑할 게 있었으면'","<b>차이:</b> 모범답안은 '발견·자랑'(유입·SNS), AFTER 6는 '나를 챙김'(체류·구매)에 닿아 있습니다."]},
+{t:"고객여정지도",fields:function(){return ["인지","방문 전","체험","구매","사후"].map(function(s,i){return ta("w3_"+i,(i+1)+". "+s,"행동(동사) / 감정(+·0·−) / 불편 / 기회")}).join("")+'<div class="f"><label for="w3_low">감정 최저점 = 개입 지점</label><select id="w3_low" class="ws"><option value="">선택</option>'+["인지","방문 전","체험","구매","사후"].map(function(s){return '<option'+(wv("w3_low")===s?" selected":"")+'>'+s+'</option>'}).join("")+'</select></div>'},
+ hint:["행동은 '본다·검색한다·기다린다·결제한다'처럼 동사로.","퇴근 후 고객이 가장 싫어하는 것은? 기다림, 예약, 피곤함.","불편 1개 → 아이디어 1개. 짝이 안 맞으면 다시 보세요."],
+ ex:["인지: 퇴근길 앱 푸시를 본다 (0) / 광고로 스쳐 감 → 기회: '오늘 저녁 빈 자리 n석' 실시간 알림","방문 전: 진단 시간이 맞을지 검색한다 (−) / 예약·대기가 번거롭다 → 기회: 앱 사전예약 + 시간대 선택","체험: 진단을 받고 향을 만든다 (+) / 결과만 듣고 끝날까 걱정 → 기회: 진단 결과 카드에 맞춤 제품 3종","구매: 번들 가격을 비교한다 (0) / 얼마나 사야 이득인지 헷갈림 → 기회: 7만/12만/20만 사다리 한눈 안내","사후: 사진을 올린다 (+) / 다시 올 이유가 없다 → 기회: 리턴 살롱 패스 3회","최저점: <b>방문 전</b> — 퇴근 후 피곤한데 예약·대기까지. 리피지털(앱 사전예약)로 푼다."],
+ model:["인지 + / 방문 전 0 '주차가 걸린다' / 체험 + / 구매 − '결제 줄이 길다' / 사후 0","최저점: 구매 단계 → 3만원 이상 구매 시 즉시 굿즈 커스텀","<b>차이:</b> 모범답안은 결제 대기, AFTER 6는 퇴근 후 예약 부담을 최저점으로 봅니다."]},
+{t:"SMART 목표",fields:function(){return '<div class="tblwrap"><table><thead><tr><th>No</th><th>목표 문장</th><th>현재값</th><th>목표값</th><th>측정 방법</th></tr></thead><tbody>'+[1,2,3].map(function(n){return '<tr><td>'+n+'</td>'+["s","now","goal","how"].map(function(k){return '<td><input class="cell ws" id="w4_'+k+n+'" value="'+esc(wv("w4_"+k+n))+'" aria-label="목표'+n+' '+k+'"></td>'}).join("")+'</tr>'}).join("")+'</tbody></table></div>'},
+ hint:["목표는 3개까지. 이익 행사라면 전환·객단가가 들어가야 합니다.","현재값을 모르면 '행사 전 2주 측정'이라고 측정 계획을 쓰세요.","A: 왜 35%인가? 사전예약자가 이미 관심 고객이라는 근거를 댈 수 있나요?"],
+ ex:["① 6주(화~금 18~22시) 증분 방문 3만 명 / 현재: 평일 저녁 별도 집계 없음 → 행사 전 2주 측정 / 앱 사전예약·체크인 로그","② 행사장 참여자 구매전환율 35% / 진단·클래스 참여자 중 구매건수 / POS 멤버십 매칭","③ 20~30대 객단가 8.7만 → 11만원 / 번들 사다리 / POS 멤버십 결제"],
+ model:["① 20~30대 방문 16.4만 → 20.5만 명(+25%) ② 객단가 8.7 → 9.6만원 ③ SNS 월 1,200 → 3,000건","<b>차이:</b> 모범답안 주 목표는 방문(유입), AFTER 6는 전환율·객단가(이익)입니다."]},
+{t:"프로모션 컨셉",fields:function(){return '<div class="grid g2">'+inp("w5_name","행사명","")+inp("w5_tag","대표 해시태그 (고객이 붙일 수 있게)","#…")+'</div>'+ta("w5_line","한 줄 컨셉","")+ta("w5_diff","센텀시티와 무엇이 다른가 (한 문장)","")+inp("w5_str","8대 전략 조합","예: 리테일 테라피 + 리피지털")+'<div class="f"><label>좋은 컨셉 5조건 점검</label><div class="check">'+["차별성","재미","체험","SNS확산","브랜드일치"].map(function(c,i){return '<label><input type="checkbox" class="ws" id="w5_c'+i+'"'+(W["w5_c"+i]?" checked":"")+'> '+c+'</label>'}).join("")+'</div></div>'},
+ hint:["잠재 니즈 한 문장을 행사명으로 줄여 보세요.","해시태그는 점포명이 아니라 고객의 순간(예: 퇴근 후 나)을 담습니다.","8대 전략 두 축을 겹치면 경쟁사와 겹치지 않습니다."],
+ ex:["행사명: <b>서면 AFTER 6</b>","한 줄: 퇴근 후 90분, 나를 위한 뷰티·다이닝 살롱","차이: 센텀시티는 주말 팝업 물량, 우리는 평일 저녁 '나를 챙기는 90분'","해시태그: #퇴근후90분 #오늘의나에게 #서면애프터6","전략: 리테일 테라피(쉬러 오는 백화점) + 리피지털(앱 사전예약·스탬프)"],
+ model:["서면 인디 서머 — 센텀에는 없는 것, 서면에만 있는 것. 부산 로컬 크리에이터 45일 여름 아케이드","#서면인디서머 #부산본점아케이드 #오늘의발견","<b>차이:</b> 모범답안은 리테일 랩·리테일테인먼트(빈 축 채우기), AFTER 6는 리테일 테라피·리피지털(구매로 잇기)."]},
+{t:"운영 프로그램",fields:function(){return '<div class="tblwrap"><table><thead><tr><th>No</th><th>프로그램 (내용)</th><th>여정 단계</th><th class="r">평수</th></tr></thead><tbody>'+[1,2,3,4,5].map(function(n){return '<tr><td>'+n+'</td><td><input class="cell ws" id="w6_n'+n+'" value="'+esc(wv("w6_n"+n))+'" aria-label="프로그램'+n+'"></td><td><select class="cell ws" id="w6_s'+n+'" aria-label="단계'+n+'"><option value="">선택</option>'+STG.map(function(s){return '<option'+(wv("w6_s"+n)===s?" selected":"")+'>'+s+'</option>'}).join("")+'</select></td><td><input class="cell ws num" type="number" min="0" id="w6_a'+n+'" value="'+esc(wv("w6_a"+n))+'" style="text-align:right" aria-label="평수'+n+'"></td></tr>'}).join("")+'</tbody></table></div><div id="w6chk" class="check" style="margin-top:8px"></div>'},
+ hint:["이익 행사라도 체류·재방문 프로그램 1개씩은 둡니다.","전환 프로그램이 가장 넓은 면적을 가져가야 합니다.","합계 200평을 넘기면 무엇을 뺄지 정하세요."],
+ ex:PROG_EX.map(function(p,i){return (i+1)+". "+p[0]+" — "+p[1]+" · "+p[2]+"평"}).concat(["합계 <b>200평</b> ✓ · 전환 2 · 체류 2 · 재방문 1"]),
+ model:["로컬 크리에이터 마켓(유입 100평) · 나이트 아케이드(체류 40평) · 인디 뮤직 라이브(유입 30평) · 굿즈 커스텀 랩(전환 20평) · 리턴 패스(재방문 10평) = 200평","<b>차이:</b> 모범답안은 유입에 130평, AFTER 6는 전환에 100평을 씁니다."],
+ after:w6check},
+{t:"홍보 전략",fields:function(){return [["d4","D-4주"],["d2","D-2주"],["d1","D-1주 ~ 개장"],["run","행사 중 (6주)"],["post","사후"]].map(function(x){return ta("w7_"+x[0],x[1],"채널 · 무엇을 낼지")}).join("")+ta("w7_wk","평일 유입 장치 (필수)","")},
+ hint:["사전예약이 핵심이면 D-4주에 예약을 엽니다.","서면 오피스 직장인에게 닿는 채널은? (연결통로, 사내 제휴, 앱 푸시)","입점 브랜드 계정을 동시에 움직이면 채널이 늘어납니다."],
+ ex:["D-4주: 앱 사전예약 오픈 · 입점 뷰티·F&B 브랜드 계정 동시 티저","D-2주: 서면역 연결통로 배너 '퇴근 후 90분' · 인근 오피스 제휴 쿠폰","D-1주~개장: 사전예약자 리마인드 푸시 · 첫 주 클래스 시간표 공개","행사 중: 화~금 17시 '오늘 저녁 빈 자리 n석' 푸시 · 요일별 클래스","사후: 리턴 살롱 패스 미완성 고객 푸시 · 다음 시즌 VIP 사전예약 안내","평일 장치: 화~금 18~22시에만 여는 다이닝 바·클래스 + 퇴근 시간 실시간 푸시"],
+ model:["크리에이터 12팀 계정 동시 가동 → 채널 13개 / 목·금 야간 한정 혜택 앱 푸시","<b>차이:</b> 모범답안은 SNS 확산(언급량), AFTER 6는 예약·푸시로 구매 의향 있는 고객을 부릅니다."]},
+{t:"예산 배분",fields:budgetFields,after:budgetCalc,
+ hint:["일반 비중: 공간 30~40 · 콘텐츠 20~30 · 홍보 15~25 · 사은품 10~15 · 인력 5~10 · 예비비 5~10","홍보비는 먼저 깎지 않습니다. 안전비용은 협상 불가.","분담은 납품업자 부담 50% 초과 불가(대규모유통업법)."],
+ ex:["홍보 25% · 공간 25% · 콘텐츠 22% · 사은품 8% · 인력 10% · 예비비 10% = 100%","공간 25%(일반보다 낮음): 기존 아트리움·식품관 집기 활용, 브랜드 부스 연출 일부 브랜드 부담","사은품 8%(낮음): 샘플키트를 유료 클래스에 포함해 사은품 대체","입점 뷰티·F&B 브랜드 공동판촉 분담 1.2억(40%) → 백화점 순부담 1.8억. 50% 한도 안에서 협상 여지를 남기려고 40%로 설정","20% 삭감 순서: 사은품 → 콘텐츠 → 공간 → 인력 → 홍보(마지막) · 예비비·안전은 유지"],
+ model:["홍보 35% · 공간 22% · 콘텐츠 22% · 경품 8% · 인력 7% · 제작 3% · 예비 3% — 분담 없음, 순부담 3억","<b>차이:</b> 모범답안은 SNS 열세를 풀려고 홍보를 올렸고, AFTER 6는 분담으로 순부담을 1.8억으로 줄였습니다."]},
+{t:"KPI · ROI",fields:roiFields,after:roiCalc,
+ hint:["손익분기 = 순부담 ÷ GP율 을 먼저 구하세요.","총비용 기준 ROI도 함께 적습니다. 협찬받은 돈도 비용입니다.","방문이 목표의 60%만 오면? 민감도를 꼭 확인하세요."],
+ ex:["증분 방문 3만 명 × 전환율 35% × 객단가 11만원 = 11.55억 + 기존 고객 번들 증분 1.45억 = <b>증분 매출 13억</b>","GP율 32%(뷰티·F&B 비중) → 증분 이익 4.16억","손익분기 = 1.8억 ÷ 32% = <b>5.625억</b>","ROI(순부담) = (4.16 − 1.8) ÷ 1.8 × 100 ≒ <b>+131%</b> / ROI(총비용 3억) ≒ <b>+39%</b>","민감도: 방문 60%만 달성해도 증분 약 8.4억 → ROI 약 +49% (여전히 흑자)","<span class='fake'>가상 가정치</span>"],
+ model:["총비용 3억 · GP 30% · 손익분기 10억","증분 방문 4.1만 × 25% × 9.6만 ≒ 9.8억 + 기존 고객 1.2억 = 11억 → ROI +10%","<b>차이:</b> 여유 1억 vs 7.4억. 모범답안은 방문 20%만 빗나가도 적자, AFTER 6는 60%만 와도 흑자."]},
+{t:"1페이지 기획안",fields:onePageFields,after:onePageRender,
+ hint:["8칸이 서로 이어지는지 소리 내어 읽어 보세요: 이 타깃 → 이 프로그램 → 이 KPI.","④ 목표 숫자와 ⑨ ROI 숫자가 같은지 확인하세요.","빈칸은 앞 단계로 돌아가 채우세요."],
+ ex:["배경: 20~30대 객단가 8.7만(전체의 70%) · 주말 68% → 평일 저녁이 빈다","타깃: 서면 인근 27~34세 직장인 · 잠재 니즈 '하루 끝에 나를 챙기고 싶다'","목표: 증분 방문 3만 · 전환율 35% · 객단가 11만","컨셉: 서면 AFTER 6 — 퇴근 후 90분, 나를 위한 뷰티·다이닝 살롱","프로그램: 진단 살롱 · 클래스 · 다이닝 바 · 번들 존 · 리턴 패스 = 200평","홍보: 앱 사전예약 · 퇴근 시간 푸시 · 오피스 제휴","예산: 총 3억 · 분담 1.2억 · 순부담 1.8억","KPI·ROI: 손익분기 5.625억 vs 증분 13억 → ROI +131%(총비용 +39%)"],
+ model:["서면 인디 서머: 20~30대 방문 +25% · 로컬 크리에이터 45일 아케이드 · 홍보 35% · 손익분기 10억 vs 11억 → ROI +10%"]}
+];
+
+function budgetFields(){
+  if(wv("w8_total")==="")W.w8_total="3";
+  return '<div class="grid g2">'+inp("w8_total","총예산 (억원)","3")+inp("w8_share","브랜드 공동판촉 분담액 (억원)","예: 1.2")+'</div>'+
+  '<div class="tblwrap" style="margin-top:10px"><table class="num"><thead><tr><th>항목</th><th class="r">일반 비중</th><th class="r">우리 비중(%)</th><th class="r">금액</th><th>벗어나면 이유</th></tr></thead><tbody>'+
+  BUD.map(function(b){return '<tr><td>'+b[0]+'</td><td class="r">'+b[2]+'~'+b[3]+'%</td><td><input class="cell ws num" type="number" min="0" max="100" step="1" id="w8_'+b[1]+'" value="'+esc(wv("w8_"+b[1]))+'" style="text-align:right" aria-label="'+b[0]+' 비중"></td><td class="r" id="w8a_'+b[1]+'">—</td><td><input class="cell ws" id="w8r_'+b[1]+'" value="'+esc(wv("w8r_"+b[1]))+'" aria-label="'+b[0]+' 이유"></td></tr>'}).join("")+
+  '<tr><td><b>합계</b></td><td></td><td class="r"><b id="w8sum">0%</b></td><td class="r"><b id="w8amt">—</b></td><td id="w8msg"></td></tr></tbody></table></div>'+
+  '<div id="w8share" class="fb info" style="margin-top:10px"></div>'+
+  '<div class="row" style="margin-top:8px"><button class="btn ghost sm" id="w8fill">AFTER 6 예시값 넣기</button></div>'+
+  ta("w8_cut","20% 삭감 시 순서","홍보·안전은 마지막")}
+function num(id){var v=parseFloat(wv(id));return isNaN(v)?0:v}
+function budgetCalc(){
+  var T=num("w8_total")||0,sum=0;
+  BUD.forEach(function(b){var p=num("w8_"+b[1]);sum+=p;var cell=$("#w8a_"+b[1]);if(!cell)return;
+    cell.textContent=wv("w8_"+b[1])===""?"—":won(T*p/100);
+    var out=wv("w8_"+b[1])!==""&&(p<b[2]||p>b[3]);cell.className="r "+(out?"warn-t":"");
+    var r=$("#w8r_"+b[1]);if(r)r.placeholder=out?"범위 밖 → 이유를 쓰세요":"";
+  });
+  if(!$("#w8sum"))return;
+  $("#w8sum").textContent=r1(sum)+"%";$("#w8sum").className=Math.abs(sum-100)<0.01?"ok-t":"no-t";
+  $("#w8amt").textContent=won(T*sum/100);
+  $("#w8msg").innerHTML=Math.abs(sum-100)<0.01?'<span class="ok-t">✓ 100% · 합계 '+eok(T)+' 일치</span>':'<span class="no-t">'+(sum<100?(r1(100-sum)+"%p 남음"):(r1(sum-100)+"%p 초과"))+'</span>';
+  var S=num("w8_share"),box=$("#w8share");
+  if(S>0){var ratio=T?S/T*100:0;box.className="fb "+(ratio>50?"no":"info");
+    box.innerHTML='분담 '+eok(S)+' = 총예산의 <b>'+Math.round(ratio)+'%</b> → 백화점 순부담 <b>'+eok(Math.max(0,T-S))+'</b>'+(ratio>50?'<span class="src">납품업자 부담 50% 초과 불가(대규모유통업법). 분담액을 낮추세요.</span>':' · 분담받은 돈도 비용입니다(총비용 '+eok(T)+').');}
+  else{box.className="fb info";box.textContent="분담액을 넣으면 순부담이 계산됩니다. 없으면 0.";}
+}
+function roiFields(){
+  var f=function(id,l,ph){return '<div class="f"><label for="'+id+'">'+l+'</label><input id="'+id+'" class="ws num" type="number" step="any" value="'+esc(wv(id))+'" placeholder="'+ph+'"></div>'};
+  return '<p class="note">총비용·분담액은 ⑧ 예산에서 가져옵니다. 바꾸려면 ⑧로 돌아가세요.</p><div class="grid g3">'+f("w9_v","증분 방문객 (명)","30000")+f("w9_c","구매전환율 (%)","35")+f("w9_a","객단가 (만원)","11")+f("w9_x","기존 고객 증분 매출 (억)","1.45")+f("w9_g","GP율 (%)","32")+'</div>'+
+  '<div class="res" id="w9res" style="margin-top:12px"></div><div class="row" style="margin-top:8px"><button class="btn ghost sm" id="w9fill">AFTER 6 예시값 넣기</button></div>'+ta("w9_why","주 목적과 KPI 설명 (ROI가 음수라면 목적과 다른 근거)","")}
+function roiCalc(){
+  var box=$("#w9res");if(!box)return;
+  var p={v:num("w9_v"),c:num("w9_c"),a:num("w9_a"),x:num("w9_x"),g:num("w9_g"),t:num("w8_total")||3,s:num("w8_share")};
+  if(!p.g){box.className="res";box.innerHTML='<span class="note">GP율과 매출 가정을 넣으면 손익분기·ROI가 계산됩니다.</span>';return}
+  var r=calc(p),p6=Object.assign({},p,{v:p.v*0.6}),r6=calc(p6);
+  box.className="res "+(r.roi>=0?"pos":"neg");
+  box.innerHTML='<div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="note">ROI (순부담 '+eok(r.net)+' 기준)</div><div class="bigroi num">'+pct(r.roi)+'</div></div><span class="pill '+(r.roi>=0?"g":"r")+'">'+(r.roi>=0?"흑자":"적자")+'</span></div>'+
+   '<div class="rrow"><span>증분 매출</span><b>'+eok(r.rev)+'</b></div><div class="rrow"><span>증분 이익</span><b>'+eok(r.gp)+'</b></div>'+
+   '<div class="rrow"><span>손익분기 (순부담 ÷ GP율)</span><b>'+eok(r.be)+'</b></div><div class="rrow"><span>손익분기 (총비용 기준)</span><b>'+eok(r.beT)+'</b></div>'+
+   '<div class="rrow"><span>ROI (총비용 '+eok(p.t)+' 기준)</span><b>'+pct(r.roiT)+'</b></div>'+
+   '<div class="rrow"><span>민감도: 방문 60%만 오면</span><b class="'+(r6.roi>=0?"ok-t":"no-t")+'">증분 '+eok(r6.rev)+' → ROI '+pct(r6.roi)+'</b></div>';
+}
+function onePageFields(){return '<p class="note">①~⑨에 쓴 내용이 자동으로 모입니다. 비어 있는 칸은 해당 단계로 돌아가 채우세요.</p><div id="onepage"></div><div class="row noprint" style="margin-top:12px"><button class="btn coral" id="opCopy">복사</button><button class="btn" id="opPrint">인쇄</button><span class="note" id="opMsg"></span></div>'}
+function onePageData(){
+  var j=function(){return Array.prototype.slice.call(arguments).filter(function(x){return x&&String(x).trim()}).join("\n")};
+  var progs=[1,2,3,4,5].filter(function(n){return wv("w6_n"+n)}).map(function(n){return wv("w6_n"+n)+(wv("w6_s"+n)?" ("+wv("w6_s"+n)+(wv("w6_a"+n)?" · "+wv("w6_a"+n)+"평":"")+")":"")});
+  var goals=[1,2,3].filter(function(n){return wv("w4_s"+n)}).map(function(n){return n+") "+wv("w4_s"+n)+(wv("w4_now"+n)||wv("w4_goal"+n)?" ["+wv("w4_now"+n)+" → "+wv("w4_goal"+n)+"]":"")});
+  var T=num("w8_total"),S=num("w8_share");
+  var bud=BUD.filter(function(b){return wv("w8_"+b[1])!==""}).map(function(b){return b[0]+" "+wv("w8_"+b[1])+"%"}).join(" · ");
+  var roi="";if(num("w9_g")){var r=calc({v:num("w9_v"),c:num("w9_c"),a:num("w9_a"),x:num("w9_x"),g:num("w9_g"),t:T||3,s:S});roi="증분 "+eok(r.rev)+" · 손익분기 "+eok(r.be)+" · ROI "+pct(r.roi)+" (총비용 기준 "+pct(r.roiT)+")"}
+  return {title:wv("w5_name")||"(행사명 — ⑤에서 입력)",cells:[
+   ["1. 배경과 문제 (①)",wv("w1_imp")],
+   ["2. 타깃과 니즈 (②)",j(wv("w2_name"),wv("w2_exp")&&"표현: "+wv("w2_exp"),wv("w2_lat")&&"잠재: "+wv("w2_lat"))],
+   ["3. 목표 SMART (④)",goals.join("\n")],
+   ["4. 컨셉 (⑤)",j(wv("w5_line"),wv("w5_diff"),wv("w5_tag"),wv("w5_str"))],
+   ["5. 운영 프로그램 (⑥)",progs.join("\n")],
+   ["6. 홍보 (⑦)",j(wv("w7_d4")&&"D-4주: "+wv("w7_d4"),wv("w7_run")&&"행사 중: "+wv("w7_run"),wv("w7_wk")&&"평일: "+wv("w7_wk"))],
+   ["7. 예산 (⑧)",j(T?"총 "+eok(T)+(S?" · 분담 "+eok(S)+" · 순부담 "+eok(T-S):""):"",bud)],
+   ["8. KPI · ROI (⑨)",j(roi,wv("w9_why"))]]};
+}
+function onePageRender(){
+  var el=$("#onepage");if(!el)return;var d=onePageData();
+  var html='<div class="onepage"><div class="ttl">'+esc(d.title)+'</div>'+d.cells.map(function(c){return '<div><b>'+c[0]+'</b>'+(c[1]?esc(c[1]):'<span class="empty-v">비어 있음</span>')+'</div>'}).join("")+'</div>';
+  el.innerHTML=html;$("#printArea").innerHTML=html;
+  $("#opCopy").onclick=function(){var t="■ "+d.title+"\n\n"+d.cells.map(function(c){return "["+c[0]+"]\n"+(c[1]||"-")}).join("\n\n")+"\n\n※ 교육용 가상 데이터";
+    var done=function(){$("#opMsg").textContent="복사했습니다."};
+    var fallback=function(){var tx=document.createElement("textarea");tx.value=t;document.body.appendChild(tx);tx.select();try{document.execCommand("copy");done()}catch(e){$("#opMsg").textContent="복사가 막혔습니다. 직접 선택해 복사하세요."}tx.remove()};
+    try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}};
+  $("#opPrint").onclick=function(){$("#printArea").hidden=false;try{window.print()}catch(e){}setTimeout(function(){$("#printArea").hidden=true},500);$("#opMsg").textContent="인쇄 창이 안 뜨면 파일을 브라우저에서 직접 열어 주세요."};
+}
+function w6check(){
+  var el=$("#w6chk");if(!el)return;var sum=0,st={};
+  [1,2,3,4,5].forEach(function(n){sum+=num("w6_a"+n);var s=wv("w6_s"+n);if(s)st[s]=(st[s]||0)+1});
+  var parts=STG.map(function(s){return s+" "+(st[s]||0)});
+  var only=Object.keys(st).length===1&&st["유입"];
+  el.innerHTML='<span class="'+(sum===200?"ok-t":"no-t")+'">면적 합계 '+sum+'평 / 200평 '+(sum===200?"✓":(sum>200?"초과":"미달"))+'</span><span class="note">· '+parts.join(" · ")+'</span>'+(only?'<span class="no-t">유입만 있으면 매출이 따라오지 않습니다</span>':'');
+}
+function stepFilled(i){
+  var pre=["w1_","w2_","w3_","w4_","w5_","w6_","w7_","w8_","w9_"][i];
+  if(i===9)return STEPS.slice(0,9).every(function(_,k){return stepFilled(k)});
+  return Object.keys(W).some(function(k){if(k.indexOf(pre)!==0)return false;if(k==="w8_total")return false;return W[k]!==""&&W[k]!==false&&W[k]!=null});
+}
+var curStep=store.get("pl_step",0);
+function renderNav(){
+  $("#stepnav").innerHTML=STEPS.map(function(s,i){return '<button data-s="'+i+'" class="'+(stepFilled(i)?"filled":"")+'"'+(i===curStep?' aria-current="step"':'')+'><b>'+NUMS[i]+'</b>'+s.t+'</button>'}).join("");
+  $$("#stepnav button").forEach(function(b){b.addEventListener("click",function(){goStep(+b.dataset.s)})});
+}
+function goStep(i){curStep=i;store.set("pl_step",i);renderStep();renderNav();var n=$("#stepnav button[aria-current]");if(n&&n.scrollIntoView)n.scrollIntoView({block:"nearest",inline:"center"})}
+function renderStep(){
+  var s=STEPS[curStep];
+  $("#stepCard").innerHTML='<div class="row" style="justify-content:space-between;margin-bottom:12px"><h2><span style="color:var(--coral)">'+NUMS[curStep]+'</span> '+s.t+'</h2><span class="note">'+(curStep+1)+' / 10</span></div>'+
+   '<div class="fields">'+s.fields()+'</div>'+
+   '<div class="toggles noprint" style="margin-top:14px"><button class="btn ghost sm" data-r="hint">힌트 보기</button><button class="btn ghost sm" data-r="ex">예시답 보기 (AFTER 6)</button><button class="btn ghost sm" data-r="model">모범답안(인디 서머)과 비교</button></div>'+
+   '<div class="reveal hint" id="rv_hint"><h4>힌트</h4>'+list(s.hint)+'</div>'+
+   '<div class="reveal ex" id="rv_ex"><h4>예시답 · 서면 AFTER 6</h4>'+list(s.ex)+'</div>'+
+   '<div class="reveal model" id="rv_model"><h4>모범답안 · 서면 인디 서머</h4>'+list(s.model)+'</div>'+
+   '<div class="stepfoot noprint" style="margin-top:14px"><button class="btn ghost" id="prevS"'+(curStep===0?" disabled":"")+'>← 이전</button><button class="btn" id="nextS"'+(curStep===9?" disabled":"")+'>다음 →</button></div>';
+  $$("#stepCard [data-r]").forEach(function(b){b.addEventListener("click",function(){var r=$("#rv_"+b.dataset.r);r.classList.toggle("on");b.textContent=b.textContent.replace(/보기|숨기기/,r.classList.contains("on")?"숨기기":"보기")})});
+  $("#prevS").addEventListener("click",function(){goStep(curStep-1)});$("#nextS").addEventListener("click",function(){goStep(curStep+1)});
+  $$("#stepCard .ws").forEach(function(el){el.addEventListener(el.type==="checkbox"||el.tagName==="SELECT"?"change":"input",function(){
+    W[el.id]=el.type==="checkbox"?el.checked:el.value;store.set("pl_ws",W);
+    if(s.after)s.after();updateProgress();
+    var nb=$('#stepnav button[data-s="'+curStep+'"]');if(nb)nb.classList.toggle("filled",stepFilled(curStep));
+  })});
+  var f8=$("#w8fill");if(f8)f8.addEventListener("click",function(){W.w8_total="3";W.w8_share="1.2";BUD.forEach(function(b){W["w8_"+b[1]]=String(b[4])});W.w8r_space="기존 집기 활용 · 부스 연출 일부 브랜드 부담";W.w8r_gift="샘플키트를 유료 클래스에 포함";store.set("pl_ws",W);renderStep();updateProgress()});
+  var f9=$("#w9fill");if(f9)f9.addEventListener("click",function(){W.w9_v="30000";W.w9_c="35";W.w9_a="11";W.w9_x="1.45";W.w9_g="32";if(!num("w8_share")){W.w8_share="1.2"}store.set("pl_ws",W);renderStep();updateProgress()});
+  if(s.after)s.after();
+}
+
+/* ───────── ⑥ 비교 ───────── */
+var CMP=[
+["주 목적","유입 (20~30대 방문 +25%)","전환 · 이익 (전환율 35%, 객단가 11만)"],
+["타깃 시간대","45일 상시 · 목·금 19~22시 야간 · 격주 토 공연","6주 화~금 18~22시 (24일)"],
+["핵심 레버","로컬 크리에이터 콘텐츠 · SNS 확산 (홍보 35%)","전환율 · 객단가 사다리 · 고GP 카테고리 · 브랜드 분담 · 평일 저녁"],
+["8대 전략","리테일 랩 + 리테일테인먼트","리테일 테라피 + 리피지털"],
+["비용 (총 / 순)","3억 / 3억","3억 / 1.8억 (분담 1.2억, 40%)"],
+["GP율","30%","32% (뷰티 · F&B 비중)"],
+["손익분기","10억","5.625억 (총비용 기준 9.375억)"],
+["예상 증분 매출","11억","13억"],
+["ROI",'<b class="g">+10%</b>','<b class="g">+131%</b> (순부담) · <b class="g">+39%</b> (총비용)'],
+["리스크","여유 1억. 방문 목표 20%만 빗나가도 적자","분담 협상이 깨지면 순부담 3억 → ROI +39%로 하락. SNS 확산 · 신규 유입 효과는 약함. 방문 60%만 와도 흑자(+49%)"]
+];
+$("#cmpBody").innerHTML=CMP.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'}).join("");
+function bars(rows){var mx=13;return rows.map(function(r){return '<div><div class="lbl">'+r[0]+'</div>'+
+  '<div class="ln num"><span>손익분기</span><div class="t"><i style="width:'+(r[1]/mx*100)+'%;background:var(--navy)"></i></div><span>'+eok(r[1])+'</span></div>'+
+  '<div class="ln num"><span>예상 증분</span><div class="t"><i style="width:'+(r[2]/mx*100)+'%;background:var(--coral)"></i></div><span>'+eok(r[2])+'</span></div>'+
+  '<div class="note">여유 '+eok(r[2]-r[1])+'</div></div>'}).join("")}
+$("#cmpBars").innerHTML=bars([["서면 인디 서머",10,11],["서면 AFTER 6 (순부담 기준)",5.625,13]]);
+function renderMine(){
+  var el=$("#mineCmp");
+  if(!num("w9_g")){el.innerHTML='<h3>내 기획안 숫자</h3><p class="note" style="margin-top:6px">활동지 ⑨ KPI·ROI를 채우면 여기에 내 숫자가 함께 나옵니다.</p><div class="row" style="margin-top:10px"><button class="btn ghost sm" id="goSheet">활동지로 가기</button></div>';$("#goSheet").onclick=function(){showTab("sheet");goStep(8)};return}
+  var r=calc({v:num("w9_v"),c:num("w9_c"),a:num("w9_a"),x:num("w9_x"),g:num("w9_g"),t:num("w8_total")||3,s:num("w8_share")});
+  el.innerHTML='<h3>내 기획안 숫자 · '+esc(wv("w5_name")||"이름 없음")+'</h3><div class="grid g4" style="margin-top:10px">'+
+   [["순부담",eok(r.net)],["손익분기",eok(r.be)],["예상 증분",eok(r.rev)],["ROI (순부담)",pct(r.roi)],["ROI (총비용)",pct(r.roiT)]].map(function(k){return '<div class="kpi"><div class="k">'+k[0]+'</div><div class="v num">'+k[1]+'</div></div>'}).join("")+'</div>';
+}
+
+/* ───────── 시작 ───────── */
+renderTerms();g1render();g2init();g3render();simSync();renderNav();renderStep();updateProgress();
+var h=(location.hash||"").replace("#","");if(h)showTab(h);
+})();
+</script>
+</body>
+</html>
