@@ -278,6 +278,47 @@ td .cell{min-width:80px}
 .bars .ln .t{height:16px;background:var(--bg);border-radius:6px;overflow:hidden}
 .bars .ln .t i{display:block;height:100%}
 
+/* 강의 따라 게임 */
+.chnav{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.chnav button{flex:0 0 auto;border:2px solid var(--line);background:var(--card);border-radius:12px;padding:6px 12px;font-size:14px;text-align:left;line-height:1.25}
+.chnav button b{font-family:var(--fd);font-weight:400;font-size:19px;display:block}
+.chnav button.done{border-color:var(--good)}
+.chnav button[aria-current="step"]{border-color:var(--coral);background:var(--coral-soft)}
+.say{background:var(--navy);color:#fff;border-radius:4px var(--r) var(--r) var(--r);padding:14px 16px;font-size:19px;line-height:1.55;display:grid;gap:6px}
+.say .who{font-size:13px;letter-spacing:.08em;color:var(--coral);font-weight:700}
+.say b{color:#FFD2CC}
+details.memo{border:1px dashed var(--line);border-radius:var(--r-sm);padding:8px 12px;font-size:15px;color:var(--muted)}
+details.memo summary{cursor:pointer;font-weight:700}
+.lstage{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.lq{font-size:19px;font-weight:700}
+.lq small{display:block;font-size:14px;font-weight:400;color:var(--muted)}
+.poll{display:grid;gap:8px}
+.prow{display:grid;grid-template-columns:minmax(120px,190px) 1fr 44px auto;gap:8px;align-items:center}
+@media (max-width:520px){.prow{grid-template-columns:1fr 44px auto}.prow .pbar{display:none}}
+.prow .pbar{height:14px;background:var(--bg);border-radius:7px;overflow:hidden}
+.prow .pbar i{display:block;height:100%;background:var(--coral);transition:width .3s}
+.prow .pbar i.hl{background:var(--navy)}
+.prow .cnt{font-family:var(--fd);font-size:22px;text-align:right}
+.srow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.srow.ok{border-color:var(--good);background:var(--good-soft)} .srow.no{border-color:var(--bad);background:var(--bad-soft)}
+.srow span{font-weight:500}
+.chant{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:560px){.chant{grid-template-columns:1fr 1fr}}
+.chant div{background:var(--coral-soft);border-radius:var(--r-sm);padding:12px;text-align:center}
+.chant div b{display:block;font-family:var(--fd);font-weight:400;font-size:26px;color:var(--coral-ink)}
+.chant div span{font-size:14px;color:var(--muted)}
+.orderpad{display:flex;flex-wrap:wrap;gap:8px}
+.orderpad button{border:2px solid var(--navy);background:var(--card);border-radius:999px;padding:8px 18px;font-size:19px;font-family:var(--fd)}
+.orderpad button.used{background:var(--navy);color:#fff}
+.oneline{background:var(--coral-soft);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.oneline .big{font-family:var(--fd);font-size:clamp(22px,3.4vw,30px);line-height:1.3}
+.oneline .big b{font-weight:400;color:var(--coral-ink)}
+.bridge{font-size:17px;color:var(--navy);border-left:4px solid var(--navy);padding-left:10px}
+.recall{display:grid;gap:8px}
+.recall div{display:flex;gap:10px;align-items:baseline;font-size:19px;background:var(--bg);border-radius:10px;padding:10px 12px}
+.recall .no{font-family:var(--fd);color:var(--coral);font-size:22px;min-width:26px}
+.blank{border:0;border-bottom:2px solid var(--coral);background:var(--coral-soft);border-radius:6px 6px 0 0;padding:0 10px;font:inherit;font-weight:700;color:transparent;min-width:120px}
+.blank.show{color:var(--coral-ink);background:none}
 footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:center}
 
 @media print{
@@ -307,7 +348,7 @@ footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:cent
   <div class="prog" aria-label="학습 진도">
     <div class="wrap">
       <div class="pseg">용어 <em id="pg1">0%</em><div class="bar"><i id="pb1"></i></div></div>
-      <div class="pseg">게임 <em id="pg2">0/4</em><div class="bar"><i id="pb2"></i></div></div>
+      <div class="pseg">게임 <em id="pg2">0/5</em><div class="bar"><i id="pb2"></i></div></div>
       <div class="pseg">활동지 <em id="pg3">0/10</em><div class="bar"><i id="pb3"></i></div></div>
     </div>
   </div>
@@ -365,7 +406,7 @@ footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:cent
       <h2 style="margin-bottom:12px">이렇게 공부하세요</h2>
       <div class="steps3">
         <button data-go="glossary"><b>1. 용어</b>카드 80여 장. 아는 카드에 체크</button>
-        <button data-go="games"><b>2. 게임</b>4종, 각 5분. 틀리면 강의 근거가 나옵니다</button>
+        <button data-go="games"><b>2. 게임</b>7~34장 강의 따라 + 심화 4종. 틀리면 강의 근거가 나옵니다</button>
         <button data-go="sheet"><b>3. 활동지</b>10단계로 '남는 행사'를 직접 설계</button>
       </div>
     </div>
@@ -403,18 +444,28 @@ footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:cent
 <!-- ③ 게임 -->
 <section class="tab" id="tab-games" role="tabpanel">
   <div>
-    <h2>워밍업 게임 4종</h2>
-    <p class="lead">각 5분 내외. 점수는 이 화면에서만 유지됩니다(새로고침하면 초기화).</p>
+    <h2>워밍업 게임</h2>
+    <p class="lead">7~34장 강의 흐름 게임 + 심화 게임 4종. 각 5분 내외. 점수는 이 화면에서만 유지됩니다(새로고침하면 초기화).</p>
   </div>
   <div class="gsel" id="gsel">
-    <button data-g="1" aria-pressed="true"><b>1. 여정 KPI 매칭</b><span class="s">수단·KPI를 4단계에</span> <span class="done" id="gd1"></span></button>
+    <button data-g="0" aria-pressed="true"><b>강의 따라 7~34장</b><span class="s">09:25~15:20 · 강의 흐름대로</span> <span class="done" id="gd0"></span></button>
+    <button data-g="1" aria-pressed="false"><b>1. 여정 KPI 매칭</b><span class="s">수단·KPI를 4단계에</span> <span class="done" id="gd1"></span></button>
     <button data-g="2" aria-pressed="false"><b>2. 8대 전략 뒤집기</b><span class="s">사례 ↔ 전략 짝 맞추기</span> <span class="done" id="gd2"></span></button>
     <button data-g="3" aria-pressed="false"><b>3. SMART 판정관</b><span class="s">목표 10문장 판정</span> <span class="done" id="gd3"></span></button>
     <button data-g="4" aria-pressed="false"><b>4. 손익 시뮬레이터</b><span class="s">남았나, 손해봤나?</span> <span class="done" id="gd4"></span></button>
   </div>
 
   <!-- 게임1 -->
-  <div class="game on card" id="game1">
+  <div class="game on card" id="game0">
+    <div class="row" style="justify-content:space-between">
+      <h2>강의 따라 게임 · 7~34장</h2><span class="score num" id="g0score"></span>
+    </div>
+    <p class="note">강사가 질문하고 → 대답을 듣고 → 게임으로 확인하고 → 한 줄로 남깁니다. 실습 장에는 코칭 질문 고르기와 모범답안 공개가 들어 있습니다. 대답 집계 +1은 강사가 눌러 주세요.</p>
+    <nav class="grid" id="chnav" aria-label="강의 장" style="gap:8px"></nav>
+    <div id="lect" class="grid"></div>
+  </div>
+
+  <div class="game card" id="game1">
     <div class="row" style="justify-content:space-between">
       <h2>여정 KPI 매칭</h2><span class="score num" id="g1score"></span>
     </div>
@@ -600,15 +651,15 @@ $$("[data-go]").forEach(function(b){b.addEventListener("click",function(){showTa
 
 /* ───────── 진도 ───────── */
 var known=store.get("pl_known",[]);
-var gamesDone={1:false,2:false,3:false,4:false};
+var gamesDone={0:false,1:false,2:false,3:false,4:false};
 function updateProgress(){
   var g=TERMS.length?known.length/TERMS.length:0;
   $("#pb1").style.width=Math.round(g*100)+"%";$("#pg1").textContent=Math.round(g*100)+"%";
   var n=0;for(var k in gamesDone)if(gamesDone[k])n++;
-  $("#pb2").style.width=(n/4*100)+"%";$("#pg2").textContent=n+"/4";
+  $("#pb2").style.width=(n/5*100)+"%";$("#pg2").textContent=n+"/5";
   var f=STEPS.filter(function(s,i){return stepFilled(i)}).length;
   $("#pb3").style.width=(f/10*100)+"%";$("#pg3").textContent=f+"/10";
-  for(var i=1;i<=4;i++)$("#gd"+i).textContent=gamesDone[i]?"✓ 완료":"";
+  for(var i=0;i<=4;i++)$("#gd"+i).textContent=gamesDone[i]?"✓ 완료":"";
 }
 
 /* ───────── ② 용어사전 ───────── */
@@ -1158,8 +1209,374 @@ function renderMine(){
    [["순부담",eok(r.net)],["손익분기",eok(r.be)],["예상 증분",eok(r.rev)],["ROI (순부담)",pct(r.roi)],["ROI (총비용)",pct(r.roiT)]].map(function(k){return '<div class="kpi"><div class="k">'+k[0]+'</div><div class="v num">'+k[1]+'</div></div>'}).join("")+'</div>';
 }
 
+
+/* ───────── 강의 따라 게임 7~34장 ───────── */
+var LS={ok:0,all:0},LDONE={},LC=0;
+function lscore(ok){LS.all++;if(ok)LS.ok++;$("#g0score").textContent="첫 시도 정답 "+LS.ok+"/"+LS.all}
+function seq(el,fns,done){var i=0;function next(){if(i>=fns.length){done();return}var d=document.createElement("div");d.className="lstage";el.appendChild(d);fns[i++](d,next);if(i>1&&d.scrollIntoView)d.scrollIntoView({behavior:"smooth",block:"nearest"})}next()}
+function ask(q,opts,ans,okMsg,noMsg){return function(d,next){
+  d.innerHTML='<p class="lq">'+q+'</p><div class="choice"></div><div></div>';var box=d.children[1],fb=d.children[2],picked=null;
+  function draw(){box.innerHTML=opts.map(function(o,i){var c="";if(picked!=null){if(i===ans)c="right";else if(i===picked)c="wrong"}return '<button data-i="'+i+'" class="'+c+'"'+(picked!=null?" disabled":"")+'>'+o+'</button>'}).join("");
+    $$("button",box).forEach(function(b){b.addEventListener("click",function(){picked=+b.dataset.i;var ok=picked===ans;lscore(ok);draw();fb.innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?"맞아요! ":"정답은 <b>"+opts[ans]+"</b>. ")+(ok?okMsg:noMsg||okMsg)+'</div>';next()})})}
+  draw()}}
+function askMulti(q,opts,ans,msgOk,msgNo){return function(d,next){
+  var pick=[];d.innerHTML='<p class="lq">'+q+'</p><div class="choice"></div><div class="row"><button class="btn coral sm">정답 확인</button></div><div></div>';
+  var box=d.children[1],btn=d.querySelector(".btn"),fb=d.children[3],done=false;
+  function draw(){box.innerHTML=opts.map(function(o,i){var c=pick.indexOf(i)>=0?"pick":"";if(done){c=ans.indexOf(i)>=0?"right":(pick.indexOf(i)>=0?"wrong":"")}return '<button data-i="'+i+'" class="'+c+'"'+(done?" disabled":"")+'>'+o+'</button>'}).join("");
+    $$("button",box).forEach(function(b){b.addEventListener("click",function(){var i=+b.dataset.i,k=pick.indexOf(i);if(k>=0)pick.splice(k,1);else{if(pick.length>=ans.length)pick.shift();pick.push(i)}draw()})})}
+  btn.addEventListener("click",function(){if(done)return;done=true;btn.disabled=true;var ok=pick.length===ans.length&&ans.every(function(a){return pick.indexOf(a)>=0});lscore(ok);draw();fb.innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?msgOk:msgNo)+'</div>';next()});draw()}}
+function sortTask(q,items,bins,explain){return function(d,next){
+  var ch={};d.innerHTML='<p class="lq">'+q+'</p><div class="grid"></div><div class="row"><button class="btn coral sm">확인</button></div><div></div>';
+  var box=d.children[1],btn=d.querySelector(".btn"),fb=d.children[3],done=false,order=shuffle(items.map(function(_,i){return i}));
+  function draw(){box.innerHTML=order.map(function(i){var it=items[i],cls="srow"+(done?(ch[i]===it[1]?" ok":" no"):"");
+    return '<div class="'+cls+'"><span>'+it[0]+'</span><div class="choice">'+bins.map(function(b,k){var c=ch[i]===k?"pick":"";if(done&&k===it[1])c="right";else if(done&&ch[i]===k)c="wrong";return '<button data-i="'+i+'" data-k="'+k+'" class="'+c+'"'+(done?" disabled":"")+'>'+b+'</button>'}).join("")+'</div></div>'}).join("");
+    $$("button",box).forEach(function(b){b.addEventListener("click",function(){ch[b.dataset.i]=+b.dataset.k;draw()})})}
+  btn.addEventListener("click",function(){if(Object.keys(ch).length<items.length){fb.innerHTML='<div class="fb info">아직 '+(items.length-Object.keys(ch).length)+'개 남았어요.</div>';return}
+    done=true;btn.disabled=true;var ok=items.every(function(it,i){return ch[i]===it[1]});lscore(ok);draw();
+    var n=items.filter(function(it,i){return ch[i]===it[1]}).length;
+    fb.innerHTML='<div class="fb '+(ok?"ok":"no")+'"><b>'+n+'/'+items.length+' 정답.</b> '+explain+'</div>';next()});draw()}}
+function poll(q,opts,hl,result){return function(d,next){
+  var c=opts.map(function(){return 0}),shown=false;
+  d.innerHTML='<p class="lq">'+q+'<small>대답이 들릴 때마다 +1을 눌러 주세요.</small></p><div class="poll"></div><div class="row"><button class="btn coral sm">결과 보기</button><button class="btn ghost sm">초기화</button></div><div></div>';
+  var box=d.children[1],bs=d.querySelectorAll(".row .btn"),fb=d.children[3];
+  function draw(){var mx=Math.max.apply(null,c.concat([1]));box.innerHTML=opts.map(function(o,i){return '<div class="prow"><span>'+o+'</span><div class="pbar"><i class="'+(shown&&i===hl?"hl":"")+'" style="width:'+(c[i]/mx*100)+'%"></i></div><span class="cnt num">'+c[i]+'</span><button class="btn ghost sm" data-i="'+i+'">+1</button></div>'}).join("");
+    $$("button",box).forEach(function(b){b.addEventListener("click",function(){c[b.dataset.i]++;draw();if(shown)fb.innerHTML='<div class="fb info">'+result(c)+'</div>'})})}
+  bs[0].addEventListener("click",function(){var first=!shown;shown=true;draw();fb.innerHTML='<div class="fb info">'+result(c)+'</div>';if(first)next()});
+  bs[1].addEventListener("click",function(){c=c.map(function(){return 0});draw();if(shown)fb.innerHTML='<div class="fb info">'+result(c)+'</div>'});
+  draw()}}
+function orderTask(q,words,after){return function(d,next){
+  var got=0,miss=0,ord=shuffle(words.map(function(_,i){return i}));
+  d.innerHTML='<p class="lq">'+q+'</p><div class="orderpad"></div><div></div>';var pad=d.children[1],fb=d.children[2];
+  function draw(){pad.innerHTML=ord.map(function(i){return '<button data-i="'+i+'" class="'+(i<got?"used":"")+'"'+(i<got?" disabled":"")+'>'+words[i]+'</button>'}).join("");
+    $$("button",pad).forEach(function(b){b.addEventListener("click",function(){var i=+b.dataset.i;
+      if(i===got){got++;draw();if(got===words.length){lscore(miss===0);fb.innerHTML=after;next()}else fb.innerHTML='<div class="fb ok">'+words.slice(0,got).join(" → ")+' → ?</div>'}
+      else{miss++;got=0;draw();fb.innerHTML='<div class="fb no">순서가 달라요. 처음부터! 고객은 먼저 <b>와야</b> 머물 수 있어요.</div>'}})})}
+  draw()}}
+
+var STG_TXT=['유입','체류','전환','재방문'];
+function info(html,label){return function(d,next){d.innerHTML=html+'<div class="row"><button class="btn ghost sm">'+(label||"확인했어요 →")+'</button></div>';var b=d.querySelector(".row:last-child .btn");b.addEventListener("click",function(){if(b.disabled)return;b.disabled=true;next()})}}
+function timer(sec,q){return function(d,next){
+  d.innerHTML='<p class="lq">'+q+'</p><div class="row"><span class="score num">'+sec+'초</span><button class="btn coral sm">타이머 시작</button><button class="btn ghost sm">건너뛰기</button></div>';
+  var out=d.querySelector(".score"),bs=d.querySelectorAll(".btn"),t=null,left=sec,fired=false;
+  function fin(){if(fired)return;fired=true;clearInterval(t);out.textContent="끝!";bs[0].disabled=true;bs[1].disabled=true;next()}
+  bs[0].addEventListener("click",function(){if(t)return;t=setInterval(function(){left--;out.textContent=left+"초";if(left<=0)fin()},1000)});
+  bs[1].addEventListener("click",fin)}}
+function coach(sit,opts,ans,msg){return ask('조가 이렇게 썼어요: <b>「'+sit+'」</b><small>선생님은 뭐라고 물어볼까요?</small>',opts,ans,msg||"답을 알려 주지 말고, 질문으로 스스로 고치게 해요.")}
+function tbl(head,rows){return '<div class="tblwrap"><table><thead><tr>'+head.map(function(h){return '<th>'+h+'</th>'}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join("")+'</tr>'}).join("")+'</tbody></table></div>'}
+var STR8=G2.map(function(p){return p[0]});
+
+var BLOCKS=[["7~11장","09:25~10:05"],["12~17장","10:05~11:00"],["18~21장","11:00~11:25"],["22~27장 · 실습①","11:25~13:15"],["28~30장 · 실습②","13:15~14:10"],["31~34장 · 실습③","14:10~15:20"]];
+var LECT=[
+/* ── A 7~11 ── */
+{b:0,n:"7장",time:"09:25~09:32",t:"백화점은 어떻게 변화하고 있을까요?",
+ say:"여러분, 마지막으로 백화점 간 게 언제예요? <b>뭐 하러</b> 가셨어요?",
+ memo:"핵심: 예전 백화점은 사러 가는 곳, 지금은 놀러 가는 곳. 대표 예: 롯데 잠실(쇼핑몰·롯데월드·아쿠아리움·영화관·맛집이 한곳에).",
+ one:"백화점은 <b>사러 가는 곳 → 놀러 가는 곳</b>",
+ bridge:"이런 변화가 우연일까요? 책 한 권이 이걸 8가지로 정리해 놨어요.",
+ stages:[
+  poll("마지막으로 백화점에 뭐 하러 가셨어요?",["밥 먹으러","팝업 보러","친구 만나러","전시·영화 보러","사진 찍으러","옷 사러"],5,function(c){
+    var tot=c.reduce(function(a,b){return a+b},0);if(!tot)return "아직 대답이 없어요. 몇 명만 물어보고 다시 눌러 보세요.";
+    var buy=c[5],other=tot-buy,p=Math.round(other/tot*100);
+    return buy<Math.max.apply(null,c.slice(0,5))?'보세요. <b>"옷 사러 갔어요"라는 답이 별로 없죠.</b> '+tot+'명 중 '+other+'명('+p+'%)이 사는 것 말고 다른 이유로 갔어요.':'오늘은 "옷 사러"가 많네요! 그래도 '+tot+'명 중 '+other+'명('+p+'%)은 밥·팝업·친구 때문에 갔어요.'}),
+  sortTask("그럼 예전 백화점과 지금 백화점을 나눠 볼까요?",[["단순 판매 공간",0],["사고 나면 바로 나감",0],["상품 중심",0],["복합 라이프스타일 플랫폼",1],["하루를 머묾",1],["경험 소비 중심",1]],["과거","현재"],
+   '지금은 밥 먹고, 전시 보고, 사진 찍고, 하루를 보내는 곳이에요. 이런 곳을 <b>복합 라이프스타일 플랫폼</b>, 물건보다 경험에 돈 쓰는 걸 <b>경험 소비</b>라고 해요.')]},
+{b:0,n:"8장",time:"09:32~09:39",t:"오프라인 매장 진화의 8개 축 (《리:스토어》)",
+ say:"황지영 교수의 《리:스토어》라는 책이에요. 앞에 다 <b>'리(Re)'</b>가 붙죠? 무슨 뜻일까요?",
+ memo:"핵심: 8개를 다 외우게 하지 않는다. 'Re = 다시'와 마지막 문장만 남긴다. 몇 개만: 리아날로그 · 리테일테인먼트 · 리피지털.",
+ one:"8대 전략 중 <b>무엇을 강화할지 골라라</b>",
+ bridge:"그럼 실제 백화점에서는 어떻게 나타나는지 볼게요.",
+ stages:[
+  ask("'리(Re)'는 무슨 뜻일까요?",["다시","진짜","소매","리뷰"],0,"오프라인 매장을 <b>다시 생각해 보자</b>는 거예요."),
+  sortTask("몇 개만 볼게요. 설명에 맞는 전략을 고르세요.",[["향 맡고, 만져 보고, 맛보는 것 — 온라인이 못 주는 것",0],["사러 가는 게 아니라 <b>보러 가는</b> 매장",1],["앱으로 주문하고 매장에서 찾는 것",2]],["리아날로그","리테일테인먼트","리피지털"],
+   '리테일테인먼트 = 리테일 + 엔터테인먼트, 리피지털 = 오프라인(피지컬) + 디지털이에요.'),
+  ask("마지막 문장을 완성해 보세요. \"전부를 노리는 행사는 ______.\"",["아무것도 남기지 못한다","매출이 가장 크다","SNS에 가장 잘 퍼진다"],0,"그래서 8개 중 <b>뭘 강화할지 골라야</b> 해요.")]},
+{b:0,n:"9장",time:"09:39~09:47",t:"8대 전략으로 백화점 읽기",
+ say:"표가 길죠. 다 읽을 필요 없어요. <b>아는 곳만</b> 찾아볼게요.",
+ memo:"핵심: 표를 다 읽지 않는다. 아는 사례 2~3개만. 마지막 질문(부산본점의 빈 축)은 오후 실습 복선 → 17장에서 회수.",
+ one:"부산본점은 <b>리테일 랩 · 리테일테인먼트</b>가 비어 있다",
+ bridge:"그럼 백화점 마케팅은 결국 <b>무엇을 목표로</b> 할까요?",
+ stages:[
+  ask("더현대 서울 가 보신 분? 팝업이 계속 바뀌죠. 이건 어떤 축일까요?",["리테일 랩","리그린","리클린","리테일 테라피"],0,"팝업은 실패해도 4주면 끝나는, <b>돈 적게 드는 실험</b>이에요."),
+  ask("젠틀몬스터 매장 가 보셨어요? 안경 파는 곳인데 전시관 같죠. 이건요?",["리피지털","리테일테인먼트","리아날로그","리인벤팅 스페이스"],1,"사진 찍고 싶게 만들어서 <b>SNS에 퍼지게</b> 해요."),
+  askMulti('우리 부산본점은 8개 중 <b>어느 축이 비어 있을까요?</b> (2개)<small>힌트: 팝업 1년에 4번(센텀시티 22회), SNS 언급량은 센텀시티의 4분의 1</small>',STR8,[0,5],
+   '맞아요. <b>리테일 랩 · 리테일테인먼트</b>. 기억해 두세요. 오후 실습 때 다시 나옵니다.<span class="src">팝업 연 4회 → 반응을 재는 실험 부족 · SNS 1/4 → 보러 올 재미 부족</span>',
+   '정답은 <b>리테일 랩 · 리테일테인먼트</b>. 오후에 다시 나오니 기억해 두세요.<span class="src">팝업 연 4회 → 리테일 랩 · SNS 1/4 → 리테일테인먼트</span>')]},
+{b:0,n:"10장",time:"09:47~09:56",t:"백화점 마케팅의 4단계 목표",
+ say:"백화점 마케팅이 하는 일은 딱 <b>네 가지</b>예요. 순서대로 눌러 볼까요?",
+ memo:"핵심: 오늘 하루 계속 쓰는 뼈대. 동사로 기억하게 한다. 다 같이: '오게, 머물게, 사게, 다시 오게.'",
+ one:"<b>오게 → 머물게 → 사게 → 다시 오게</b>",
+ bridge:"그런데 행사가 잘됐는지는 <b>어떻게</b> 알까요?",
+ stages:[
+  orderTask("네 단계를 순서대로 누르세요.",["오게","머물게","사게","다시 오게"],
+   '<div class="fb ok">따라 해 볼까요? <b>"오게, 머물게, 사게, 다시 오게."</b></div><div class="chant"><div><b>① 유입</b><span>광고 · SNS · 팝업</span></div><div><b>② 체류</b><span>전시 · 포토존 · 공연</span></div><div><b>③ 전환</b><span>할인 · 쿠폰 · L.POINT</span></div><div><b>④ 재방문</b><span>VIP · 멤버십 · 시즌 행사</span></div></div>'),
+  sortTask("아까 자켓 예시에 넣어 볼까요? 각각 몇 단계일까요?",[["점심시간 팝업",0],["셋업 코디 체험",1],["퇴근길 쿠폰",2],["멤버십 적립",3]],STG_TXT,
+   '이걸 계속 반복하면 한 고객이 평생 우리한테 쓰는 돈, <b>생애가치</b>가 커져요.')]},
+{b:0,n:"11장",time:"09:56~10:05",t:"프로모션 목적과 KPI 매칭",
+ say:"행사 끝나고 '잘됐어요!' 하면 <b>뭘 보고</b> 잘됐다고 할까요?",
+ memo:"핵심: 목적마다 봐야 할 숫자가 다르다. 꼭 강조: 사람 오게 하려고 한 행사를 매출로 평가하는 실수. 주 목적 1개 + 부 목적 1개.",
+ one:"<b>목적이 다르면 보는 숫자도 다르다</b>",
+ bridge:"그럼 이런 일을 실제로 하는 <b>마케팅팀은 어떤 일을 할까요?</b>",
+ stages:[
+  poll("뭘 보고 '잘됐다'고 할까요?",["매출","방문객 수","SNS 후기","체류 시간","다시 온 사람"],-1,function(c){
+    var tot=c.reduce(function(a,b){return a+b},0);
+    return (tot?'대답이 '+c.filter(function(x){return x>0}).length+'가지로 갈렸죠. ':'')+'이렇게 성과를 판단하는 숫자를 <b>KPI, 핵심성과지표</b>라고 해요. 중요한 건 <b>단계마다 보는 숫자가 다르다</b>는 거예요.'}),
+  sortTask("행사마다 어떤 숫자를 봐야 할까요?",[["<b>오게</b> 하는 행사",0],["<b>머물게</b> 하는 행사",1],["<b>사게</b> 하는 행사",2],["<b>다시 오게</b> 하는 행사",3]],["방문객 수·신규 회원 수","체류 시간","구매 전환율·객단가","재방문율"],'객단가는 한 사람이 평균 얼마 썼는지예요.'),
+  sortTask("숫자로 재는 건 정량, 질로 보는 건 정성. 나눠 볼까요?",[["방문객 수",0],["객단가",0],["재방문율",0],["만족도",1],["후기",1],["추천 의향",1]],["정량 KPI","정성 KPI"],'숫자로 재는 건 <b>정량 KPI</b>, 만족도나 후기처럼 질로 보는 건 <b>정성 KPI</b>예요.'),
+  ask("제일 많이 하는 실수예요. 팝업에 사람이 엄청 왔는데 매출이 적어서 '실패'라고 평가했어요. 맞을까요?",["맞다, 매출이 적으면 실패다","아니다, 목적이 유입이었으니 방문객 수로 봐야 한다"],1,
+   '억울하죠? 목적이 유입이었으니까요. 그래서 행사 하나에 <b>주 목적 하나, 부 목적 하나</b>만 정하고 거기 맞는 숫자로 평가해야 해요.<span class="src">흔한 실수: 유입 목적 행사를 매출로 평가</span>')]},
+{b:0,recall:[["7","백화점은","사러 가는 곳 → 놀러 가는 곳"],["8","8대 전략 중","무엇을 강화할지 골라라"],["9","부산본점은","리테일 랩·리테일테인먼트가 비어 있다"],["10","4단계는","오게 → 머물게 → 사게 → 다시 오게"],["11","KPI는","목적이 다르면 보는 숫자도 다르다"]]},
+
+/* ── B 12~17 ── */
+{b:1,n:"12장",time:"10:05~10:15",t:"마케팅팀은 실제로 무슨 일을 할까요?",
+ say:"마케팅팀이라고 하면 <b>이벤트 여는 팀</b> 같죠? 실제로는 하는 일이 다섯 가지예요.",
+ memo:"핵심: 행사만 하는 팀이 아니라 기획 → 실행 → 분석 → 개선을 도는 팀. 오늘 실습도 이 순서(분석 → 기획 → KPI 평가).",
+ one:"마케팅팀은 <b>기획 → 실행 → 분석 → 개선</b>을 계속 돈다",
+ bridge:"10분 쉬고, 백화점 프로모션이 <b>실제로 어떤 종류</b>가 있는지 볼게요.",
+ rest:"☕ 휴식 10:15~10:25",
+ stages:[
+  sortTask("다섯 가지 업무와 설명을 짝지어 보세요.",[["시즌·테마 행사로 사람을 모으고 매출을 올림",0],["우수 고객 관리, 다른 브랜드와 함께 행사",1],["SNS 운영, 고객 데이터로 맞춤 혜택",2],["숫자에서 '그래서 뭘 할까'를 찾음",3],["끝난 행사를 평가하고 다음에 고침",4]],["프로모션 기획","VIP·협업","SNS·CRM","데이터 분석","성과 측정"],
+   '1번 프로모션 기획이 오늘 우리가 할 일이에요.'),
+  ask("여러분 폰에 오는 백화점 앱 쿠폰, 어떤 업무일까요?",["프로모션 기획","CRM 마케팅","VIP 행사","성과 측정"],1,"CRM은 고객관계관리예요. 그냥 오는 게 아니라 <b>여러분이 뭘 샀는지 보고</b> 보내는 거예요."),
+  orderTask("행사 하고 끝이 아니에요. 계속 도는 순서를 눌러 보세요.",["기획","실행","분석","개선"],'<div class="fb ok">보세요. <b>행사 하고 끝이 아니라, 고치고 다시 해요.</b> 오늘 실습도 이 순서예요. 분석하고, 기획하고, 마지막에 KPI로 평가하고요.</div>')]},
+{b:1,n:"13장",time:"10:25~10:32",t:"시즌 프로모션",
+ say:"쉬고 오셨죠? 지금 <b>9월</b>이에요. 백화점 가면 뭐가 보여요?",
+ memo:"핵심: 달력을 따라가는 행사. 학생들이 이미 다 아는 것이라 가볍게 넘어간다.",
+ one:"시즌은 <b>\"언제\"</b> (달력)",
+ bridge:"그럼 달력이 아니라 <b>사람</b>을 기준으로 하는 행사도 있겠죠?",
+ stages:[
+  poll("9월에 백화점 가면 뭐가 보여요?",["추석 선물세트","가을 신상","세일 안내","팝업"],0,function(){return '맞아요. 그게 <b>시즌 프로모션</b>이에요. <b>달력대로 돌아가는 행사</b>예요.'}),
+  sortTask("달력을 채워 볼까요?",[["신년세일",0],["봄세일",1],["여름 바캉스",2],["추석 선물전",3],["크리스마스",4]],["1월","3~4월","7~8월","9월","12월"],
+   '목적은 세 가지예요. <b>매출 올리고, 재고 정리하고, 사람 오게 하고.</b>'),
+  ask("고객이 이미 '그때 되면 사야지' 하고 있죠. 시즌 행사는 어떤 수요를 잡을까요?",["원래 있는 수요","새로 만드는 수요","없던 수요"],0,"<b>원래 있는 수요를 잡는</b> 행사예요.")]},
+{b:1,n:"14장",time:"10:32~10:39",t:"테마 프로모션",
+ say:"시즌 행사가 '언제'를 기준으로 한다면, 테마 행사는 <b>'누구'</b>를 기준으로 해요.",
+ memo:"핵심: 시즌은 '언제', 테마는 '누구'. 대부분 체험형, 관심 있는 사람만 와서 객단가가 높다.",
+ one:"테마는 <b>\"누구\"</b> (특정 고객)",
+ bridge:"그럼 백화점에서 <b>가장 중요한 고객</b>은 누구일까요?",
+ stages:[
+  sortTask("와인페어는 누가 올까요? 행사와 타깃을 이어 보세요.",[["와인페어·K-Food",0],["명품전",1],["리빙·베이비페어",2],["스포츠페어",3]],["미식가","VIP","신혼부부","운동 애호가"],'이렇게 <b>특정한 사람을 콕 찍어서</b> 여는 행사예요. 대부분 <b>체험형</b>이에요. 시음하고, 만져 보고, 직접 해 보고요.'),
+  sortTask("'언제'일까요, '누구'일까요?",[["추석 선물전",0],["크리스마스",0],["베이비페어",1],["오피스 직장인 출근룩 페어",1]],["시즌 (언제)","테마 (누구)"],'자켓 예시로 하면 <b>오피스 직장인 출근룩 페어</b>가 테마 프로모션이에요.'),
+  ask("테마 행사는 왜 객단가가 높을까요?",["관심 있는 사람만 와서","할인을 많이 해서","행사장이 커서"],0,"관심 있는 사람만 오니까 한 명이 쓰는 돈, <b>객단가가 높아요.</b>")]},
+{b:1,n:"15장",time:"10:39~10:46",t:"VIP 프로모션",
+ say:"VIP 고객한테 <b>10% 할인 쿠폰</b> 주면 좋아할까요?",
+ memo:"핵심: VIP는 할인보다 '나만 받는 대접'에 움직인다. 4단계 중 재방문.",
+ one:"VIP는 할인보다 <b>\"나만 받는 대접\"</b>",
+ bridge:"마지막 유형이에요. 요즘 백화점에서 <b>줄 서는 곳</b>, 어디죠?",
+ stages:[
+  poll("VIP에게 10% 할인 쿠폰, 좋아할까요?",["좋아한다","별로다","모르겠다"],1,function(){return '생각보다 별로 안 움직여요. 이분들은 돈보다 <b>\'나만 받는 대접\'</b>에 움직여요.'}),
+  sortTask("VIP를 움직이는 건 어느 쪽일까요?",[["전담 직원이 골라 주는 프라이빗 쇼핑",0],["세일 전에 먼저 사는 사전 판매",0],["VIP만 들어가는 라운지·공연 초청",0],["누구나 받는 10% 할인 쿠폰",1],["전 고객 대상 사은품",1]],["나만 받는 대접","누구나 받는 혜택"],'이렇게 챙기면 다른 백화점 안 가요. 이걸 <b>고객 충성도</b>라고 해요.'),
+  ask("아까 4단계에서 VIP는 어디였죠?",STG_TXT,3,"<b>재방문</b>이요. 계속 오게 하는 거예요. 객단가도 올라 <b>안정적 매출</b>이 돼요.")]},
+{b:1,n:"16장",time:"10:46~10:53",t:"팝업스토어",
+ say:"팝업스토어 <b>줄 서 보신 분?</b> 뭐 때문에 서셨어요?",
+ memo:"핵심: 학생 경험을 먼저 꺼내고, 그 경험을 세 단어(희소성 · SNS 인증 · 경험 소비)로 정리해 준다.",
+ one:"팝업은 <b>희소성 · SNS 인증 · 경험</b>",
+ bridge:"그런데 팝업이 잘되는 건 운이 아니에요. <b>아까 본 8대 전략 두 개</b>가 합쳐져서 그래요.",
+ stages:[
+  poll("팝업, 뭐 때문에 줄 서셨어요?",["캐릭터","아이돌","디저트","한정 굿즈","친구 따라"],-1,function(){return '왜 줄까지 섰을까요? <b>세 가지 이유</b>가 있어요.'}),
+  sortTask("세 가지 이유로 나눠 보세요.",[["2주만 하고, 100개만 판대요",0],["포토존에서 찍어서 올려요",1],["한정 굿즈 인증샷",1],["굿즈가 아니라 '거기 다녀온 나'를 샀어요",2]],["희소성","SNS 인증","경험 소비"],'SNS 인증은 백화점이 광고비 안 써도 <b>여러분이 홍보해 주는 거예요.</b>'),
+  ask("그래서 팝업은 4단계 중 어디에 가장 강할까요?",STG_TXT,0,"팝업은 <b>유입</b>에 가장 강해요.")]},
+{b:1,n:"17장",time:"10:53~11:00",t:"팝업스토어는 왜 통하는가",
+ say:"아까 부산본점에 <b>비어 있는 축이 두 개</b>라고 했죠? 뭐였죠?",
+ memo:"핵심: 9장 복선 회수. 맨 아래 '기획 시 정할 3가지'가 오후 실습 평가 기준.",
+ one:"팝업 = <b>리테일 랩 × 리테일테인먼트</b>, 부산본점은 <b>1년에 4번 vs 300번</b>",
+ bridge:"자, 이제 여러분이 직접 할 차례예요. <b>오늘의 미션</b>을 드릴게요.",
+ stages:[
+  askMulti("9장에서 찾은 부산본점의 빈 축 두 개는?",STR8,[0,5],'맞아요. 팝업은 그 <b>두 개를 합친 것</b>이에요.','정답은 <b>리테일 랩 · 리테일테인먼트</b>. 팝업은 이 두 개를 합친 거예요.'),
+  sortTask("팝업 속 두 전략을 찾아보세요.",[["매출이 아니라 <b>반응을 사는 것</b>. 4주 해 보면 안다",0],["사러 가는 곳이 아니라 <b>보러 가는 곳</b>",1],["찍고 싶은 곳 = 광고비 절약",1]],["리테일 랩","리테일테인먼트"],''),
+  ask("더현대 서울은 팝업을 1년에 300번 넘게 해요. 부산본점은 몇 번이었죠?",["4번","22번","40번"],0,"<b>4번.</b> 이 차이가 오늘 풀어야 할 문제의 핵심이에요."),
+  sortTask("팝업 기획할 때 꼭 정할 3가지. 답을 질문에 연결하세요.",[["20~30대가 이 브랜드를 좋아하나? 반응 데이터",0],["포토존은 장식이 아니라 핵심",1],["회원 가입 · 앱 설치 · 재방문 쿠폰",2]],["① 뭘 알아낼까","② 어디서 찍을까","③ 4주 뒤 뭘 남길까"],'이 세 가지, 오후에 여러분 기획안 평가할 때 <b>제가 물어볼 거예요.</b>')]},
+{b:1,recall:[["12","마케팅팀은","기획 → 실행 → 분석 → 개선을 계속 돈다"],["13","시즌은","\"언제\" (달력)"],["14","테마는","\"누구\" (특정 고객)"],["15","VIP는","할인보다 \"나만 받는 대접\""],["16","팝업은","희소성 · SNS 인증 · 경험"],["17","팝업 =","리테일 랩 × 리테일테인먼트 (4번 vs 300번)"]]},
+
+/* ── C 18~21 ── */
+{b:2,n:"18장",time:"11:00~11:05",t:"오늘의 미션: 20~30대 고객을 되찾아라",
+ say:"지금부터 여러분은 학생이 아니에요. <b>부산본점 마케팅팀 신입사원</b>이에요. 팀장님이 이렇게 말씀하셨어요. '요즘 <b>20~30대가 안 와.</b> 젊은 고객 데려올 행사 하나 기획해 와.'",
+ memo:"핵심: '듣는 사람'에서 '마케팅팀 신입'으로 역할을 확실히 준다. 오후 늦게 기획안 한 장으로 묶어 발표.",
+ one:"여러분은 <b>부산본점 마케팅팀 신입</b>, 미션은 <b>20~30대 되찾기</b>",
+ bridge:"팀장님이 자료를 하나 주셨어요. 같이 볼게요.",
+ stages:[
+  orderTask("오늘 만들 다섯 가지를 순서대로 눌러 보세요.",["행사명·목표","타깃·페르소나","컨셉","프로그램·홍보","KPI·기대효과"],'<div class="fb ok">오후 늦게 이걸 <b>기획안 한 장</b>으로 묶어서 발표할 거예요.</div>'),
+  ask("그럼 기획하기 전에 <b>제일 먼저</b> 해야 할 게 뭘까요?",["행사 이름 짓기","지금 상황을 숫자로 파악하기","포토존 디자인","연예인 섭외"],1,"맞아요. <b>지금 상황이 어떤지 숫자부터</b> 봐야죠.")]},
+{b:2,n:"19장",time:"11:05~11:15",t:"실습 케이스: 부산본점 현황 자료",
+ say:"먼저 꼭 말할 것: <b>교육용으로 만든 가상 데이터</b>입니다. 표에 숫자가 많죠? 다 볼 필요 없어요.",
+ memo:"핵심: 표를 위에서부터 읽지 않는다. '이상한 숫자 찾기'처럼 먼저 찾게 하고, 숫자 네 개만 짚는다. 1분 뒤 3~4명 발표, 칠판에 적기.",
+ one:"숫자 네 개: <b>9%p 하락 · 객단가 70% · 주말 68% · SNS 4배</b> / 조건: <b>3억 · 200평</b><br>'제 생각엔요'가 아니라 <b>'자료에 보면요'</b>",
+ bridge:"숫자는 봤는데, 이걸 <b>어떻게 정리</b>할까요? 마케터들이 쓰는 틀이 있어요.",
+ stages:[
+  timer(60,"1분 드릴게요. <b>'이거 문제다' 싶은 숫자</b>를 하나씩 찾아보세요.<small>홈 탭의 케이스 숫자를 보여 주세요.</small>"),
+  sortTask("찾은 숫자를 네 묶음 + 조건으로 정리해 볼까요?",[["20~30대 비중 31% → 22%",0],["40~50대 비중 41% → 46%",0],["20~30대 객단가 8.7만원 (전체 12.4만원의 70%)",1],["20~30대 주말 방문 68%",2],["센텀시티 20~30대 38%",3],["팝업 4회 vs 22회",3],["월 SNS 1,200건 vs 4,800건",3],["예산 3억원",4],["1층 아트리움 200평",4]],["① 누가 줄었나","② 얼마나 쓰나","③ 언제 오나","④ 옆집은","조건"],
+   '40~50대는 늘었죠. 백화점이 점점 <b>나이 들고 있는</b> 거예요. 3억과 200평은 오후 내내 나오니 <b>꼭 적어 두세요.</b>'),
+  ask("620만 명 기준으로 20~30대 9%p 감소는 약 몇 명일까요?",["약 5.5만 명","약 55만 명","약 200만 명"],1,"전체는 <b>3.2%</b> 줄었는데 20~30대는 <b>9%p</b>, 약 55만 명이 사라진 거예요."),
+  ask("20~30대는 와도 덜 써요(70%). 그럼 먼저 풀 문제는?",["객단가 올리기","오게 만들기","가격 내리기"],1,"<b>안 오는 게 먼저 풀 문제</b>예요. 와야 쓰죠."),
+  ask("열 명 중 일곱 명이 주말에만 와요. 평일은?",["포기해야 할 시간","아직 아무도 안 건드린 시간"],1,"나쁜 소식이기도 하지만 <b>좋은 소식</b>이에요."),
+  ask("20~30대가 부산을 떠난 걸까요?",["네, 떠났다","아니요, 센텀으로 갔다"],1,"팝업은 5배, SNS는 4배 차이. <b>리테일 랩, 리테일테인먼트</b>가 비어 있다는 게 숫자로 보이죠.")]},
+{b:2,n:"20장",time:"11:15~11:20",t:"환경분석 3C",
+ say:"3C, 이름은 어려워 보이는데 <b>방금 여러분이 한 거예요.</b>",
+ memo:"핵심: 3C는 세 방향으로 쳐다보는 것. 고객만 보면 '20대가 좋아하는 거 하자'로 끝남 → 센텀이 이미 하면 못 이김 → 우리 돈이 없으면 못 함.",
+ one:"3C = <b>고객이 원하고, 경쟁사가 안 하고, 우리가 할 수 있는 것</b>",
+ bridge:"3C 할 때 이 질문만 답하면 돼요. <b>10가지 질문</b>을 볼게요.",
+ stages:[
+  sortTask("19장에서 본 숫자, 어느 C일까요?",[["20~30대가 줄었다",0],["주말에만 온다",0],["센텀은 팝업 22번 한다",1],["우리는 3억 있고 200평 있다",2]],["고객 Customer","경쟁사 Competitor","자사 Company"],'알파벳 C가 세 개라서 <b>3C</b>예요.'),
+  ask("그럼 3C로 찾는 곳은 어디일까요?",["고객이 원하는 모든 것","경쟁사가 잘하는 것","고객이 원하고, 경쟁사가 안 하고, 우리가 할 수 있는 것"],2,"이 세 개가 <b>겹치는 곳</b>을 찾는 게 3C예요.")]},
+{b:2,n:"21장",time:"11:20~11:25",t:"3C/FAW 분석의 Point (10가지 질문)",
+ say:"10가지를 다 읽지 않을게요. <b>몇 개만 우리 케이스에</b> 넣어 볼게요.",
+ memo:"핵심: 각 C마다 대표 질문 하나만 19장 데이터에 대입. FAW = Forces At Work, 바깥 환경의 힘(경기·트렌드·인구 변화).",
+ one:"<b>없는 것만 세지 말고, 있는 걸로 설계하라</b>",
+ bridge:"3C를 조금 더 깊게 보는 방법이 있어요. <b>4P</b>랑 겹쳐 보는 건데, 빠르게 보고 실습 들어갈게요.",
+ stages:[
+  sortTask("질문에 대한 우리 케이스의 답이에요. 어느 칸일까요?",[["주 고객은? → 지금은 40~50대",0],["경쟁사의 약점은? → 센텀은 유명 브랜드 팝업이 강함. 안 하는 건?",1],["숫자로 보이는 강점은? → 서면 한복판, 지하철 바로 앞",2],["바깥 힘은? → 20~30대의 경험 소비·SNS 인증",3]],["고객","경쟁사","자사","FAW"],'FAW는 <b>바깥 환경의 힘</b>이에요. 아침에 본 경험 소비, 기억나죠?'),
+  ask("3C에 '팝업 적다, SNS 적다, 젊은 사람 없다'만 적었어요. 괜찮을까요?",["괜찮다, 정확한 분석이다","아니다, 있는 걸로 설계해야 한다"],1,"약점만 적으면 할 수 있는 게 없어져요. <b>없는 것만 세지 말고, 있는 걸로 설계하세요.</b>")]},
+{b:2,recall:[["18","여러분은","부산본점 마케팅팀 신입, 미션은 20~30대 되찾기"],["19","숫자 네 개:","9%p 하락 · 객단가 70% · 주말 68% · SNS 4배 / 3억 · 200평"],["20","3C =","고객이 원하고, 경쟁사가 안 하고, 우리가 할 수 있는 것"],["21","3C는","없는 것만 세지 말고, 있는 걸로 설계하라"]]},
+
+/* ── D 22~27 ── */
+{b:3,n:"22~25장",time:"11:25~11:30",t:"3C × 4P 점검표",
+ say:"3C를 좀 더 꼼꼼하게 보고 싶을 때는 <b>4P</b>랑 겹쳐 봐요. Product 제품, Price 가격, Place 유통, Promotion 홍보.",
+ memo:"핵심: 4장을 한 장씩 설명하지 않는다. 4P를 한 번 말하고, P마다 우리 케이스 질문 하나씩만. 참고용, 5분.",
+ one:"4P는 <b>P마다 질문 하나씩</b>. 특히 <b>Place: 서면역 바로 앞</b>",
+ bridge:"마지막으로 3C에 하나를 더 붙여서 보는 방법이 있어요.",
+ stages:[
+  sortTask("우리 케이스 질문이에요. 어느 P일까요?",[["20~30대가 부산본점에서 살 만한 게 있나요?",0],["객단가 8.7만원, 백화점이 비싸다고 느낄까요?",1],["서면역 바로 앞, 센텀보다 오기 쉬울까요?",2],["SNS 언급 1/4, 우리 홍보가 20~30대에게 닿고 있을까요?",3]],["Product","Price","Place","Promotion"],''),
+  ask("이 중 오후에 <b>큰 무기</b>가 되는 P는?",["Product","Price","Place","Promotion"],2,"서면은 부산에서 <b>지하철로 가장 오기 쉬운 곳</b>이에요. 약점만 있는 게 아니에요.")]},
+{b:3,n:"26장",time:"11:30~11:35",t:"3C + Channel (4C 순환도)",
+ say:"3C에 <b>Channel, 채널</b>을 하나 더 붙이면 <b>4C</b>가 돼요.",
+ memo:"핵심: SWOT, STP 두 단어만 소개. Channel = 고객과 만나는 통로. 경쟁사 쪽 영어 도구는 넘어가도 된다.",
+ one:"채널 = <b>고객과 만나는 통로</b> / SWOT · STP",
+ bridge:"자, 이제 <b>직접 써 볼 시간</b>이에요.",
+ stages:[
+  ask("채널은 무엇일까요?",["고객과 만나는 통로","유통 가격","경쟁사 목록"],0,"인스타그램, 앱, 매장, 지하철 광고 같은 거요. 좋은 걸 만들어도 <b>고객이 모르면 없는 거</b>랑 같아요."),
+  sortTask("두 단어만 알아 두세요. 어느 C를 볼 때 쓸까요?",[["SWOT: 강점·약점·기회·위협",0],["STP: 나누고 → 고르고 → 자리 잡기",1],["인스타그램 · 앱 · 지하철 광고",2]],["자사","고객","채널"],''),
+  ask("자켓 예시에서 '오피스 직장인'을 고른 건 STP 중 무엇일까요?",["S 세분화","T 타깃","P 포지셔닝"],1,"바로 <b>T, 타깃</b>이에요.")]},
+{b:3,n:"27장 · 실습 ①",time:"11:35~13:15",t:"3C 분석과 시사점 도출 (40분)",
+ say:"활동지를 보세요. 칸이 두 개예요. <b>왼쪽은 숫자 그대로</b>, <b>오른쪽은 여러분 생각</b>. 규칙 하나. <b>'자료에 보면요'로 시작하세요.</b>",
+ memo:"진행: 11:35 설명(5분) → 11:40 개인 작성(10분) → 11:50 조별 합치기(10분) → 점심 12:00~13:00 → 13:00 시사점 3가지(10분) → 13:10 2~3개 조 발표(5분). 점심 전엔 표 윗부분까지만. 모범답안(53장)은 발표 후 공개.",
+ one:"사실 칸엔 <b>숫자만</b>, 문제·기회 칸엔 <b>생각을</b>, 시사점엔 <b>근거 숫자와 함께</b><br>결론 세 단어: <b>20~30대 · 로컬 · 평일 저녁</b>",
+ bridge:"20~30대를 데려오자고 했죠. 그런데 <b>'20~30대'가 누구예요?</b> 너무 넓죠. 이제 딱 <b>한 사람</b>으로 좁혀 볼게요.",
+ rest:"🍚 점심 12:00~13:00 (시사점은 점심 뒤에)",
+ stages:[
+  sortTask("어느 칸에 들어갈까요?",[["20~30대 31% → 22%",0],["이 점포에 올 이유가 없어졌다",1],["주말 방문 68%",0],["평일은 아직 안 건드린 시간",1],["센텀 팝업 22회",0],["물량으로는 못 이긴다",1]],["확인한 사실","문제·기회"],'사실 칸에는 <b>여러분 생각을 넣지 마세요.</b>'),
+  coach("젊은 층이 백화점을 싫어한다 (사실 칸)",["좋아요, 다음 칸으로","그건 자료 어디에 나와요? 숫자로 바꿔 볼까요?","더 길게 써 보세요"],1),
+  coach("팝업 적다, SNS 적다, 젊은 사람 없다",["그럼 우리가 가진 건 뭐예요? 200평은 어디에 있죠?","약점을 더 찾아보세요","경쟁사 칸으로 옮기세요"],0),
+  coach("팝업을 22번 하자",["좋아요, 센텀을 따라잡아요","3억으로 22번 할 수 있을까요? 센텀이 안 하는 건 뭘까요?","30번으로 늘려 볼까요?"],1),
+  coach("SNS를 강화한다 (시사점)",["좋은 방향이에요","누구에게, 언제, 어떤 SNS요? 근거 숫자는요?","홍보팀에 넘기세요"],1),
+  coach("(주말 68%를 그냥 지나침)",["주말 행사를 더 크게 하자","주말에 68%면 평일은요? 문제일까요, 기회일까요?","주말은 중요하지 않아요"],1),
+  info('<p class="lq">조별 발표 뒤 공개: 실습 ① 모범답안 (53장)</p>'+tbl(["구분","확인한 사실","읽히는 문제·기회"],[["<b>고객</b>","20~30대 31%→22%, 약 55.8만 명 감소 / 객단가 70% / 주말 68%","부산을 떠난 게 아니라 <b>이 점포에 올 이유가 없어진 것</b>. 평일은 <b>아직 안 건드린 시간</b>"],["<b>경쟁사</b>","센텀 20~30대 38%, 팝업 22회, SNS 4,800건","물량으로는 못 이김. 센텀이 <b>비워 둔 축</b> → <b>로컬 콘텐츠, 평일 야간</b>"],["<b>자사</b>","방문 620만(−3.2%), 팝업 4회, SNS 1,200건 / 3억, 200평","콘텐츠는 열세. 하지만 <b>서면 도심, 주 통로와 붙은 200평</b>. 있는 것으로 설계"]])+
+   tbl(["","시사점","근거"],[["1","<b>20~30대 방문 회복</b>을 단일 목표로","31%→22%, 약 55.8만 명 감소"],["2","센텀과 같은 방식이 아니라 <b>'로컬'</b>로 승부","팝업 22 vs 4, SNS 4배 열세"],["3","주말이 아니라 <b>평일 저녁</b> 공략","주말 방문 68%"]])+
+   '<div class="fb info">제일 중요한 건 <b>경쟁사 칸</b>이에요. \'센텀처럼 하자\'가 아니라 <b>\'센텀이 안 하는 걸 하자\'</b>로 갔죠. 시사점 세 개가 <b>전부 숫자랑 짝지어져</b> 있죠? 이게 좋은 3C예요.</div>',"모범답안 확인 →"),
+  askMulti("오후 실습 전부가 출발하는 <b>세 단어</b>는? (3개)",["20~30대","로컬","평일 저녁","할인","주말","유명 브랜드"],[0,1,2],'<b>20~30대 · 로컬 · 평일 저녁</b>. 기억하세요!','정답은 <b>20~30대 · 로컬 · 평일 저녁</b>이에요.')]},
+{b:3,recall:[["22~25","4P는","P마다 질문 하나씩. 특히 Place: 서면역 바로 앞"],["26","채널 =","고객과 만나는 통로 / SWOT·STP"],["27","사실 칸엔","숫자만, 문제·기회 칸엔 생각을, 시사점엔 근거 숫자와 함께"],["53","결론 세 단어:","20~30대 · 로컬 · 평일 저녁"]]},
+
+/* ── E 28~30 ── */
+{b:4,n:"28장",time:"13:15~13:25",t:"구체적인 타깃 고객 정의",
+ say:"질문 하나 할게요. <b>25살 대학생</b>이랑 <b>38살 두 아이 엄마</b>, 같은 행사에 올까요?",
+ memo:"핵심: '20~30대'는 타깃이 아니라 범위. 한 사람으로 좁혀야 기획이 선명해진다. 자켓 예시 → 박소연(31세, 서면 마케터, 다음 주 첫 PT).",
+ one:"<b>\"20~30대\"는 타깃이 아니라 범위</b>, 한 사람으로 좁혀라",
+ bridge:"그럼 소연 씨는 자켓을 <b>왜</b> 살까요? 여기서 중요한 개념이 나와요.",
+ stages:[
+  ask("같은 행사에 올까요?",["네, 둘 다 20~30대니까","아니요, 좋아하는 게 완전히 달라요"],1,"그래서 <b>'20~30대'는 타깃이 아니라 범위</b>예요. 딱 한 사람으로 좁혀야 해요."),
+  sortTask("범위일까요, 페르소나일까요?",[["20~30대",0],["20대 여성",0],["김지은, 26세 회사원. 패션·뷰티·카페, 인스타에 매일 올림",1],["박소연, 31세, 서면 회사 마케터, 다음 주 첫 PT 발표",1]],["범위","페르소나"],'이름과 얼굴이 생기면 회의가 쉬워져요. <b>"이거 지은 씨가 좋아할까?"</b> 하고 물으면 되거든요.'),
+  ask("페르소나를 만들면 가장 좋은 점은?",["컨셉·상품·홍보가 전부 한 사람을 향한다","행사 비용이 줄어든다","경쟁사를 몰라도 된다"],0,"소연 씨라면 무슨 자켓을 어떻게 권할지 <b>바로 보이죠.</b>")]},
+{b:4,n:"29장",time:"13:25~13:35",t:"표현 니즈 vs 잠재 니즈",
+ say:"소연 씨한테 물어봐요. <b>'자켓 왜 사세요?'</b> 뭐라고 할까요?",
+ memo:"핵심: 오후에서 가장 중요한 개념. 천천히, 예시를 두 개 이상. '표현 니즈만 채우면 경쟁사와 같은 행사가 나온다.'",
+ one:"표현 니즈 = <b>말하는 것</b>, 잠재 니즈 = <b>속마음</b> / 자켓 → <b>자신감</b>",
+ bridge:"그럼 이제 여러분 조의 <b>'한 사람'</b>을 만들어 볼게요.",
+ stages:[
+  sortTask("말하는 것일까요, 속마음일까요?",[["발표 때 입을 자켓이 필요해요",0],["출근용 옷이 필요해요",0],["할인받고 싶어요",0],["회의실에서 믿음직해 보이고 싶다",1],["첫 발표에서 무시당하고 싶지 않다",1]],["표현 니즈","잠재 니즈"],'잠재 니즈는 본인도 말로 안 해요. 물어보면 <b>"그냥 옷 필요해서요"</b>라고 해요.'),
+  sortTask("어떤 니즈로 파는 방법일까요?",[["출근용 자켓 20% 할인",0],["\"첫 PT, 자신감을 입으세요\" + 퍼스널 컬러 코디 상담",1]],["표현 니즈로 팔기","잠재 니즈로 팔기"],'자켓이 아니라 <b>자신감</b>을 파는 거예요.'),
+  ask("표현 니즈로만 팔면 어떻게 될까요?",["우리만의 행사가 된다","옆 매장도 할인해서 가격 싸움이 된다"],1,"그래서 실습지에 써 있어요. <b>'표현 니즈만 채우면 경쟁사와 같은 행사가 나온다.'</b>")]},
+{b:4,n:"30장 · 실습 ②",time:"13:35~14:10",t:"타깃 페르소나와 니즈 정의 (35분)",
+ say:"규칙이 있어요. <b>실습 ①의 결론을 가져오세요.</b> 20~30대, 로컬, 평일 저녁. 그러니까 이 사람은 <b>평일 저녁에 서면을 지나다니는 사람</b>이어야 해요.",
+ memo:"진행: 13:35 설명(5분) → 13:40 윗부분 8칸(15분) → 13:55 니즈 2칸(10분) → 14:05 1~2개 조 소개(5분). 잠재 니즈가 안 나오면 '왜요?'를 세 번. 모범답안(55장)은 소개 후 공개.",
+ one:"고객이 말하는 걸 팔면 <b>가격 싸움</b>, 속마음을 팔면 <b>우리만의 행사</b><br>이서진이 원하는 것은 쇼핑이 아니라 <b>발견</b>",
+ bridge:"서진 씨가 <b>행사를 처음 알게 되는 순간부터 집에 갈 때까지</b> 어떤 일을 겪을까요? 지도로 그려 볼게요.",
+ stages:[
+  coach("20대 여성, SNS 좋아함",["좋아요, 니즈 칸으로","이름이 뭐예요? 어디 살아요? 어제 퇴근하고 뭐 했어요?","30대도 넣어 보세요"],1),
+  coach("주말마다 친구와 백화점에 오는 사람",["실습 ①에서 언제를 공략하자고 했죠?","주말 행사를 짜 봐요","좋은 페르소나예요"],0),
+  coach("잠재 니즈: 할인받고 싶다",["할인 폭을 정해 보세요","그건 본인이 말할 수 있는 거죠? 말 안 하는 속마음은요?","좋아요, 다음 칸으로"],1),
+  coach("잠재 니즈: 행복하고 싶다",["왜 센텀이 아니라 서면에 와야 해요? 그 이유가 되는 속마음은요?","좋은 니즈예요","더 크게 써 보세요"],0),
+  coach("(영향받는 사람 칸이 비어 있음)",["비워도 돼요","이 사람은 누구 말을 듣고 가게에 가요? 친구? 인플루언서?","가족이라고 쓰세요"],1),
+  orderTask("잠재 니즈가 안 나올 땐 <b>'왜요?'를 세 번</b>. 대화 순서대로 눌러 보세요.",["백화점 왜 안 가요?","살 게 없어서요","센텀에 다 있어서요","자랑할 만한 게요"],'<div class="fb ok">세 번 물었더니 속마음이 나왔죠. <b>"자랑할 만한 게"</b> 없다는 거예요.</div>'),
+  info('<p class="lq">소개 뒤 공개: 실습 ② 모범답안 (55장)</p>'+tbl(["항목","내용"],[["이름·나이·직업","<b>이서진</b>, 27세, IT기업 UI디자이너"],["거주지·이동","서면 원룸, 지하철·도보"],["라이프스타일","퇴근 후 서면에서 저녁, 주말엔 카페·전시"],["주로 쓰는 SNS","인스타그램, 유튜브, 스레드"],["영향받는 사람","인스타 로컬 큐레이션 계정, 친구 단톡방"],["백화점 방문","분기 1~2회, 주로 주말 오후"]])+
+   tbl(["","말하는 것·보이는 것","프로모션에서 이렇게"],[["<b>표현 니즈</b>","\"백화점은 살 게 있을 때만 가요.\" 팝업이 없으면 <b>서면을 지나쳐 센텀</b>까지 감","할인 쿠폰, 사은품 → 하지만 <b>센텀과 똑같은 행사</b>"],["<b>잠재 니즈</b>","\"센텀엔 자랑할 게 있는데 <b>우리 동네엔 없다.</b>\" 사는 것보다 <b>발견하는 경험</b>","부산 로컬 크리에이터를 주인공으로, 방문객이 <b>'발견자'</b>가 되게"]]),"모범답안 확인 →"),
+  ask("서진 씨가 진짜 원하는 건?",["할인","쇼핑","'내가 먼저 발견했다'는 기분"],2,"그래서 답이 <b>'부산 로컬'</b>로 가요. 유명 브랜드는 다들 알아서 자랑이 안 되고, 로컬 브랜드는 <b>나만 아는 거</b>라 자랑이 돼요. 소연 씨가 산 건 자신감, 서진 씨가 원하는 건 <b>발견</b>이에요.")]},
+{b:4,recall:[["28","\"20~30대\"는","타깃이 아니라 범위, 한 사람으로 좁혀라"],["29","표현 니즈 = 말하는 것,","잠재 니즈 = 속마음 (자켓 → 자신감)"],["30","잠재 니즈는","\"왜요?\" 세 번"],["55","이서진이 원하는 것은","쇼핑이 아니라 발견"]]},
+
+/* ── F 31~34 ── */
+{b:5,n:"31장",time:"14:10~14:17",t:"고객 여정지도란?",
+ say:"오늘 아침에 <b>커피 사 오신 분?</b> 그 커피 사기까지 무슨 일이 있었는지 말해 볼까요?",
+ memo:"핵심: 정의를 읽기보다 학생이 겪은 일로 여정을 먼저 그려 보게 한다. 한 명 지목해서 대답 끌어내기.",
+ one:"고객 여정 = 고객 입장에서 <b>처음부터 끝까지 따라가 보기</b>",
+ bridge:"막상 그리려고 하면 어디서부터 해야 할지 막히죠. <b>순서대로 채우면</b> 돼요.",
+ stages:[
+  orderTask("커피 사기까지, 순서대로 눌러 보세요.",["앱에서 쿠폰 봤다","가게 갔더니 줄이 길었다","주문했다","5분 기다렸다","받아서 나왔다"],'<div class="fb ok">이렇게 고객 입장에서 <b>처음부터 끝까지 따라가 보는 것</b>이 고객 여정이에요.</div>'),
+  askMulti("이 중에 <b>기분 나빴던 순간</b>은? (2개)",["앱에서 쿠폰 봤다","가게 갔더니 줄이 길었다","주문했다","5분 기다렸다","받아서 나왔다"],[1,3],'커피 맛은 좋았는데 <b>줄 서는 순간</b>에 기분이 나빴죠? 사장님은 <b>커피</b>만 보니까 모를 수도 있어요. 표로 그리면 <b>불편한 빈틈</b>이 보여요.','정답은 <b>줄이 길 때, 기다릴 때</b>예요. 표로 그리면 이런 빈틈이 보여요.')]},
+{b:5,n:"32장",time:"14:17~14:24",t:"고객 여정 지도 작성법",
+ say:"표가 복잡해 보이죠. <b>가로 다섯, 세로 다섯</b>, 25칸 채우면 끝이에요.",
+ memo:"핵심: 가로 5 × 세로 5 = 25칸. 감정 곡선이 가장 낮은 곳이 프로모션이 들어갈 자리. 백화점 최저점: 주차·계산 대기.",
+ one:"<b>가로 5 × 세로 5</b>, 감정 곡선이 <b>가장 낮은 곳</b>에 프로모션이 들어간다",
+ bridge:"그럼 이렇게 찾은 불편은 <b>어떻게 풀까요?</b> 아침에 본 8대 전략이 여기서 다시 나와요.",
+ stages:[
+  orderTask("가로는 시간 순서예요. 다섯 단계를 순서대로.",["인지","방문 전","방문·체험","구매","사후"],'<div class="fb ok">행사를 <b>알게 되고 → 가기 전 → 가서 보고 → 사고 → 집에 와서.</b></div>'),
+  sortTask("세로 다섯 항목이에요. 어느 줄에 들어갈까요?",[["인스타 피드, 계산대, 직원",0],["\"검색한다\", \"주차한다\"",1],["− \"결제 줄이 길다\"",2],["대기에 구매 포기",3],["모바일 결제 동선",4]],["접점","행동","감정","불편","기회"],'행동은 <b>동사로</b>, 감정은 <b>+ / 0 / −</b>, 기회는 <b>불편 하나에 아이디어 하나</b>.'),
+  askMulti("백화점에서 기분이 제일 많이 떨어지는 곳은? (2개)",["주차","계산 대기","포토존","시식","엘리베이터"],[0,1],'<b>주차</b>랑 <b>계산 대기</b>. 들어가기 전에 한 번, 나오기 전에 한 번. 이따 여러분 지도에도 나올 거예요.','정답은 <b>주차, 계산 대기</b>예요.')]},
+{b:5,n:"33장",time:"14:24~14:30",t:"감정이 떨어지는 지점을 무엇으로 푸는가",
+ say:"아침에 8대 전략 배웠죠. 여기서는 <b>불편을 푸는 도구</b>로 써요.",
+ memo:"핵심: 8대 전략은 이론이 아니라 해결 도구. 두 줄만 짚고 넘어간다. 아이디어 옆에 전략 이름 붙여 두기.",
+ one:"8대 전략은 <b>불편을 푸는 도구</b>, 불편 하나에 아이디어 하나",
+ bridge:"그럼 <b>서진 씨의 여정</b>을 그려 볼게요.",
+ stages:[
+  sortTask("불편을 어떤 전략으로 풀까요?",[["01 인지: 행사를 아예 모름",0],["02 방문 전: 주차 대기, 교통 부담",1],["03 방문·체험: 볼 건 많은데 쉴 곳 없음",2],["04 구매: 계산 대기, 재고 없음",1],["05 사후: 끝나면 관계도 끝",3]],["리테일테인먼트","리피지털","리테일 테라피","리테일 랩·리그린"],
+   '주차가 불편하다? <b>리피지털</b>, 앱으로 미리 주차 예약. 다리 아프다? <b>리테일 테라피</b>, 쉬는 공간.'),
+  ask("아이디어 옆에 전략 이름을 붙여 두는 이유는?",["보고서가 길어 보여서","나중에 '이거 왜 하는 거였지?'가 안 흔들리게","점수를 더 받으려고"],1,"원칙은 하나예요. <b>불편 하나에 아이디어 하나.</b>")]},
+{b:5,n:"34장 · 실습 ③",time:"14:30~15:10",t:"고객 여정 지도 작성 (40분)",
+ say:"주인공은 실습 ②에서 만든 <b>여러분 조의 페르소나</b>예요. <b>위에서 아래로가 아니라, 한 줄씩 가로로</b> 채우세요.",
+ memo:"진행: 14:30 설명(5분) → 14:35 접점·행동(15분) → 14:50 감정·불편, 곡선(10분) → 15:00 기회 + 맨 아래 질문(5분) → 15:05 1~2개 조 공유(5분). 감정 칸엔 +/0/− 와 한 마디 대사. 모범답안(57장)은 공유 후 공개.",
+ one:"<b>대기를 없애지 말고 대기를 체험으로 바꿔라</b>",
+ bridge:"10분 쉬고 오세요. 돌아와서는 이 모든 걸 <b>숫자 목표</b>로 바꿀 거예요. '잘해 보자'가 아니라 <b>'몇 명, 몇 퍼센트, 언제까지'</b>로요.",
+ rest:"☕ 휴식 15:10~15:20",
+ stages:[
+  orderTask("채우는 순서예요. 한 줄씩 가로로!",["접점·행동","감정·불편","기회","맨 아래 질문"],'<div class="fb ok">마지막 질문: <b>감정이 가장 낮은 곳은 어디고, 거기를 어떻게 끌어올릴 건가?</b></div>'),
+  coach("접점: 매장",["매장 어디요? 입구? 계산대? 만나는 직원은요?","좋아요","온라인만 쓰세요"],0),
+  coach("행동: 검색, 구매",["동사로 바꿔 볼까요? '피드에서 보고 저장한다'처럼요","짧아서 좋아요","감정 칸으로 옮기세요"],0),
+  coach("감정: + + + + +",["정말 다 좋았어요? 줄 설 때도요? 주차할 때도요?","행복한 여정이네요","−를 하나 아무 데나 넣으세요"],0),
+  coach("방문 전: 차 타고 와서 주차한다",["주차 쿠폰을 넣어요","서진 씨는 뭘 타고 다닌다고 했죠?","좋아요"],1),
+  coach("(사후 칸이 비어 있음)",["사후는 원래 비워요","행사 끝나고 서진 씨가 다시 올 이유가 있어요?","앱 설치라고 쓰세요"],1),
+  info('<p class="lq">공유 뒤 공개: 실습 ③ 모범답안 (57장)</p>'+tbl(["항목","01 인지","02 방문 전","03 방문·체험","04 구매","05 사후"],[["<b>접점</b>","인스타 피드·릴스, 단톡방","행사 계정, 지도·후기","입구 사이니지, 크리에이터 부스","계산대, 앱 쿠폰","앱 알림, 인스타 리포스트"],["<b>행동</b>","우연히 보고 <b>저장한다</b>","덜 붐비는 때를 <b>검색한다</b>","둘러보고 <b>사진 찍는다</b>","마음에 든 걸 <b>결제한다</b>","사진 올리고 <b>공유한다</b>"],["<b>감정</b>","<b>+</b> \"이건 좀 다른데\"","<b>0</b> \"주차가 걸리는데\"","<b>+</b> \"볼 게 많다\"",'<b style="color:var(--bad)">−</b> "결제 줄이 길다"',"<b>0</b> \"다음엔 언제 하지\""],["<b>불편</b>","피드에 묻혀 지나침","주차·혼잡 걱정","동선이 끊겨 일부만 봄","대기에 구매 포기, 혜택 모름","한 번 오고 끝"],["<b>기회</b>","크리에이터 12곳 동시 릴스, #서면인디서머","평일 저녁 음료 쿠폰, <b>지하철 도보 3분</b> 안내","<b>스탬프 6종</b> 동선","3만원 이상 구매 시 <b>커스텀 굿즈 제작</b>","<b>3회 방문</b> 스탬프 완성 시 한정 굿즈"]]),"모범답안 확인 →"),
+  ask("모범답안에서 감정이 가장 낮은 곳은?",["01 인지","02 방문 전","04 구매","05 사후"],2,"기분 좋게 왔는데 <b>계산 줄에서 다 무너져요.</b>"),
+  ask("모범답안은 04 구매를 어떻게 풀었을까요?",["계산대를 늘렸다","할인을 더 줬다","대기를 체험으로 바꿨다 (커스텀 랩)"],2,"기다리는 시간이 <b>'내 것을 만드는 시간'</b>이 돼요."),
+  ask("02 방문 전에서 주차 쿠폰 대신 '지하철 도보 3분'을 넣은 이유는?",["주차장이 없어서","서진 씨가 지하철을 타서 (페르소나에 맞춤)","광고비가 싸서"],1,"05 사후의 <b>3회 방문 스탬프</b>는 아침에 배운 4단계 중 <b>재방문</b>을 만든 거예요.")]},
+{b:5,recall:[["31","고객 여정 =","고객 입장에서 처음부터 끝까지 따라가 보기"],["32","가로 5 × 세로 5,","감정 곡선이 가장 낮은 곳에 프로모션"],["33","8대 전략은","불편을 푸는 도구, 불편 하나에 아이디어 하나"],["34","채우기는","한 줄씩 가로로, 페르소나와 맞는지 확인"],["57","대기를 없애지 말고","대기를 체험으로 바꿔라"]]}
+];
+var LB=0;
+function chNav(){
+  var inB=LECT.map(function(c,i){return i}).filter(function(i){return LECT[i].b===LB});
+  var chaps=LECT.filter(function(c){return !c.recall});
+  var dn=chaps.filter(function(c){return LDONE[LECT.indexOf(c)]}).length;
+  $("#chnav").innerHTML='<div class="chnav" style="width:100%">'+BLOCKS.map(function(b,i){return '<button data-b="'+i+'"'+(i===LB?' aria-current="step"':'')+'><b>'+b[0]+'</b>'+b[1]+'</button>'}).join("")+'</div>'+
+   '<div class="chnav" style="width:100%">'+inB.map(function(i){var c=LECT[i];return '<button data-c="'+i+'" class="'+(LDONE[i]?"done":"")+'"'+(i===LC?' aria-current="step"':'')+'><b>'+(c.recall?"복습":c.n)+'</b>'+(c.recall?"한 줄씩":c.time)+'</button>'}).join("")+'</div><p class="note" style="width:100%">완료 '+dn+' / '+chaps.length+'개 장</p>';
+  $$("#chnav [data-b]").forEach(function(b){b.addEventListener("click",function(){LB=+b.dataset.b;LC=LECT.map(function(c){return c.b}).indexOf(LB);renderLect()})});
+  $$("#chnav [data-c]").forEach(function(b){b.addEventListener("click",function(){LC=+b.dataset.c;renderLect()})});
+}
+function renderLect(){
+  LB=LECT[LC].b;chNav();var el=$("#lect"),c=LECT[LC];
+  var nextBtn=LC<LECT.length-1?'<button class="btn" id="lnext">'+(LECT[LC+1].recall?"한 줄 복습 →":(LECT[LC+1].b!==LB?BLOCKS[LECT[LC+1].b][0]+" 시작 →":LECT[LC+1].n+"으로 →"))+'</button>':'';
+  if(c.recall){
+    el.innerHTML='<div class="say"><span class="who">강사</span><p>'+BLOCKS[c.b][0].replace(/ · .*/,"")+'을 한 줄씩 기억해 볼까요? 빈칸을 눌러 확인하세요.</p></div><div class="recall">'+c.recall.map(function(r){return '<div><span class="no">'+r[0]+'</span><span>'+r[1]+' <button class="blank">'+r[2]+'</button></span></div>'}).join("")+'</div><div class="row"><button class="btn ghost sm" id="rcAll">모두 보기</button>'+nextBtn+'</div>';
+    $$("#lect .blank").forEach(function(b){b.addEventListener("click",function(){b.classList.add("show")})});
+    $("#rcAll").addEventListener("click",function(){$$("#lect .blank").forEach(function(b){b.classList.add("show")})});
+    LDONE[LC]=true;
+  }else{
+    el.innerHTML='<div class="row" style="justify-content:space-between"><span class="pill c">'+c.n+' · '+c.time+'</span><span class="note">'+BLOCKS[c.b][0]+'</span></div><h2>'+c.t+'</h2>'+
+     '<div class="say"><span class="who">강사</span><p>'+c.say+'</p></div><details class="memo"><summary>강사 노트</summary>'+c.memo+'</details><div id="lbody" class="grid"></div>'+
+     '<div id="lend" class="oneline" hidden><div class="note">한 줄 기억</div><div class="big">'+c.one+'</div><p class="bridge">넘어가는 한마디: "'+c.bridge+'"</p>'+(c.rest?'<p class="pill" style="justify-self:start">'+c.rest+'</p>':'')+'<div class="row">'+nextBtn+'</div></div>';
+    seq($("#lbody"),c.stages,function(){LDONE[LC]=true;$("#lend").hidden=false;wire();checkAll();chNav()});
+  }
+  function wire(){var nb=$("#lnext");if(nb)nb.onclick=function(){LC++;renderLect();var t=$("#game0");if(t&&t.scrollIntoView)t.scrollIntoView({block:"start"})}}
+  wire();checkAll();
+}
+function checkAll(){if(LECT.every(function(c,i){return c.recall||LDONE[i]})){gamesDone[0]=true;updateProgress()}}
+
 /* ───────── 시작 ───────── */
-renderTerms();g1render();g2init();g3render();simSync();renderNav();renderStep();updateProgress();
+renderTerms();renderLect();g1render();g2init();g3render();simSync();renderNav();renderStep();updateProgress();
 var h=(location.hash||"").replace("#","");if(h)showTab(h);
 })();
 </script>
