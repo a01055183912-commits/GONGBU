@@ -406,7 +406,7 @@ footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:cent
       <h2 style="margin-bottom:12px">이렇게 공부하세요</h2>
       <div class="steps3">
         <button data-go="glossary"><b>1. 용어</b>카드 80여 장. 아는 카드에 체크</button>
-        <button data-go="games"><b>2. 게임</b>7~47장 강의 따라 + 심화 4종. 틀리면 강의 근거가 나옵니다</button>
+        <button data-go="games"><b>2. 게임</b>7~51장 강의 따라 + 심화 4종. 틀리면 강의 근거가 나옵니다</button>
         <button data-go="sheet"><b>3. 활동지</b>10단계로 '남는 행사'를 직접 설계</button>
       </div>
     </div>
@@ -445,10 +445,10 @@ footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:cent
 <section class="tab" id="tab-games" role="tabpanel">
   <div>
     <h2>워밍업 게임</h2>
-    <p class="lead">7~47장 강의 흐름 게임(본 강의 + 확장 차시 ①) + 심화 게임 4종. 각 5분 내외. 점수는 이 화면에서만 유지됩니다(새로고침하면 초기화).</p>
+    <p class="lead">7~51장 강의 흐름 게임(본 강의 + 확장 차시) + 심화 게임 4종. 각 5분 내외. 점수는 이 화면에서만 유지됩니다(새로고침하면 초기화).</p>
   </div>
   <div class="gsel" id="gsel">
-    <button data-g="0" aria-pressed="true"><b>강의 따라 7~47장</b><span class="s">본 강의 + 확장 차시 ①</span> <span class="done" id="gd0"></span></button>
+    <button data-g="0" aria-pressed="true"><b>강의 따라 7~51장</b><span class="s">본 강의 + 확장 차시 전체</span> <span class="done" id="gd0"></span></button>
     <button data-g="1" aria-pressed="false"><b>1. 여정 KPI 매칭</b><span class="s">수단·KPI를 4단계에</span> <span class="done" id="gd1"></span></button>
     <button data-g="2" aria-pressed="false"><b>2. 8대 전략 뒤집기</b><span class="s">사례 ↔ 전략 짝 맞추기</span> <span class="done" id="gd2"></span></button>
     <button data-g="3" aria-pressed="false"><b>3. SMART 판정관</b><span class="s">목표 10문장 판정</span> <span class="done" id="gd3"></span></button>
@@ -458,9 +458,9 @@ footer{padding-block:20px 40px;color:var(--muted);font-size:14px;text-align:cent
   <!-- 게임1 -->
   <div class="game on card" id="game0">
     <div class="row" style="justify-content:space-between">
-      <h2>강의 따라 게임 · 7~47장</h2><span class="score num" id="g0score"></span>
+      <h2>강의 따라 게임 · 7~51장</h2><span class="score num" id="g0score"></span>
     </div>
-    <p class="note">강사가 질문하고 → 대답을 듣고 → 게임으로 확인하고 → 한 줄로 남깁니다. 실습 ①~⑨ 장에는 코칭 질문 고르기와 모범답안 공개가 들어 있습니다. 대답 집계 +1은 강사가 눌러 주세요.</p>
+    <p class="note">강사가 질문하고 → 대답을 듣고 → 게임으로 확인하고 → 한 줄로 남깁니다. 실습 ①~⑪ 장에는 코칭 질문 고르기와 모범답안 공개가 들어 있습니다. 대답 집계 +1은 강사가 눌러 주세요.</p>
     <nav class="grid" id="chnav" aria-label="강의 장" style="gap:8px"></nav>
     <div id="lect" class="grid"></div>
   </div>
@@ -1263,9 +1263,28 @@ function timer(sec,q){return function(d,next){
   bs[1].addEventListener("click",fin)}}
 function coach(sit,opts,ans,msg){return ask('조가 이렇게 썼어요: <b>「'+sit+'」</b><small>선생님은 뭐라고 물어볼까요?</small>',opts,ans,msg||"답을 알려 주지 말고, 질문으로 스스로 고치게 해요.")}
 function tbl(head,rows){return '<div class="tblwrap"><table><thead><tr>'+head.map(function(h){return '<th>'+h+'</th>'}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join("")+'</tr>'}).join("")+'</tbody></table></div>'}
+function presentTool(){return function(d,next){
+  var left=0,t=null;
+  d.innerHTML='<p class="lq">발표 타이머<small>6개 조 이상이면 5분 + 2분으로 줄이세요.</small></p><div class="row"><span class="bigroi num" style="color:var(--navy)">0:00</span></div><div class="row"><button class="btn coral sm" data-s="420">발표 7분</button><button class="btn ghost sm" data-s="180">질의 3분</button><button class="btn ghost sm" data-s="300">발표 5분</button><button class="btn ghost sm" data-s="120">질의 2분</button><button class="btn ghost sm" data-s="0">정지</button></div><div class="row"><button class="btn sm" id="ptNext">평가 집계표 열기 →</button></div>';
+  var out=d.querySelector(".bigroi");
+  function show(){var m=Math.floor(Math.max(left,0)/60),s=Math.max(left,0)%60;out.textContent=m+":"+(s<10?"0":"")+s;out.style.color=left<=0&&t===null?"var(--navy)":(left<=60?"var(--bad)":"var(--navy)")}
+  $$("[data-s]",d).forEach(function(b){b.addEventListener("click",function(){clearInterval(t);t=null;left=+b.dataset.s;show();if(left>0)t=setInterval(function(){left--;show();if(left<=0){clearInterval(t);t=null;out.textContent="시간 끝!";out.style.color="var(--bad)"}},1000)})});
+  var nb=d.querySelector("#ptNext");nb.addEventListener("click",function(){if(nb.disabled)return;nb.disabled=true;next()});show()}}
+function scoreBoard(){return function(d,next){
+  var crit=["문제 정의","차별성","운영·홍보","예산·KPI","완성도"],teams=[1,2,3,4,5].map(function(n){return {name:n+"조",s:[0,0,0,0,0],c:""}});
+  function draw(){
+    var tot=teams.map(function(t){return t.s.reduce(function(a,b){return a+(+b||0)},0)}),sorted=tot.slice().sort(function(a,b){return b-a});
+    d.innerHTML='<p class="lq">상호 평가 집계표<small>항목당 0~20점 · 점수는 이 화면에만 남습니다.</small></p><div class="tblwrap"><table class="num"><thead><tr><th>조</th>'+crit.map(function(c){return '<th class="r">'+c+'</th>'}).join("")+'<th class="r">합계</th><th class="r">순위</th><th>한 줄 코멘트</th></tr></thead><tbody>'+
+     teams.map(function(t,i){return '<tr><td><input class="cell" data-t="'+i+'" data-k="name" value="'+esc(t.name)+'" style="min-width:60px"></td>'+t.s.map(function(v,k){return '<td><input class="cell num" type="number" min="0" max="20" data-t="'+i+'" data-k="'+k+'" value="'+(v||"")+'" style="text-align:right;min-width:56px"></td>'}).join("")+'<td class="r"><b>'+tot[i]+'</b></td><td class="r">'+(tot[i]?sorted.indexOf(tot[i])+1:"—")+'</td><td><input class="cell" data-t="'+i+'" data-k="c" value="'+esc(t.c)+'" placeholder="뭘 고치면 좋을까?" style="min-width:160px"></td></tr>'}).join("")+
+     '</tbody></table></div><div class="row"><button class="btn ghost sm" id="sbAdd">조 추가</button><button class="btn sm" id="sbNext">총평으로 →</button></div>';
+    $$("input",d).forEach(function(inp){inp.addEventListener("change",function(){var t=teams[+inp.dataset.t],k=inp.dataset.k;if(k==="name")t.name=inp.value;else if(k==="c")t.c=inp.value;else t.s[+k]=Math.max(0,Math.min(20,+inp.value||0));draw()})});
+    d.querySelector("#sbAdd").addEventListener("click",function(){teams.push({name:(teams.length+1)+"조",s:[0,0,0,0,0],c:""});draw()});
+    var nb=d.querySelector("#sbNext");nb.addEventListener("click",function(){if(d.dataset.done)return;d.dataset.done=1;nb.disabled=true;next()});
+    if(d.dataset.done)nb.disabled=true;
+  }draw()}}
 var STR8=G2.map(function(p){return p[0]});
 
-var BLOCKS=[["7~11장","09:25~10:05"],["12~17장","10:05~11:00"],["18~21장","11:00~11:25"],["22~27장 · 실습①","11:25~13:15"],["28~30장 · 실습②","13:15~14:10"],["31~34장 · 실습③","14:10~15:20"],["35~39장 · 실습④⑤","15:20~17:15"],["40~41장 · 실습⑥ · 마무리","17:15~18:00"],["확장① 42~47장 · 실습⑦⑧⑨","확장 차시"]];
+var BLOCKS=[["7~11장","09:25~10:05"],["12~17장","10:05~11:00"],["18~21장","11:00~11:25"],["22~27장 · 실습①","11:25~13:15"],["28~30장 · 실습②","13:15~14:10"],["31~34장 · 실습③","14:10~15:20"],["35~39장 · 실습④⑤","15:20~17:15"],["40~41장 · 실습⑥ · 마무리","17:15~18:00"],["확장① 42~47장 · 실습⑦⑧⑨","확장 차시"],["확장② 48~51장 · 실습⑩⑪","확장 차시"]];
 var LECT=[
 /* ── A 7~11 ── */
 {b:0,n:"7장",time:"09:25~09:32",t:"백화점은 어떻게 변화하고 있을까요?",
@@ -1734,7 +1753,62 @@ var LECT=[
   ask("본전 10억, 예상 11억. 여유는?",["1억","3억","11억"],0,"좋아하기엔 일러요. <b>여유가 1억뿐이에요.</b>"),
   ask("방문객 증가가 25%가 아니라 <b>20%</b>에 그치면?",["여전히 흑자","마이너스로 돌아선다"],1,"증분 방문이 약 3.28만 명으로 줄어 증분 매출 약 9.1억 → 본전 10억 아래. <b>게임 4 손익 시뮬레이터 미션 ②</b>에서 직접 확인해 보세요."),
   ask("발표할 때 가장 좋은 말은?",["ROI +10%니까 성공한 기획입니다.","ROI는 +10%지만 여유가 적다. 그래서 주 KPI는 방문객 수로 보고, SNS 언급량과 재방문율을 함께 평가한다."],1,"<b>위험까지 알고 말하는 기획</b>이 좋은 기획이에요.")]},
-{b:8,recall:[["42·65","홍보는 시점마다 다르게,","SNS 열세는 말하게 만드는 사람 수로 뒤집는다"],["43","예비비 남기고,","홍보는 먼저 깎지 말고, 안전은 전제 조건"],["44·67","일반 비중을 벗어나도","이유만 있으면 된다, 삭감해도 홍보는 끝까지"],["45","성과 측정은","다음 행사를 위해 한다"],["46","매출 올랐는데 손해?","증분 → GP율 → ROI → 손익분기 12억"],["47·69","증분 매출은","더 오는 사람 × 사는 비율 × 쓰는 돈, 위험까지 말하라"]]}
+{b:8,recall:[["42·65","홍보는 시점마다 다르게,","SNS 열세는 말하게 만드는 사람 수로 뒤집는다"],["43","예비비 남기고,","홍보는 먼저 깎지 말고, 안전은 전제 조건"],["44·67","일반 비중을 벗어나도","이유만 있으면 된다, 삭감해도 홍보는 끝까지"],["45","성과 측정은","다음 행사를 위해 한다"],["46","매출 올랐는데 손해?","증분 → GP율 → ROI → 손익분기 12억"],["47·69","증분 매출은","더 오는 사람 × 사는 비율 × 쓰는 돈, 위험까지 말하라"]]},
+/* ── J 확장 ② 48~51 ── */
+{b:9,n:"48장",time:"확장 · 5분",t:"기획안 작성 요소 ①: 행사 기본 정보",
+ say:"여러분, 좋은 소식이 있어요. 기획안에 들어갈 건 <b>이미 다 만들었어요.</b>",
+ memo:"핵심: 새로 배우는 게 아니라 이미 만든 것을 제자리에 넣는 것. '또 뭘 해야 해?' 하고 지치지 않게. 48·49장 합쳐 권장 10분.",
+ one:"기획안은 <b>새로 만드는 게 아니라 모으는 것</b>, 팀장님은 <b>한 장만</b> 본다",
+ bridge:"그럼 나머지 요소도 볼게요. 그런데 이 슬라이드 예시, 좀 이상해요.",
+ stages:[
+  sortTask("기본 정보 네 가지, 어느 실습에서 가져올까요?",[["행사명",0],["목표 설정",1],["예산 계획",2]],["실습 ⑤","실습 ④","실습 ⑧"],'지금부터 할 일은 <b>새로 만드는 게 아니라, 흩어진 걸 한 장에 모으는 거</b>예요.'),
+  ask("기획안을 받는 팀장님은 활동지 몇 장을 볼까요?",["열 장 전부","한 장"],1,"팀장님은 바빠요. <b>한 장만 보고</b> '이거 하자, 말자'를 정해요.")]},
+{b:9,n:"49장",time:"확장 · 5분",t:"기획안 작성 요소 ②: 타깃 고객과 컨셉",
+ say:"이 슬라이드 예시를 보세요. <b>'Summer Vibes 2026, K-POP·디저트·아티스트 협업.'</b> 괜찮아 보이죠? 오늘 배운 걸로 한번 따져 볼게요.",
+ memo:"핵심: 48·49장을 합치면 기획안 뼈대 9개. 49장 예시를 '나쁜 예'로 활용. ⚠️ 49장 예시(Summer Vibes, 월 2만 명·월 15억)는 모범답안(서면 인디 서머, 20.5만 명·증분 11억)과 숫자·컨셉이 다름 → '일반적인 예시 vs 우리 케이스' 비교 소재로 쓰거나 강의 전에 바꿔 두기.",
+ one:"\"Summer Vibes\"는 <b>센텀도 할 수 있는 행사</b><br>앞 실습과 이어지지 않으면 멋있어 보여도 힘이 없다",
+ bridge:"그럼 여러분 조의 기획안을 <b>한 장으로</b> 만들어 볼게요.",
+ stages:[
+  info('<div class="fb info"><b>슬라이드 예시</b><br>컨셉: Summer Vibes 2026 · K-POP·디저트·아티스트 협업<br>타깃: 20~30대 직장인·대학생, SNS 활발<br>프로그램: 주 3회 공연, 팝업, 일일 이벤트<br>KPI: 월 2만 명 방문, 월 15억 매출</div>',"따져 볼게요 →"),
+  ask("이거 <b>센텀에서도</b> 할 수 있어요?",["네, 할 수 있다 → 차별성이 없다","아니요, 우리만 할 수 있다"],0,"네, 할 수 있죠. <b>차별성</b>이 없어요."),
+  askMulti("이 예시에 <b>빠진 것</b> 세 가지는?",["센텀과의 차별성","서진 씨의 속마음 '발견'","평일 저녁 공략","K-POP 공연","디저트"],[0,1,2],'속마음도, 평일 저녁도 안 보여요. <b>앞 실습과 이어지지 않으면</b> 멋있어 보여도 힘이 없어요.','정답은 <b>차별성 · 속마음 · 평일 저녁</b>이에요.'),
+  sortTask("어느 쪽이 부산본점만의 행사예요?",[["센텀에는 없는 것, 서면에만 있는 것",0],["부산 로컬 크리에이터 12팀",0],["목·금 야간 나이트 아케이드",0],["Summer Vibes 2026",1],["K-POP·디저트·아티스트 협업",1]],["서면 인디 서머 (우리 케이스)","일반 예시"],'')]},
+{b:9,n:"50장 · 실습 ⑩",time:"확장 · 45분",t:"프로모션 기획안 1페이지",
+ say:"먼저 지금까지 만든 활동지를 <b>책상에 다 펼치세요.</b> 실습 ①부터 ⑨까지요. 칸마다 <b>두세 줄</b>이에요. 비고 칸에 <b>실습 번호</b>를 적으세요.",
+ memo:"진행: 설명 + 활동지 펼치기 5분 → 8칸 채우기(칸마다 2~3줄, 비고에 실습 번호) 25분 → 연결 점검 10분 → 발표 담당자·순서 5분. 마지막 5분에 73장 평가 기준을 먼저 보여 주면 발표 체크리스트가 됨. 앱 ⑤ 활동지 ⑩에서 1페이지 자동 정리.",
+ one:"8칸마다 <b>실습 번호</b>, 한 칸을 짚으면 <b>다른 칸이 따라 나와야</b> 한다",
+ bridge:"이제 이 한 장을 들고 <b>팀장님 앞에서 발표</b>해 볼게요.",
+ stages:[
+  sortTask("8칸은 각각 어느 실습에서 가져올까요?",[["① 배경·문제",0],["② 타깃·니즈",1],["③ 목표",2],["④ 행사명·컨셉",3],["⑤ 프로그램",4],["⑥ 홍보",5],["⑦ 예산",6],["⑧ KPI·효과",7]],["①","②","④","⑤","⑥","⑦","⑧","⑨"],'실습 ③ 여정 지도는 따로 칸이 없지만, ⑤ 프로그램(굿즈 커스텀 랩·리턴 패스) 안에 들어 있어요.'),
+  sortTask("연결 점검! 이어질까요, 무너질까요?",[["① 주말에만 온다(68%) → ⑤ 나이트 아케이드 목·금",0],["① SNS 4배 열세 → ⑦ 홍보 35%",0],["② '자랑할 게 있었으면' → ④ '서면에만 있는 것'",0],["② 20~30대 서진 씨 → ⑤ 40대 골프 클래스",1],["② 인스타 로컬 계정을 봄 → ⑥ 지역 신문 광고만",1],["③ 방문 +25% → ⑧ 주 KPI는 매출",1]],["이어진다","무너진다"],'타깃이 20~30대인데 프로그램이 40대용이면 <b>기획안이 무너집니다.</b>'),
+  coach("(칸마다 한 문단씩 길게)",["자세해서 좋아요","팀장님이 30초만 본다면 어떤 한 줄을 남길래요?","글씨를 작게 하세요"],1),
+  coach("(① 문제 칸에 숫자가 없음)",["실습 ①에서 찾은 숫자가 여기 어디 있어요?","문장이 좋아요","숫자는 발표 때 말하세요"],0),
+  coach("② 타깃: 20~30대",["이름이 있었잖아요. 그 사람 속마음은요?","범위가 넓어서 좋아요","10대도 넣어요"],0),
+  coach("(⑤ 프로그램과 ⑦ 예산이 안 맞음)",["예산은 대충 맞으면 돼요","나이트 아케이드 게임기 렌탈비, 예산 어디에 있어요?","프로그램을 줄이세요"],1),
+  coach("⑧ 매출 증가",["좋아요","주 KPI가 뭐였죠? ROI는 몇 %였어요?","매출 두 배로 쓰세요"],1),
+  info('<p class="lq">공개: 실습 ⑩ 모범답안 (71장)</p>'+tbl(["구성","내용","출처"],[["<b>1. 배경·문제</b>","20~30대 31% → 22%(<b>−9%p</b>), 약 55.8만 명 감소. 남은 20~30대도 <b>주말에만(68%)</b>","실습 ①"],["<b>2. 타깃·니즈</b>","<b>이서진</b>, 27세 디자이너. 표현 '살 게 있으면 간다' / 잠재 <b>'우리 동네에도 자랑할 게 있었으면'</b>","실습 ②"],["<b>3. 목표</b>","① 방문 16.4만 → <b>20.5만(+25%)</b> ② 객단가 8.7 → 9.6만 ③ SNS 1,200 → 3,000건","실습 ④"],["<b>4. 행사명·컨셉</b>","<b>서면 인디 서머</b> — 센텀에는 없는 것, 서면에만 있는 것","실습 ⑤"],["<b>5. 프로그램</b>","마켓(유입)·아케이드(체류)·라이브(유입)·커스텀 랩(전환)·리턴 패스(재방문) — <b>200평</b>","실습 ⑥"],["<b>6. 홍보</b>","크리에이터 12팀 동시 가동 → <b>채널 13배</b>, 목·금 야간 앱 푸시","실습 ⑦"],["<b>7. 예산</b>","총 3억, <b>홍보 35%(1.05억)</b> 상향","실습 ⑧"],["<b>8. KPI·효과</b>","주 KPI <b>20~30대 방문객 수</b>. 손익분기 10억 vs 증분 11억, <b>ROI +10%</b>","실습 ⑨"]]),"모범답안 확인 →"),
+  ask("좋은 기획안은?",["칸마다 내용이 많은 기획안","한 칸을 짚으면 다른 칸이 따라 나오는 기획안","디자인이 예쁜 기획안"],1,"1번 '주말에만' → 5번 '목·금 아케이드' → 6번 '목·금 야간 혜택'. <b>이어지죠?</b>")]},
+{b:9,n:"51장 · 실습 ⑪",time:"확장 · 60분",t:"발표와 상호 평가",
+ say:"발표는 <b>7분</b>이에요. 시간 넘으면 제가 끊을 거예요. 다른 조가 발표할 때 여러분은 <b>평가자</b>예요. 그리고 <b>한 줄 코멘트</b>는 꼭 쓰세요.",
+ memo:"진행(5개 조 기준): 안내 5분 → 조별 7분 발표 + 3분 질의 × 5 (50분) → 점수 합산·총평 5분. 6개 조 이상이면 발표 5분 + 질의 2분, 또는 질의를 강사 질문 1개로. 모든 조에 같은 질문 말고, 각 조의 가장 약한 칸 하나를 골라 묻기. 아래 타이머와 평가 집계표를 화면에 띄워 쓰세요(점수는 이 화면에만 남음).",
+ one:"7분 = <b>1 · 2 · 2 · 2분</b>, 첫 1분은 <b>숫자로 시작</b><br>평가 기준은 <b>발표 전에 먼저 공개</b>",
+ bridge:"모든 조 수고했어요. 점수보다 <b>더 중요한 이야기</b>를 할게요.",
+ stages:[
+  info('<p class="lq">발표 전에 먼저 공개: 평가 기준 (73장)</p><p class="note">"여러분 발표를 이 다섯 줄로 채점할 거예요. 발표 준비할 때 체크리스트로 쓰세요."</p>'+tbl(["평가 항목 (각 20점)","이걸 보면 된다"],[["<b>문제 정의의 근거</b>","3C 데이터를 인용했나? <b>'9%p 하락', '4배 열세'</b>처럼 숫자로 말했나?"],["<b>컨셉의 차별성</b>","센텀과 뭐가 다른지 <b>한 문장으로</b>? <b>잠재 니즈</b>가 컨셉에 들어 있나?"],["<b>운영·홍보의 구체성</b>","프로그램마다 <b>여정 단계 목적</b>? <b>200평 안에</b> 들어가나?"],["<b>예산·KPI의 현실성</b>","합계 <b>3억</b>? <b>손익분기</b> 계산? ROI 근거?"],["<b>발표 완성도</b>","<b>7분 안에</b> 논리가 끊기지 않나? <b>8칸이 서로</b> 이어지나?"]]),"기준 공개했어요 →"),
+  orderTask("7분 발표, 순서대로 눌러 보세요.",["문제 정의 (1분)","타깃과 컨셉 (2분)","운영과 홍보 (2분)","예산과 KPI (2분)"],'<div class="fb ok">질의응답 <b>3분</b>까지 합쳐 조당 10분이에요.</div>'),
+  ask("첫 1분, 어떻게 시작할까요?",["\"20~30대가 줄었습니다.\"","\"20~30대가 3년 만에 9%p 줄었습니다.\""],1,"첫 1분이 제일 중요해요. <b>숫자로 시작하세요.</b>"),
+  sortTask("질의응답 때 강사 질문이에요. 어느 평가 항목을 보는 질문일까요?",[["그 문제, 어떤 숫자를 보고 찾았어요?",0],["센텀과 뭐가 달라요? 한 문장으로 말해 볼래요?",1],["이 프로그램들, 200평 안에 다 들어가요?",2],["손익분기 매출이 얼마예요? ROI 근거는요?",3],["왜 25%예요?",3]],["문제 정의","컨셉 차별성","운영·홍보","예산·KPI"],'17장 팝업 질문도 좋아요: <b>"이 행사로 뭘 알아낼 거예요? 4주 뒤에 뭘 남겨요?"</b>'),
+  presentTool(),
+  scoreBoard()]},
+{b:9,n:"강사 총평",time:"확장 · 5분",t:"팔지 않아도 팔리게",
+ say:"모든 조 수고했어요. 오늘 <b>잘한 조의 공통점</b>이 있어요. 뭘까요?",
+ memo:"첫날 3장(피터 드러커)으로 돌아가며 마무리.",
+ one:"할인 없이도 오는 행사 = <b>팔지 않아도 팔리게</b>",
+ bridge:"여러분은 오늘 <b>팔지 않아도 팔리는 행사</b>를 만들었어요. 그게 마케팅이에요. 정말 수고 많으셨습니다.",
+ stages:[
+  askMulti("잘한 조의 공통점 세 가지는?",["첫 1분을 숫자로 시작","컨셉을 한 문장으로","칸끼리 이어짐","할인을 크게","화려한 영상"],[0,1,2],'그리고 여러분 기획안에는 <b>할인이 거의 없어요.</b> 그런데도 서진 씨가 올 것 같죠?','정답은 <b>숫자로 시작 · 한 문장 컨셉 · 칸끼리 이어짐</b>이에요.'),
+  ask("첫날 아침 피터 드러커 말: \"마케팅의 목적은 세일즈를 ______ 만드는 것.\"",["더 쉽게","불필요하게","더 크게"],1,"<b>'마케팅의 목적은 세일즈를 불필요하게 만드는 것.'</b>")]},
+{b:9,recall:[["48","기획안은","새로 만드는 게 아니라 모으는 것, 팀장님은 한 장만 본다"],["49","\"Summer Vibes\"는","센텀도 할 수 있는 행사, 우리 케이스와 비교하는 소재"],["50·71","8칸마다 실습 번호,","한 칸을 짚으면 다른 칸이 따라 나와야"],["51","7분 = 1·2·2·2분,","첫 1분은 숫자로 시작"],["73","평가 기준을","발표 전에 먼저 공개하면 체크리스트"],["총평","할인 없이도 오는 행사 =","팔지 않아도 팔리게"]]}
 ];
 var LB=0;
 function chNav(){
