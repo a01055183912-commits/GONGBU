@@ -1,0 +1,13 @@
+{
+  "name": "promotion-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "백화점 프로모션 기획 학습 웹앱 (교육용 가상 데이터)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
